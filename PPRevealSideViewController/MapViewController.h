@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "LoginViewController.h"
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController 
 
 @end

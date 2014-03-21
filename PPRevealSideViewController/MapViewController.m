@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "RightViewController.h"
+#import "LoginViewController.h"
 
 @interface MapViewController (){
     MKMapView *map;
@@ -40,6 +41,7 @@
                                                                            target:self
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
+    [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,11 +53,13 @@
 - (void)preloadLeft {
     RightViewController *c = [[RightViewController alloc] init];
     [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionRight];
-    PP_RELEASE(c);
+    PP_AUTORELEASE(c);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    //implement later --> Make it so the view isnt preloaded until after the login is complete to save memory
+    //for now just preload anyways :p
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadLeft) object:nil];
     [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.3];
 }
@@ -69,5 +73,13 @@
 - (void)create:(id)sender{
     
 }
+
+#pragma mark - Navigation
+
+- (void)pushLogin{
+    LoginViewController *lv = [[LoginViewController alloc]init];
+    [self.navigationController presentViewController:lv animated:YES completion:^{PPRSLog(@"Popped login")}];
+}
+
 
 @end
