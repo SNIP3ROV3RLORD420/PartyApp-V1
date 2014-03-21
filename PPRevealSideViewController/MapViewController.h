@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "LoginViewController.h"
+#import "LeftViewController.h"
 
-@interface MapViewController : UIViewController 
+@interface MapViewController : UIViewController <LeftViewControllerDelegate>
 
 @end

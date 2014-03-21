@@ -9,10 +9,15 @@
 #import "MapViewController.h"
 #import "RightViewController.h"
 #import "LoginViewController.h"
+#import "LeftViewController.h"
 
 @interface MapViewController (){
     MKMapView *map;
+    NSMutableArray *allEvents;
 }
+
+- (void)updateMap:(NSMutableArray*)allVisibleEvents;
+- (NSMutableArray*)processAllEvents:(NSMutableArray*)allEvents;
 
 @end
 
@@ -42,6 +47,8 @@
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
+    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,9 +57,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)preloadLeft {
+- (void)preloadRight{
     RightViewController *c = [[RightViewController alloc] init];
     [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionRight];
+    PPRSLog(@"Preloaded Right View");
     PP_AUTORELEASE(c);
 }
 
@@ -60,8 +68,6 @@
     [super viewDidAppear:animated];
     //implement later --> Make it so the view isnt preloaded until after the login is complete to save memory
     //for now just preload anyways :p
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadLeft) object:nil];
-    [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.3];
 }
 
 #pragma mark - Managing Button Methods
@@ -71,7 +77,8 @@
 }
 
 - (void)create:(id)sender{
-    
+    LeftViewController *lv = [[LeftViewController alloc]init];
+    [self.navigationController pushViewController:lv animated:YES];
 }
 
 #pragma mark - Navigation
@@ -81,5 +88,30 @@
     [self.navigationController presentViewController:lv animated:YES completion:^{PPRSLog(@"Popped login")}];
 }
 
+#pragma mark - All Map View Class methods
+
+- (void)updateMap:(NSMutableArray *)allVisibleEvents{
+    //this method will take the array from processAllEvents
+    //this method will configure the map to display the events
+    //will be called when the map is slid up and will be called in the left view controller delegate method leftViewController Did Finish
+}
+
+- (NSMutableArray*)processAllEvents:(NSMutableArray *)allEvents{
+    //this method will process the list of all current visible events from the server
+    //it will return an array of the events that have not passed and should be visible
+    //for now return and empty array
+    return [NSMutableArray arrayWithObject:nil];
+}
+
+#pragma mark - Left View Controller Delegate
+
+- (void)leftViewControllerDidCancel:(LeftViewController *)lv{
+    [lv dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Canceled")}];
+}
+
+- (void)leftViewControllerDidFinish:(LeftViewController *)lv withEvent:(Event *)e{
+    [allEvents insertObject:e atIndex:0];
+    [self updateMap:[self processAllEvents:allEvents]];
+}
 
 @end

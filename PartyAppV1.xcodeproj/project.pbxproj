@@ -26,6 +26,9 @@
 		BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589AF18DBDBB300865F59 /* RightViewController.m */; };
 		BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589B218DBDC3A00865F59 /* MapViewController.m */; };
 		BF3589B518DBDDA400865F59 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3589B418DBDDA400865F59 /* MapKit.framework */; };
+		BF8A850318DCB0DA00C636A4 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850218DCB0DA00C636A4 /* LeftViewController.m */; };
+		BF8A850A18DCB19700C636A4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850718DCB19700C636A4 /* User.m */; };
+		BF8A850B18DCB19700C636A4 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850918DCB19700C636A4 /* Event.m */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
 		E0D35A4D14F282FD0013EB90 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4C14F282FD0013EB90 /* PPRevealSideViewController.m */; };
 		E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4E14F2831B0013EB90 /* AppDelegate.m */; };
@@ -54,6 +57,12 @@
 		BF3589B118DBDC3A00865F59 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		BF3589B218DBDC3A00865F59 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		BF3589B418DBDDA400865F59 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BF8A850118DCB0DA00C636A4 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
+		BF8A850218DCB0DA00C636A4 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
+		BF8A850618DCB19700C636A4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		BF8A850718DCB19700C636A4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		BF8A850818DCB19700C636A4 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		BF8A850918DCB19700C636A4 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		BFDB558218DBF68A0012C2DF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BFDB558318DBF68A0012C2DF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E0D35A4B14F282FD0013EB90 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
@@ -87,6 +96,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF8A850518DCB16D00C636A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BF8A850618DCB19700C636A4 /* User.h */,
+				BF8A850718DCB19700C636A4 /* User.m */,
+				BF8A850818DCB19700C636A4 /* Event.h */,
+				BF8A850918DCB19700C636A4 /* Event.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		E0D35A4A14F282FD0013EB90 /* PPRevealSideviewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +125,8 @@
 				BF3589AF18DBDBB300865F59 /* RightViewController.m */,
 				BFDB558218DBF68A0012C2DF /* LoginViewController.h */,
 				BFDB558318DBF68A0012C2DF /* LoginViewController.m */,
+				BF8A850118DCB0DA00C636A4 /* LeftViewController.h */,
+				BF8A850218DCB0DA00C636A4 /* LeftViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -141,6 +163,7 @@
 		E0D903C414ED2A610072EECD /* PartyAppV1 */ = {
 			isa = PBXGroup;
 			children = (
+				BF8A850518DCB16D00C636A4 /* Model */,
 				E0D35A6014F283250013EB90 /* Controllers */,
 				E0D35A5114F2831B0013EB90 /* AppDelegate.h */,
 				E0D35A4E14F2831B0013EB90 /* AppDelegate.m */,
@@ -251,10 +274,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8A850A18DCB19700C636A4 /* User.m in Sources */,
 				E0D903CB14ED2A610072EECD /* main.m in Sources */,
 				E0D35A4D14F282FD0013EB90 /* PPRevealSideViewController.m in Sources */,
+				BF8A850B18DCB19700C636A4 /* Event.m in Sources */,
 				BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */,
 				BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */,
+				BF8A850318DCB0DA00C636A4 /* LeftViewController.m in Sources */,
 				E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */,
 				BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */,
 			);
