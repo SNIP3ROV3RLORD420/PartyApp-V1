@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EABDBBB7-D1B9-4C30-A5DF-A0EDCA7B8530</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PartyAppV1</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</key>
+		<string>https://github.com/SNIP3ROV3RLORD420/PartyApp-V1.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PartyAppV1.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/SNIP3ROV3RLORD420/PartyApp-V1.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PartyApp-V1</string>
+		</dict>
+	</array>
+</dict>
+</plist>
