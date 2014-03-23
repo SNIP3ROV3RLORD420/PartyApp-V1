@@ -47,8 +47,6 @@
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
-    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,17 +55,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)preloadLeft{
+    LeftViewController *lv = [[LeftViewController alloc]init];
+    [self.revealSideViewController preloadViewController:lv forSide:PPRevealSideDirectionLeft];
+    PPRSLog(@"Preloaded Left View");
+    PP_AUTORELEASE(lv);
+}
+
 - (void)preloadRight{
     RightViewController *c = [[RightViewController alloc] init];
-    [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionRight];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:c];
+    [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
     PPRSLog(@"Preloaded Right View");
-    PP_AUTORELEASE(c);
+    PP_AUTORELEASE(nav);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     //implement later --> Make it so the view isnt preloaded until after the login is complete to save memory
     //for now just preload anyways :p
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
+    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
 }
 
 #pragma mark - Managing Button Methods
@@ -77,8 +86,7 @@
 }
 
 - (void)create:(id)sender{
-    LeftViewController *lv = [[LeftViewController alloc]init];
-    [self.navigationController pushViewController:lv animated:YES];
+    [self.revealSideViewController openCompletelySide:PPRevealSideDirectionLeft animated:YES];
 }
 
 #pragma mark - Navigation
@@ -93,25 +101,30 @@
 - (void)updateMap:(NSMutableArray *)allVisibleEvents{
     //this method will take the array from processAllEvents
     //this method will configure the map to display the events
-    //will be called when the map is slid up and will be called in the left view controller delegate method leftViewController Did Finish
+    //will be called when the map is slid up and will be called in the left view controller delegate method leftViewControllerDidFinish
 }
 
 - (NSMutableArray*)processAllEvents:(NSMutableArray *)allEvents{
     //this method will process the list of all current visible events from the server
     //it will return an array of the events that have not passed and should be visible
-    //for now return and empty array
+    //for now return an empty array
     return [NSMutableArray arrayWithObject:nil];
 }
 
 #pragma mark - Left View Controller Delegate
 
 - (void)leftViewControllerDidCancel:(LeftViewController *)lv{
-    [lv dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Canceled")}];
+    [self updateMap:[self processAllEvents:allEvents]];
 }
 
 - (void)leftViewControllerDidFinish:(LeftViewController *)lv withEvent:(Event *)e{
     [allEvents insertObject:e atIndex:0];
     [self updateMap:[self processAllEvents:allEvents]];
+}
+
+#pragma mark - Login View Controller Delegate
+
+- (void)loginViewControllerDidFinish:(LoginViewController *)lv{
 }
 
 @end

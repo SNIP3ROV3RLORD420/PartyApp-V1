@@ -11,6 +11,6 @@
 #import "LoginViewController.h"
 #import "LeftViewController.h"
 
-@interface MapViewController : UIViewController <LeftViewControllerDelegate>
+@interface MapViewController : UIViewController <LeftViewControllerDelegate, LoginViewControllerDelegate>
 
 @end

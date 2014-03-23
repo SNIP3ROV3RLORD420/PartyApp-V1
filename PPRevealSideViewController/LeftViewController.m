@@ -8,6 +8,11 @@
 
 #import "LeftViewController.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface LeftViewController ()
 
 @end
@@ -18,6 +23,19 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        UINavigationBar *navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+        [navBar setBarTintColor:UIColorFromRGB(0x34B085)];
+        UINavigationItem *navItem = [[UINavigationItem alloc]initWithTitle:@"Create Event"];
+        navItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(create:)]);
+        navItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                target:self
+                                                                                                action:@selector(cancel:)]);
+        
+        navBar.items = [NSArray arrayWithObject:navItem];
+        [self.view addSubview:navBar];
     }
     return self;
 }
@@ -25,17 +43,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
-                                                                            style:UIBarButtonItemStyleDone
-                                                                           target:self
-                                                                           action:@selector(create:)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                            target:self
-                                                                            action:@selector(cancel:)]);
 
-    self.title = @"Create Event";
-    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
-    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
+    [self.revealSideViewController unloadViewControllerForSide:PPRevealSideDirectionRight];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,6 +89,7 @@
 #pragma mark - Button Methods
 
 - (void)cancel:(id)sender{
+    [self.revealSideViewController popViewControllerAnimated:YES];
     [self.delegate leftViewControllerDidCancel:self];
     
 }
@@ -87,7 +97,7 @@
 - (void)create:(id)sender{
     //implement later --> Create event based on the properties that were created
     //for now just dismiss the view
-    [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Created")}];
+    [self.revealSideViewController popViewControllerAnimated:YES];
 }
 
 @end

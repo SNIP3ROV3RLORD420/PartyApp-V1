@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, PPRevealSideViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, PPRevealSideViewControllerDelegate>{
+    UIImageView *splashView;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) PPRevealSideViewController *revealSideViewController;
+
+- (void)startupAnimationDone:(NSString*)animationID finished:(NSNumber*)finished context:(void*) context;
 
 @end

@@ -29,6 +29,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     _revealSideViewController.delegate = self;
     
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
+    
     self.window.rootViewController = _revealSideViewController;
     
     PP_RELEASE(main);
@@ -43,7 +46,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     }
     
+    //loading animation
+    splashView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)];
+    splashView.image = [UIImage imageNamed:@"Default-568h@2x"];
+    [self.window addSubview:splashView];
+    [self.window bringSubviewToFront:splashView];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.window cache:YES];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
+    splashView.alpha = 0.0;
+    splashView.frame = CGRectMake(-60, -60, 440, 600);
+    [UIView commitAnimations];
+    
     return YES;
+    
 }
 
 #pragma mark - PPRevealSideViewController delegate
@@ -73,8 +91,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (PPRevealSideDirection)pprevealSideViewController:(PPRevealSideViewController *)controller directionsAllowedForPanningOnView:(UIView *)view {
-    if ([view isKindOfClass:NSClassFromString(@"UIWebBrowserView")])
-        return PPRevealSideDirectionLeft | PPRevealSideDirectionRight;
+    if ([view isKindOfClass:NSClassFromString(@"RightViewController")])
+        return PPRevealSideInteractionNavigationBar;
     
     return PPRevealSideDirectionLeft | PPRevealSideDirectionRight | PPRevealSideDirectionTop | PPRevealSideDirectionBottom;
 }
@@ -88,6 +106,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)unloadRevealFromMemory {
     self.revealSideViewController = nil;
     self.window.rootViewController = nil;
+}
+
+- (void)startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context{
+    [splashView removeFromSuperview];
 }
 
 #pragma mark - UIApplicationDelegate methods

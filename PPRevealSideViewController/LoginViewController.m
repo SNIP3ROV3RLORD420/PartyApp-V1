@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "CreateAccountViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -43,7 +44,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [createAccount setTitle:@"Create Account" forState:UIControlStateNormal];
         createAccount.backgroundColor = UIColorFromRGB(0x34B085);
         createAccount.showsTouchWhenHighlighted = YES;
-        [createAccount addTarget:self action:@selector(createAccount:) forControlEvents:UIControlEventTouchUpInside];
+        [createAccount addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
         
         //the Username text field
         username = [[UITextField alloc]initWithFrame:CGRectMake(20, 127, 240, 30)];
@@ -103,6 +104,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)create:(id)sender{
-
+    CreateAccountViewController *cv = [[CreateAccountViewController alloc]init];
+    [self presentViewController:cv animated:YES completion:nil];
 }
 @end
