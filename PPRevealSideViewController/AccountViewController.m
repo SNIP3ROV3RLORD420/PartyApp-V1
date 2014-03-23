@@ -13,17 +13,22 @@ colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface AccountViewController ()
+@interface AccountViewController (){
+    BOOL editingMode;
+}
 
 @end
 
 @implementation AccountViewController
+
+@synthesize username, password, email, name, birthday, gender, interestedIn;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         self.tableView.separatorColor = UIColorFromRGB(0x34B085);
+        self.tableView.allowsSelection = NO;
     }
     return self;
 }
@@ -39,6 +44,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                             target:self
                                                                             action:@selector(back)]);
     self.title = @"My Account";
+    editingMode = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,12 +89,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"Username";
+                    username = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
+                    username.borderStyle = UITextBorderStyleRoundedRect;
+                    username.delegate = self;
+                    [cell.contentView addSubview:username];
                     break;
                 case 1:
                     cell.textLabel.text = @"Password";
+                    password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
+                    password.borderStyle = UITextBorderStyleRoundedRect;
+                    password.delegate = self;
+                    [cell.contentView addSubview:password];
                     break;
                 case 2:
                     cell.textLabel.text = @"Email";
+                    email = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
+                    email.borderStyle = UITextBorderStyleRoundedRect;
+                    email.delegate = self;
+                    [cell.contentView addSubview:email];
                     break;
                 default:
                     break;
@@ -98,6 +116,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"Name";
+                    name = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
+                    name.borderStyle = UITextBorderStyleRoundedRect;
+                    name.delegate = self;
+                    [cell.contentView addSubview:name];
                     break;
                 case 1:
                     cell.textLabel.text = @"Birthday";
@@ -126,12 +148,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return @"This shouldnt show up";
 }
 
+#pragma mark - UITexfield Delegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (editingMode)
+        return YES;
+    return NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    return YES;
+}
 #pragma mark - Managing Button Methods
 
 - (void)edit{
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(done)]);
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)]);
+    editingMode = YES;
 }
 
 - (void)back{
@@ -141,11 +174,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)done{
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(edit)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);}
+    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
+        editingMode = NO;
+}
 
 - (void)cancel{
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(edit)]);
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
+    editingMode = NO;
 }
 
 @end

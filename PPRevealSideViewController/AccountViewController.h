@@ -17,8 +17,17 @@
 
 @end
 
-@interface AccountViewController : UITableViewController
+@interface AccountViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id <AccountViewControllerDelegate> delegate;
+
+@property (nonatomic, retain) UITextField *username;
+@property (nonatomic, retain) UITextField *password;
+@property (nonatomic, retain) UITextField *email;
+@property (nonatomic, retain) UITextField *name;
+
+@property (nonatomic, retain) UIDatePicker *birthday;
+@property (nonatomic, retain) UIPickerView *gender;
+@property (nonatomic, retain) UIPickerView *interestedIn;
 
 @end
