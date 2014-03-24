@@ -97,22 +97,27 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             break;
         case 1:
             return 4;
+            break;
     }
     return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1 && indexPath.row == 1)
+    if (indexPath.section == 1 && indexPath.row == 1 && editingMode)
         return 200;
-    if (indexPath.section == 1 && indexPath.row == 2)
+    if (indexPath.section == 1 && indexPath.row == 2 && editingMode)
         return 200;
-    if (indexPath.section == 1 && indexPath.row == 3)
+    if (indexPath.section == 1 && indexPath.row == 3 && editingMode)
         return 200;
     return 44;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"Cell";
+    //label for all the picker views
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 160, 20)];
+    //label for all the picker views
+    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(250, 10, 50, 20)];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     switch (indexPath.section) {
         case 0:
@@ -174,10 +179,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     break;
                 case 1:
                     cell = [[UITableViewCell alloc]init];
-                    cell.textLabel.text = @"Birthday";
-                    birthday = [[UIDatePicker alloc]init];
+                    label.text = @"Birthday";
+                    birthday = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 10, 320, 100)];
                     birthday.datePickerMode = UIDatePickerModeDate;
-                    [cell.contentView addSubview:birthday];
+                    if (!editingMode){
+                        label1.text = @"This";
+                        [cell.contentView addSubview:label1];
+                    }
+                    if (editingMode){
+                        [cell.contentView addSubview:birthday];
+                    }
+                    [cell.contentView addSubview:label];
                     break;
                 case 2:
                     cell = [[UITableViewCell alloc]init];
@@ -224,6 +236,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(done)]);
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)]);
     editingMode = YES;
+    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView reloadData];
+    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
 }
 
 - (void)back{
@@ -237,6 +252,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         editingMode = NO;
     [self.view endEditing:YES];
     [self updateCurrentUser];
+    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView reloadData];
+    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
 }
 
 - (void)cancel{
@@ -244,6 +262,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
     editingMode = NO;
     [self.view endEditing:YES];
+    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView reloadData];
+    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
 }
 
 @end
