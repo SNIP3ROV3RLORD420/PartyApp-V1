@@ -13,4 +13,7 @@
 
 @property (retain, nonatomic)UITextField *username;
 @property (retain, nonatomic)UITextField *password;
+
+@property (retain, nonatomic)UINavigationBar *navBar;
+
 @end

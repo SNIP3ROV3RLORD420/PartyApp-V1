@@ -16,7 +16,7 @@
 
 @end
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (retain, nonatomic)UIButton *loginButton;
 @property (retain, nonatomic)UIButton *createAccount;

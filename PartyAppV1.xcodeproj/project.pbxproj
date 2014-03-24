@@ -48,6 +48,7 @@
 		BF8A850A18DCB19700C636A4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850718DCB19700C636A4 /* User.m */; };
 		BF8A850B18DCB19700C636A4 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850918DCB19700C636A4 /* Event.m */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
+		BFF6FF3818DFF02200ADF5A1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFF6FF3718DFF02200ADF5A1 /* FacebookSDK.framework */; };
 		E0D35A4D14F282FD0013EB90 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4C14F282FD0013EB90 /* PPRevealSideViewController.m */; };
 		E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4E14F2831B0013EB90 /* AppDelegate.m */; };
 		E0D903BF14ED2A610072EECD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0D903BE14ED2A610072EECD /* UIKit.framework */; };
@@ -393,6 +394,7 @@
 		BF8A850918DCB19700C636A4 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		BFDB558218DBF68A0012C2DF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BFDB558318DBF68A0012C2DF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		BFF6FF3718DFF02200ADF5A1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
 		E0D35A4B14F282FD0013EB90 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
 		E0D35A4C14F282FD0013EB90 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
 		E0D35A4E14F2831B0013EB90 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Sample/AppDelegate.m; sourceTree = "<group>"; };
@@ -413,13 +415,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFF6FF3818DFF02200ADF5A1 /* FacebookSDK.framework in Frameworks */,
+				23BCBC2E18DF99A8001AA03A /* Parse.framework in Frameworks */,
 				23BCBD7C18DF9B96001AA03A /* AdSupport.framework in Frameworks */,
 				23BCBD7A18DF9B8E001AA03A /* Accounts.framework in Frameworks */,
 				23BCBD7818DF9B87001AA03A /* libsqlite3.dylib in Frameworks */,
 				23BCBD7618DF9B7B001AA03A /* Security.framework in Frameworks */,
 				23BCBD7418DF9B73001AA03A /* Social.framework in Frameworks */,
 				23BCBD7218DF9B6B001AA03A /* FacebookSDK.framework in Frameworks */,
-				23BCBC2E18DF99A8001AA03A /* Parse.framework in Frameworks */,
 				23BCBC2C18DF9994001AA03A /* AudioToolbox.framework in Frameworks */,
 				23BCBC2A18DF998D001AA03A /* CFNetwork.framework in Frameworks */,
 				23BCBC2818DF9984001AA03A /* CoreLocation.framework in Frameworks */,
@@ -981,6 +984,7 @@
 		E0D903BD14ED2A610072EECD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFF6FF3718DFF02200ADF5A1 /* FacebookSDK.framework */,
 				23BCBD8018DF9CCA001AA03A /* FBUserSettingsViewResources.bundle */,
 				23BCBD7B18DF9B96001AA03A /* AdSupport.framework */,
 				23BCBD7918DF9B8E001AA03A /* Accounts.framework */,
@@ -1558,6 +1562,7 @@
 					"$(inherited)",
 					/Users/jake/Desktop,
 					/Users/jake/Documents/FacebookSDK,
+					/Users/dylanhumphrey/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPRevealSideViewController/PartyAppV1-Prefix.pch";
@@ -1580,6 +1585,7 @@
 					"$(inherited)",
 					/Users/jake/Desktop,
 					/Users/jake/Documents/FacebookSDK,
+					/Users/dylanhumphrey/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPRevealSideViewController/PartyAppV1-Prefix.pch";

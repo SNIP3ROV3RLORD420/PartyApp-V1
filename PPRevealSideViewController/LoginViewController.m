@@ -16,7 +16,7 @@ colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface LoginViewController () //<CommsDelegate>
+@interface LoginViewController () <CommsDelegate>
 
 @end
 
@@ -53,12 +53,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         username.borderStyle = UITextBorderStyleBezel;
         username.backgroundColor = [UIColor whiteColor];
         username.placeholder = @"Username";
+        username.delegate = self;
         
         //the password text field
         password = [[UITextField alloc]initWithFrame:CGRectMake(20, 165, 240, 30)];
         password.borderStyle = UITextBorderStyleBezel;
         password.backgroundColor = [UIColor whiteColor];
         password.placeholder = @"Password";
+        password.delegate = self;
         
         //title label
         appTitle = [[UILabel alloc]initWithFrame:CGRectMake(84, 29, 135, 40)];
@@ -120,7 +122,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)create:(id)sender{
-    CreateAccountViewController *cv = [[CreateAccountViewController alloc]init];
-    [self presentViewController:cv animated:YES completion:nil];
+    if ([username.text isEqualToString:@""] || [password.text isEqualToString:@""]){
+        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Incomplete" message:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [errorView show];
+    }
+    else{
+        [createAccount setEnabled:NO];
+        // Do the login
+        [Comms createAccountWithFB:self: self.username.text : self.password.text];
+    }
+}
+
+#pragma makr - Textfield Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self.view endEditing:YES];
+    return YES;
 }
 @end
