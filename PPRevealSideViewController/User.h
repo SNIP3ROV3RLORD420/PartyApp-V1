@@ -14,6 +14,7 @@
 
 //What gender this user is interested in
 enum{
+    None =   0,
     Male =   1,
     Female = 2,
     Both =   3,
@@ -22,6 +23,7 @@ typedef NSUInteger interestedIn;
 
 //what gender this user is
 enum{
+    GenderNone =   0,
     GenderMale =   1,
     GenderFemale = 2,
     GenderTranny = 3                          //lol
@@ -33,6 +35,7 @@ typedef NSUInteger Gender;
     NSString *username;
     NSString *password;
     NSString *home;                           //used for Quick Host button
+    NSString *emailAddress;
     
     CLLocationManager *locationManager;       //to get current location
     
@@ -54,6 +57,7 @@ typedef NSUInteger Gender;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *home;
+@property (nonatomic, strong) NSString *emailAddress;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, strong, getter = getBirthday) NSDate *DOB;

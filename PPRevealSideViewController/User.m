@@ -10,7 +10,7 @@
 
 @implementation User
 
-@synthesize interest, gender, name, username, password, home, DOB, friendsList, pushCurrentLocation, locationManager;
+@synthesize interest, gender, name, username, password, home, DOB, friendsList, pushCurrentLocation, locationManager, emailAddress;
 
 - (BOOL)hasArrived:(Event *)selectedEvent{
     //if (self.getCurrentLocation == selectedEvent.location)

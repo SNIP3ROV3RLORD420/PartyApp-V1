@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "User.h"
+#import <Parse/Parse.h>
 
 @class AccountViewController;
 
@@ -20,6 +21,7 @@
 @interface AccountViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id <AccountViewControllerDelegate> delegate;
+@property (nonatomic, weak) id account;
 
 @property (nonatomic, retain) UITextField *username;
 @property (nonatomic, retain) UITextField *password;

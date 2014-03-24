@@ -8,7 +8,6 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
-#import "CreateAccountViewController.h"
 #import "Comms.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -60,6 +59,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         password.borderStyle = UITextBorderStyleBezel;
         password.backgroundColor = [UIColor whiteColor];
         password.placeholder = @"Password";
+        password.secureTextEntry = YES;
         password.delegate = self;
         password.secureTextEntry = YES;
         
@@ -115,8 +115,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
         } else {
             //Something bad has ocurred
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid username or password" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [errorAlertView show];
         }
     }];
@@ -124,7 +123,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)create:(id)sender{
     if ([username.text isEqualToString:@""] || [password.text isEqualToString:@""]){
-        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Incomplete" message:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [errorView show];
     }
     else{
