@@ -7,14 +7,16 @@
 //
 
 #import "LoginViewController.h"
+#import <Parse/Parse.h>
 #import "CreateAccountViewController.h"
+#import "Comms.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface LoginViewController ()
+@interface LoginViewController () //<CommsDelegate>
 
 @end
 
@@ -85,10 +87,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    //Everytime u see the login view, user needs to logout
+    //[PFUser logOut];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,8 +105,18 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #pragma mark - Button methods
 
+
 - (void)logIn:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
+    [PFUser logInWithUsernameInBackground:self.username.text password:self.password.text block:^(PFUser *user, NSError *error) {
+        if (user) {
+            [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
+        } else {
+            //Something bad has ocurred
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [errorAlertView show];
+        }
+    }];
 }
 
 - (void)create:(id)sender{

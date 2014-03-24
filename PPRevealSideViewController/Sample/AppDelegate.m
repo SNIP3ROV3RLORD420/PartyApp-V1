@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import <Parse/Parse.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -19,7 +20,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @synthesize window = _window;
 @synthesize revealSideViewController = _revealSideViewController;
 
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url sourceApplication:@"PartyAppV1" withSession:[PFFacebookUtils session] ];
+}
+
+- (BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [FBAppCall handleOpenURL:url sourceApplication:@"PartyAppV1" withSession:[PFFacebookUtils session] ];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [Parse setApplicationId:@"TK1NJ2HGR944FKKP6VR0C7YHSpzJyLwgm1UbX8IJ" clientKey:@"asTGqa9g2LAM2CztIym3h2cnbkuxOtSRsD2Venml"];
+    
+    [PFFacebookUtils initializeFacebook];
+    
     self.window = PP_AUTORELEASE([[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]);
     
     MapViewController *main = [[MapViewController alloc] init];

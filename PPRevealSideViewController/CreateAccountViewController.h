@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateAccountViewController : UITableViewController
+@interface CreateAccountViewController : UIViewController
+@property (retain, nonatomic)UIButton *createAccount;
 
+@property (retain, nonatomic)UITextField *username;
+@property (retain, nonatomic)UITextField *password;
 @end
