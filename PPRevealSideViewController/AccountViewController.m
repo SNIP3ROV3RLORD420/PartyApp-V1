@@ -24,6 +24,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @synthesize username, password, email, name, birthday, gender, interestedIn;
 
+#pragma mark - Class Methods
+
 - (void)setCurrentUser:(PFUser*)u{
     currentUser.username = [u username];
     currentUser.password = [u password];
@@ -35,6 +37,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     currentUser.gender = GenderNone;
 }
 
+- (void)updateCurrentUser{
+    //use the User *currentUser to update the actual online user
+    //this method will be called in the done method
+}
+
+#pragma mark - View Methods
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -93,15 +101,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return 3;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1 && indexPath.row == 1)
+        return 200;
+    if (indexPath.section == 1 && indexPath.row == 2)
+        return 200;
+    if (indexPath.section == 1 && indexPath.row == 3)
+        return 200;
+    return 44;
+}
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell)
-        cell = [[UITableViewCell alloc]init];
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
                 case 0:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Username";
                     username = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     username.borderStyle = UITextBorderStyleRoundedRect;
@@ -113,6 +130,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:username];
                     break;
                 case 1:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Password";
                     password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     password.borderStyle = UITextBorderStyleRoundedRect;
@@ -124,6 +142,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:password];
                     break;
                 case 2:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Email";
                     email = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     email.borderStyle = UITextBorderStyleRoundedRect;
@@ -135,12 +154,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:email];
                     break;
                 default:
+                    cell = [[UITableViewCell alloc]init];
                     break;
             }
             break;
         case 1:
             switch (indexPath.row) {
                 case 0:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Name";
                     name = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     name.borderStyle = UITextBorderStyleRoundedRect;
@@ -152,14 +173,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:name];
                     break;
                 case 1:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Birthday";
+                    birthday = [[UIDatePicker alloc]init];
+                    birthday.datePickerMode = UIDatePickerModeDate;
+                    [cell.contentView addSubview:birthday];
                     break;
                 case 2:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Gender";
                     break;
                 case 3:
+                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Interested In";
                 default:
+                    cell = [[UITableViewCell alloc]init];
                     break;
             }
             break;
@@ -208,6 +236,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
         editingMode = NO;
     [self.view endEditing:YES];
+    [self updateCurrentUser];
 }
 
 - (void)cancel{
