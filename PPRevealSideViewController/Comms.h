@@ -13,6 +13,6 @@
 @end
 
 @interface Comms : NSObject
-+ (void) createAccountWithFB:(id<CommsDelegate>)delegate : (NSString*) userName: (NSString *) password;
++ (void) createAccountWithFB:(id<CommsDelegate>)delegate : (NSString*) userName : (NSString *) password;
 
 @end

@@ -61,6 +61,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         password.backgroundColor = [UIColor whiteColor];
         password.placeholder = @"Password";
         password.delegate = self;
+        password.secureTextEntry = YES;
         
         //title label
         appTitle = [[UILabel alloc]initWithFrame:CGRectMake(84, 29, 135, 40)];

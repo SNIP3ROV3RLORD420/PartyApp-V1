@@ -10,6 +10,11 @@
 
 @implementation Comms
 
++(void) addFieldToUser: (NSString*) key : (NSObject*) object
+{
+    [[PFUser currentUser] addObject:object forKey:key];
+}
+
 
 //ACTUALLY IS AUTHORIZE FACEBOOK
 + (void) createAccountWithFB:(id<CommsDelegate>)delegate : (NSString*) userName : (NSString*) password

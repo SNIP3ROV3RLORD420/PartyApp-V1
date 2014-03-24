@@ -9,6 +9,7 @@
 #import "MapViewController.h"
 #import "RightViewController.h"
 #import "LoginViewController.h"
+#import "Comms.h"
 #import "LeftViewController.h"
 
 @interface MapViewController (){
@@ -47,6 +48,7 @@
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
+    
 }
 
 - (void)didReceiveMemoryWarning
