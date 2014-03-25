@@ -27,6 +27,7 @@
 @property (nonatomic, retain) UITextField *password;
 @property (nonatomic, retain) UITextField *email;
 @property (nonatomic, retain) UITextField *name;
+@property (nonatomic, retain) UITextField *home;
 
 @property (nonatomic, retain) UIDatePicker *birthday;
 @property (nonatomic, retain) UIPickerView *gender;

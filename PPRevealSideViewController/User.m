@@ -19,6 +19,12 @@
     return false;          // for now return false
 }
 
+- (NSString*)stringFromBirthday{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"mm/dd/yyyy"];
+    return [formatter stringFromDate:self.getBirthday];
+}
+
 - (int)getAge{
     NSDateComponents *ageComps = [[NSCalendar currentCalendar]
                                   components:NSYearCalendarUnit
