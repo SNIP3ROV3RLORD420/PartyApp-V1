@@ -20,7 +20,7 @@
 
 - (NSString*)stringFromBirthday{
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setDateFormat:@"mm/dd/yyyy"];
     return [formatter stringFromDate:self.getBirthday];
 }
 
