@@ -97,7 +97,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.navigationController setNavigationBarHidden:YES];
     
     //Everytime u see the login view, user needs to logout
-    //[PFUser logOut];
+    [PFUser logOut];
 }
 
 - (void)didReceiveMemoryWarning

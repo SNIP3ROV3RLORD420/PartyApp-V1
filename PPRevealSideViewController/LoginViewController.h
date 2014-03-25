@@ -6,17 +6,19 @@
 //
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 
 @class LoginViewController;
 
 @protocol LoginViewControllerDelegate <NSObject>
 
+
 - (void)loginViewControllerDidFinish:(LoginViewController*)lv;
 
 @end
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate>
+@interface LoginViewController : UIViewController  <UITextFieldDelegate>
 
 @property (retain, nonatomic)UIButton *loginButton;
 @property (retain, nonatomic)UIButton *createAccount;

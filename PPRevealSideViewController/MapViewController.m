@@ -23,6 +23,8 @@
 @end
 
 @implementation MapViewController
+@synthesize locationManager = _locationManager;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +40,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[self locationManager] startUpdatingLocation];
+    
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Slide"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -48,7 +52,6 @@
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,6 +82,28 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
     [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
     [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
+}
+
+- (CLLocationManager *)locationManager {
+    if (_locationManager != nil) {
+        return _locationManager;
+    }
+    
+    _locationManager = [[CLLocationManager alloc] init];
+    [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+    [_locationManager setDelegate:self];
+    
+    return _locationManager;
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations :(NSArray *)locations
+{
+    NSLog(@"Updating");
+    CLLocation* latestLoc = [locations lastObject];
+    [PFUser currentUser][@"location"] = [PFGeoPoint geoPointWithLocation:latestLoc];
+    [[PFUser currentUser] saveEventually];
 }
 
 #pragma mark - Managing Button Methods

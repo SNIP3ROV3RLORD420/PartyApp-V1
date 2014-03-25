@@ -40,18 +40,6 @@
                 [user setUsername:userName];
                 [user setPassword:password];
                 [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if(succeeded)
-                    {
-                        CLLocationManager* locMan = [[CLLocationManager alloc] init];
-                        [locMan startUpdatingLocation];
-                        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-                            if(!error) {
-                                user[@"location"] = geoPoint;
-                                [user save];
-                            }
-                        }];
-                    }
-                    
                     [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                             if (!error) {
                                 NSDictionary<FBGraphUser> *me = (NSDictionary<FBGraphUser> *)result;
@@ -65,8 +53,6 @@
                                 [user saveInBackground];
                             }
                     }];
-                        
-                
                 }];
 			} else {
 				NSLog(@"User logged in through Facebook!");

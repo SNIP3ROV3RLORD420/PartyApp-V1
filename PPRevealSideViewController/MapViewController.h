@@ -11,6 +11,8 @@
 #import "LoginViewController.h"
 #import "LeftViewController.h"
 
-@interface MapViewController : UIViewController <LeftViewControllerDelegate, LoginViewControllerDelegate>
+@interface MapViewController : UIViewController <CLLocationManagerDelegate, LeftViewControllerDelegate, LoginViewControllerDelegate>
+
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @end
