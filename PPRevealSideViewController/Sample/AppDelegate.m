@@ -30,6 +30,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [User registerSubclass];
     
     [Parse setApplicationId:@"TK1NJ2HGR944FKKP6VR0C7YHSpzJyLwgm1UbX8IJ" clientKey:@"asTGqa9g2LAM2CztIym3h2cnbkuxOtSRsD2Venml"];
     

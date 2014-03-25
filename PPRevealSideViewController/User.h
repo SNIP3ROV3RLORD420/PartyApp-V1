@@ -9,6 +9,10 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
+
+
+#warning CLASS WILL BE GONE SOON, JUST NEED TO TRANSFER OVER SOME METHODS TO STATIC METHODS THAT CAN BE CALLED ON A PFUser
 
 @class Event;   //to avoid compiling issues :D
 
@@ -30,12 +34,9 @@ enum{
 };
 typedef NSUInteger Gender;
 
-@interface User : NSObject{
-    NSString *name;                           //actual name
-    NSString *username;
-    NSString *password;
+@interface User : PFUser<PFSubclassing>{
     NSString *home;                           //used for Quick Host button
-    NSString *emailAddress;
+    NSString *name;
     
     CLLocationManager *locationManager;       //to get current location
     
@@ -48,16 +49,11 @@ typedef NSUInteger Gender;
     //add more stuff that I'm forgetting
 }
 
-@property (nonatomic, assign) interestedIn interest;
-@property (nonatomic, assign) Gender gender;
 /*
 ---------------Create Setters and Getters----------------------------------
  */
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *home;
-@property (nonatomic, strong) NSString *emailAddress;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, strong, getter = getBirthday) NSDate *DOB;
@@ -65,6 +61,10 @@ typedef NSUInteger Gender;
 @property (nonatomic, strong) NSMutableArray *friendsList;
 
 @property (nonatomic) BOOL *pushCurrentLocation;
+
+
+@property (nonatomic, assign) interestedIn interest;
+@property (nonatomic, assign) Gender gender;
 /*
  ---------------Create Methods-------------------------------------
  */

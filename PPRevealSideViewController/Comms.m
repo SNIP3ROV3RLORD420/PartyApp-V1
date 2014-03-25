@@ -7,6 +7,7 @@
 
 #import "Comms.h"
 #import <Parse/Parse.h>
+#import <CoreLocation/CoreLocation.h>
 
 @implementation Comms
 
@@ -16,7 +17,6 @@
 }
 
 
-//ACTUALLY IS AUTHORIZE FACEBOOK
 + (void) createAccountWithFB:(id<CommsDelegate>)delegate : (NSString*) userName : (NSString*) password
 {
 	// Basic User information and your friends are part of the standard permissions
@@ -37,26 +37,44 @@
 		} else {
 			if (user.isNew) {
 				NSLog(@"User signed up and logged in through Facebook!");
-                [[PFUser currentUser] setUsername:userName];
-                [[PFUser currentUser] setPassword:password];
+                [user setUsername:userName];
+                [user setPassword:password];
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(succeeded)
+                    {
+                        CLLocationManager* locMan = [[CLLocationManager alloc] init];
+                        [locMan startUpdatingLocation];
+                        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+                            if(!error) {
+                                user[@"location"] = geoPoint;
+                                [user save];
+                            }
+                        }];
+                    }
+                    
+                    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                            if (!error) {
+                                NSDictionary<FBGraphUser> *me = (NSDictionary<FBGraphUser> *)result;
+                                NSString* temp = me.name;
+                                [user setObject:me.id forKey:@"fbId"];
+                                if([[me objectForKey:@"gender"] isEqualToString:@"male"])
+                                    user[@"isMale"] = [NSNumber numberWithBool:YES];
+                                else
+                                    user[@"isMale"] = [NSNumber numberWithBool:NO];
+                                user[@"name"] = temp;
+                                [user saveInBackground];
+                            }
+                    }];
+                        
+                
+                }];
 			} else {
 				NSLog(@"User logged in through Facebook!");
 			}
-            [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                if (!error) {
-                    NSDictionary<FBGraphUser> *me = (NSDictionary<FBGraphUser> *)result;
-                    [[PFUser currentUser] setObject:me.id forKey:@"fbId"];
-                    [[PFUser currentUser] saveInBackground];
-                    NSLog(@"Test");
-                    //later on can get birthday too, auto suggest throw b-day party??/
-
-                }
-                
-                // Callback - login successful
-                if ([delegate respondsToSelector:@selector(commsDidLogin:)]) {
+            
+            if ([delegate respondsToSelector:@selector(commsDidLogin:)]) {
                     [delegate commsDidLogin:YES];
-                }
-            }];
+            }
 		}
 	}];
 }

@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Dylan Humphrey. All rights reserved.
 //
 
+#import <Parse/PFObject+Subclass.h>
 #import "User.h"
 
 @implementation User
 
-@synthesize interest, gender, name, username, password, home, DOB, friendsList, pushCurrentLocation, locationManager, emailAddress;
+@synthesize interest, gender, name, home, DOB, friendsList, pushCurrentLocation, locationManager;
 
 - (BOOL)hasArrived:(Event *)selectedEvent{
     //if (self.getCurrentLocation == selectedEvent.location)

@@ -26,10 +26,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #pragma mark - Class Methods
 
-- (void)setCurrentUser:(PFUser*)u{
-    currentUser.username = [u username];
-    currentUser.password = [u password];
-    currentUser.name = @"";
+- (void)setCurrentUser{
+    currentUser.username = [[PFUser currentUser] username];
+    currentUser.password = [[PFUser currentUser] password];
+    //currentUser.name =
     currentUser.home = @"";
     currentUser.DOB = nil;
     currentUser.pushCurrentLocation = NO;
@@ -66,7 +66,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                             action:@selector(back)]);
     self.title = @"My Account";
     editingMode = NO;
-    [self setCurrentUser:[PFUser currentUser]];
+    [self setCurrentUser];
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,10 +147,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     email = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     email.borderStyle = UITextBorderStyleRoundedRect;
                     email.delegate = self;
-                    if (![self.account emailAddress])
-                        email.placeholder = @"Email";
-                    else
-                        email.text = [self.account emailAddress];
+                    //if (![self.account emailAddress])
+                      ///  email.placeholder = @"Email";
+                    //else
+                      //  email.text = [self.account emailAddress];
                     [cell.contentView addSubview:email];
                     break;
                 default:
