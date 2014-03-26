@@ -913,13 +913,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BF31C39D18DE905600A07190 /* Sub-Controllers */ = {
+		BF31C39D18DE905600A07190 /* Sub-Controllers(Right) */ = {
 			isa = PBXGroup;
 			children = (
 				BF31C39E18DE91E100A07190 /* AccountViewController.h */,
 				BF31C39F18DE91E100A07190 /* AccountViewController.m */,
 			);
-			name = "Sub-Controllers";
+			name = "Sub-Controllers(Right)";
 			sourceTree = "<group>";
 		};
 		BF8A850518DCB16D00C636A4 /* Model */ = {
@@ -935,6 +935,13 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		BFE23FD318E21B8800D37F4C /* Sub-Controllers(left) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Sub-Controllers(left)";
+			sourceTree = "<group>";
+		};
 		E0D35A4A14F282FD0013EB90 /* PPRevealSideviewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -947,7 +954,8 @@
 		E0D35A6014F283250013EB90 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BF31C39D18DE905600A07190 /* Sub-Controllers */,
+				BFE23FD318E21B8800D37F4C /* Sub-Controllers(left) */,
+				BF31C39D18DE905600A07190 /* Sub-Controllers(Right) */,
 				BF3589B118DBDC3A00865F59 /* MapViewController.h */,
 				BF3589B218DBDC3A00865F59 /* MapViewController.m */,
 				BF3589AE18DBDBB300865F59 /* RightViewController.h */,
