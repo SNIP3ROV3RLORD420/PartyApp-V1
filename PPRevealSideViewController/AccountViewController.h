@@ -21,6 +21,11 @@
 @interface AccountViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) id <AccountViewControllerDelegate> delegate;
+<<<<<<< HEAD
+@property (nonatomic, weak) PFUser* usr;
+=======
+
+>>>>>>> FETCH_HEAD
 
 @property (nonatomic, retain) UITextField *username;
 @property (nonatomic, retain) UITextField *password;
