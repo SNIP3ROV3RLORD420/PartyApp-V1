@@ -15,41 +15,37 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface AccountViewController (){
     BOOL editingMode;
-    User *currentUser;
 }
 
 @end
 
 @implementation AccountViewController
 
-@synthesize username, password, email, home, name, birthday, gender, interestedIn;
+@synthesize username, password, email, home, name, birthday, gender, interestedIn, usr;
 
 #pragma mark - Class Methods
-
-- (void)setCurrentUser{
-    currentUser.username = [[PFUser currentUser] username];
-    currentUser.password = [[PFUser currentUser] password];
-    //currentUser.name =
-    currentUser.home = @"";
-    currentUser.DOB = [NSDate date];
-    currentUser.interest = None;
-    currentUser.gender = GenderNone;
-}
 
 - (void)updateCurrentUser{
     //use the User *currentUser to update the actual online user
     //this method will be called in the done method
-    currentUser.username = username.text;
-    currentUser.password = password.text;
-    currentUser.name = name.text;
-    currentUser.home = home.text;
-    currentUser.emailAddress = email.text;
-    currentUser.DOB = birthday.date;
-    // currentUser.interest
+    usr[@"username"] = username.text;
+    usr[@"password"] = password.text;
+    usr[@"name"] = name.text;
+    //currentUser.home = home.text;
+        //Have to set this up online before we add, but is this going to be an address? a location?
+        //I think location would be best we just need a way to set it.
+    usr[@"email"] = email.text;
+    //usr[@"birthday"] = birthday.date;
+    
+    //usr[@"isInterestedInMale"] = [NSNumber numberWithBool:YES];
+    //usr[@"isInterestedInMale"] = [NSNumber numberWithBool:NO];
+        //Set up logic for this, IDK how pickers work
+
+    
     // currentUser.gender =
-    // sets the parameters on the currentUser
-    // later implement actually uploading part
+        //I dont think this should be changeable...
 }
+
 
 #pragma mark - View Methods
 
@@ -66,6 +62,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    usr = [PFUser currentUser];
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                     target:self
                                     action:@selector(edit)]);
@@ -75,7 +72,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                             action:@selector(back)]);
     self.title = @"Profile";
     editingMode = NO;
-    [self setCurrentUser];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,6 +117,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return 44;
 }
 
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"Cell";
     //label for all the picker views
@@ -137,41 +134,30 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     username = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     username.borderStyle = UITextBorderStyleRoundedRect;
                     username.delegate = self;
-                    if (![currentUser username])
-                        username.placeholder = @"Username";
-                    else
-                        username.text = [currentUser username];
+                    username.placeholder = @"Username";
+                    username.text = usr[@"username"];
                     [cell.contentView addSubview:username];
                     break;
                 case 1:
+                {
                     cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Password";
                     password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     password.borderStyle = UITextBorderStyleRoundedRect;
                     password.delegate = self;
-                    if (![currentUser password])
-                        password.placeholder = @"Password";
-                    else
-                        password.text = [currentUser password];
+                    password.placeholder = @"Password";
+                    password.text = @"(Hidden)";
                     [cell.contentView addSubview:password];
                     break;
+                }
                 case 2:
                     cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Email";
                     email = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     email.borderStyle = UITextBorderStyleRoundedRect;
                     email.delegate = self;
-<<<<<<< HEAD
-                    //if (![self.account emailAddress])
-                      ///  email.placeholder = @"Email";
-                    //else
-                      //  email.text = [self.account emailAddress];
-=======
-                    if (![currentUser emailAddress])
-                        email.placeholder = @"Email";
-                    else
-                        email.text = [currentUser emailAddress];
->>>>>>> FETCH_HEAD
+                    email.placeholder = @"Email";
+                    email.text = usr[@"email"];
                     [cell.contentView addSubview:email];
                     break;
                 default:
@@ -179,6 +165,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     break;
             }
             break;
+            
         case 1:
             switch (indexPath.row) {
                 case 0:
@@ -187,10 +174,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     name = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     name.borderStyle = UITextBorderStyleRoundedRect;
                     name.delegate = self;
-                    if (![currentUser name])
-                        name.placeholder = @"Your Name";
-                    else
-                        name.text = [currentUser name];
+                    name.placeholder = @"Your Name";
+                    name.text = usr[@"name"];
                     [cell.contentView addSubview:name];
                     break;
                 case 1:
@@ -200,7 +185,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     home.borderStyle = UITextBorderStyleRoundedRect;
                     home.delegate = self;
                     home.placeholder = @"Address, Zipcode";
-                    home.text = [currentUser home];
+                    //home.text = usr[@"home"];
+#warning need to decide if home should be a location or an address
                     [cell.contentView addSubview:home];
                     break;
                 case 2:
@@ -209,12 +195,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     birthday = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 10, 320, 100)];
                     birthday.datePickerMode = UIDatePickerModeDate;
                     if (!editingMode){
-                        label1.text = [currentUser stringFromBirthday];
+                        label1.text = usr[@"birthday"];
                         [cell.contentView addSubview:label1];
                     }
                     if (editingMode){
-                        if (currentUser.getBirthday)
-                            birthday.date = currentUser.getBirthday;
+                        if ( [PFUser currentUser][@"birthday"]  != nil)
+                            birthday.date = usr[@"birthday"];
                         else
                             [cell.contentView addSubview:birthday];
                     }
