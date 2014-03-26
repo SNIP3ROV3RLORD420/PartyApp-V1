@@ -20,6 +20,13 @@
 
 @interface LeftViewController : UITableViewController
 
+@property (nonatomic, weak) UITextField *eName;
+@property (nonatomic, weak) UITextField *eLocation;
+
+@property (nonatomic, weak) UIDatePicker *eDate;
+
+@property (nonatomic, weak) UISlider *eCapacity;
+
 @property (weak, nonatomic) id <LeftViewControllerDelegate> delegate;
 
 @end
