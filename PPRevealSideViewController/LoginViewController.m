@@ -74,6 +74,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         //the title image
         titleIV = [[UIImageView alloc]initWithFrame:CGRectMake(85, 9, 110, 100)];
+#warning BYPASS BUTTON IS ADDED RIGHT NOW FOR ACCESS W/O INTERNET
+        //adding bypass button - No internet murrrrrr
+        UIButton *bypass = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+        bypass.backgroundColor = UIColorFromRGB(0x34B085);
+        [bypass setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [bypass addTarget:self action:@selector(bypass) forControlEvents:UIControlEventTouchUpInside];
+        bypass.showsTouchWhenHighlighted = YES;
         
         //adding shit to the vw view
         [vw addSubview:loginButton];
@@ -86,6 +93,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [self.view addSubview:logoIV];
         [self.view addSubview:createAccount];
         [self.view addSubview:appTitle];
+        [self.view addSubview:bypass];
     }
     return self;
 }
@@ -131,6 +139,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         // Do the login
         [Comms createAccountWithFB:self: self.username.text : self.password.text];
     }
+}
+
+- (void)bypass{
+    [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Bypassed")}];
 }
 
 #pragma makr - Textfield Delegate

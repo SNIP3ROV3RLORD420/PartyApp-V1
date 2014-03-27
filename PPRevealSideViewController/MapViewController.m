@@ -140,11 +140,11 @@
 
 #pragma mark - Left View Controller Delegate
 
-- (void)leftViewControllerDidCancel:(LeftViewController *)lv{
+- (void)LeftViewControllerDidCancel:(LeftViewController *)lv{
     [self updateMap:[self processAllEvents:allEvents]];
 }
 
-- (void)leftViewControllerDidFinish:(LeftViewController *)lv withEvent:(Event *)e{
+- (void)LeftViewControllerDidFinish:(LeftViewController *)lv withEvent:(Event *)e{
     [allEvents insertObject:e atIndex:0];
     [self updateMap:[self processAllEvents:allEvents]];
 }

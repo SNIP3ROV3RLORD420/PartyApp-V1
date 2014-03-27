@@ -2,7 +2,7 @@
 //  LeftViewController.h
 //  PartyAppV1
 //
-//  Created by Dylan Humphrey on 3/21/14.
+//  Created by Dylan Humphrey on 3/26/14.
 //
 //
 
@@ -13,20 +13,29 @@
 
 @protocol LeftViewControllerDelegate <NSObject>
 
-- (void)leftViewControllerDidFinish:(LeftViewController*)lv withEvent:(Event*)e;
-- (void)leftViewControllerDidCancel:(LeftViewController*)lv;
+- (void)LeftViewControllerDidCancel:(LeftViewController *)lv;
+- (void)LeftViewControllerDidfinish:(LeftViewController *)lv withEvent:(Event *)e;
 
 @end
 
-@interface LeftViewController : UITableViewController
+@interface LeftViewController : UIViewController <UITextFieldDelegate>
 
-@property (nonatomic, weak) UITextField *eName;
-@property (nonatomic, weak) UITextField *eLocation;
+@property (nonatomic, retain) UIImageView*                  eventPic;
 
-@property (nonatomic, weak) UIDatePicker *eDate;
+@property (nonatomic, retain) UITextField*                  eName;
+@property (nonatomic, retain) UITextField*                  eLocation;
+@property (nonatomic, retain) UITextField*                  ePrice;
 
-@property (nonatomic, weak) UISlider *eCapacity;
+@property (nonatomic, retain) UIButton*                     eDiscrip;
+@property (nonatomic, retain) UIButton*                     invite;
+@property (nonatomic, retain) UIButton*                     blacklist;
+@property (nonatomic, retain) UIButton*                     eDate;
 
-@property (weak, nonatomic) id <LeftViewControllerDelegate> delegate;
+@property (nonatomic, retain) UISlider*                     eCapacity;
+
+@property (nonatomic, retain) UISwitch*                     ageBased;
+@property (nonatomic, retain) UISwitch*                     pubPriv;
+
+@property (nonatomic, weak) id <LeftViewControllerDelegate> delegate;
 
 @end
