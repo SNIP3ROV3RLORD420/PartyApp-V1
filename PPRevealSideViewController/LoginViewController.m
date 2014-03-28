@@ -74,6 +74,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         //the title image
         titleIV = [[UIImageView alloc]initWithFrame:CGRectMake(85, 9, 110, 100)];
+        
 #warning BYPASS BUTTON IS ADDED RIGHT NOW FOR ACCESS W/O INTERNET
         //adding bypass button - No internet murrrrrr
         UIButton *bypass = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -120,6 +121,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)logIn:(id)sender{
     [PFUser logInWithUsernameInBackground:self.username.text password:self.password.text block:^(PFUser *user, NSError *error) {
         if (user) {
+            [self.delegate loginViewControllerDidFinish:self];
             [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
         } else {
             //Something bad has ocurred
@@ -142,6 +144,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)bypass{
+    [self.delegate loginViewControllerDidFinish:self];
     [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Bypassed")}];
 }
 

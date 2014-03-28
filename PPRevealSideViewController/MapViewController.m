@@ -15,6 +15,9 @@
 @interface MapViewController (){
     MKMapView *map;
     NSMutableArray *allEvents;
+    
+    BOOL preloadedRight;
+    BOOL preloadedLeft;
 }
 
 - (void)updateMap:(NSMutableArray*)allVisibleEvents;
@@ -23,6 +26,7 @@
 @end
 
 @implementation MapViewController
+
 @synthesize locationManager = _locationManager;
 
 
@@ -52,6 +56,8 @@
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
+    preloadedLeft = NO;
+    preloadedRight = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,18 +67,29 @@
 }
 
 - (void)preloadLeft{
-    LeftViewController *lv = [[LeftViewController alloc]init];
-    [self.revealSideViewController preloadViewController:lv forSide:PPRevealSideDirectionLeft];
-    PPRSLog(@"Preloaded Left View");
-    PP_AUTORELEASE(lv);
+    if (!preloadedLeft){
+        LeftViewController *lv = [[LeftViewController alloc]init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:lv];
+        [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionLeft];
+        PPRSLog(@"Preloaded Left View");
+        PP_AUTORELEASE(nav);
+        preloadedLeft = YES;
+    }
+    else
+        NSLog(@"Left Already Preloaded!");
 }
 
 - (void)preloadRight{
-    RightViewController *c = [[RightViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:c];
-    [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
-    PPRSLog(@"Preloaded Right View");
-    PP_AUTORELEASE(nav);
+    if (!preloadedRight){
+        RightViewController *c = [[RightViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:c];
+        [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
+        PPRSLog(@"Preloaded Right View");
+        PP_AUTORELEASE(nav);
+        preloadedRight = YES;
+    }
+    else
+        NSLog(@"Right Already Preloaded!");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -140,11 +157,11 @@
 
 #pragma mark - Left View Controller Delegate
 
-- (void)LeftViewControllerDidCancel:(LeftViewController *)lv{
+- (void)LeftViewControllerDidPop:(LeftViewController *)lv{
     [self updateMap:[self processAllEvents:allEvents]];
 }
 
-- (void)LeftViewControllerDidFinish:(LeftViewController *)lv withEvent:(Event *)e{
+- (void)addEvent:(Event *)e{
     [allEvents insertObject:e atIndex:0];
     [self updateMap:[self processAllEvents:allEvents]];
 }

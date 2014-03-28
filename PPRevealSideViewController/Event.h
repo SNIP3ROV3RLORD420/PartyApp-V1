@@ -11,6 +11,8 @@
 
 @class User;
 
+typedef CGFloat Price;
+
 @interface Event : NSObject{
     NSString *eventName;
     NSString *eventDescription;
@@ -32,8 +34,10 @@
     BOOL *ageBased;                                         //if ageBased then only people of certain age see event
     BOOL *rolled;                                           //if event is over
     
-    float *price;                                           //possibly implement price based off age
-    
+    float priceN;
+    float priceL;
+    float priceM;
+    float priceH;
     
     int numberOfMales;                                      //makes percentFemale more efficient
     int numberOfFemales;
@@ -41,6 +45,8 @@
 /*
  -------------------Getters and Setters----------------------------
  */
+@property float priceN, priceL, priceM, priceH;
+
 @property (nonatomic, strong) NSString *eventName;
 @property (nonatomic, strong) NSString *eventDescription;
 @property (nonatomic, strong) NSString *eventLocation;
@@ -58,7 +64,6 @@
 @property (nonatomic, getter = isAgeBased) BOOL *ageBased;
 @property (nonatomic, getter = isRolled) BOOL *rolled;
 
-@property (nonatomic) float *price;
 /*
  -----------------------Methods-------------------------------------
  */

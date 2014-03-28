@@ -11,7 +11,7 @@
 
 @implementation Event
 
-@synthesize eventName, eventDate, eventDescription, eventLocation, maxCapacity, invited, hosts, blacklist, BYOB, Private, ageBased, rolled, price;
+@synthesize eventName, eventDate, eventDescription, eventLocation, maxCapacity, invited, hosts, blacklist, BYOB, Private, ageBased, rolled, priceN, priceH, priceL, priceM;
 
 #pragma mark - Event Initialization
 

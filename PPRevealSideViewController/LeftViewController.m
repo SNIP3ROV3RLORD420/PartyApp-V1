@@ -17,126 +17,36 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @end
 
+@interface LeftViewController (){
+    UILabel *ageLabel;
+    UILabel *privLabel;
+    UILabel *inviteLabel;
+    
+    UIImage *image;
+    
+    UILabel *capacityNum;
+    UILabel *capacity;
+    
+    UILabel *ePL;
+    
+    UILabel *dash;
+    
+    UIDatePicker *dateAndTime;
+}
+
+@end
+
 @implementation LeftViewController
 
-@synthesize eventPic, eCapacity, eDiscrip, eLocation, ePrice, eName, eDate, invite, ageBased, pubPriv, blacklist;
+@synthesize eventPic, eCapacity, eDiscrip, eLocation, ePriceN, ePriceL, ePriceM, ePriceH, eName, eDate, invite, ageBased, pubPriv, blacklist, rangeH, rangeL;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithStyle:style];
     if (self) {
-        //adding the navigation bar and what not
-        UINavigationBar *navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-        [navBar setBarTintColor:UIColorFromRGB(0x34B085)];
-        UINavigationItem *navItem = [[UINavigationItem alloc]initWithTitle:@"Create Event"];
-        navItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
-                                                                                   style:UIBarButtonItemStyleDone
-                                                                                  target:self
-                                                                                  action:@selector(create:)]);
-        navItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                                 target:self
-                                                                                                 action:@selector(cancel:)]);
-        
-        navBar.items = [NSArray arrayWithObject:navItem];
-        [self.view addSubview:navBar];
-        
-//--------------------------------First View--------------------------------
-        
-        //creating the first view --> Holds the Event image, event name, event location, event description, event price
-        UIView *firstView = [[UIView alloc]initWithFrame:CGRectMake(0, 44, 320, 150)];
-        firstView.backgroundColor = [UIColor whiteColor];
-        
-        //adding the image view
-        eventPic = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 100, 100)];
-        eventPic.backgroundColor = UIColorFromRGB(0x34B085);
-        
-        //adding the Event Name text field
-        eName = [[UITextField alloc]initWithFrame:CGRectMake(120, 5.333333, 185, 33)];
-        eName.placeholder = @"Event Name";
-        eName.borderStyle = UITextBorderStyleNone;
-        eName.backgroundColor = [UIColor whiteColor];
-        eName.delegate = self;
-        
-        //adding the Event Location text field
-        eLocation = [[UITextField alloc]initWithFrame:CGRectMake(120, 38.333333, 185, 33)];
-        eLocation.placeholder = @"Address, Zipcode";
-        eLocation.borderStyle = UITextBorderStyleNone;
-        eLocation.backgroundColor = [UIColor whiteColor];
-        eLocation.delegate = self;
-        
-        //adding the Event price text field
-        ePrice = [[UITextField alloc]initWithFrame:CGRectMake(120, 71.333333, 185, 33)];
-        ePrice.placeholder = @"Event Price";
-        ePrice.borderStyle = UITextBorderStyleNone;
-        ePrice.backgroundColor = [UIColor whiteColor];
-        ePrice.delegate = self;
-        
-        //adding the descripiton button and labels
-        UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(10, 110, 200, 40)];
-        description.text = @"Event Description";
-        
-        eDiscrip = [[UIButton alloc]initWithFrame:CGRectMake(250, 110, 50, 40)];
-        [eDiscrip setTitle:@"Show" forState:UIControlStateNormal];
-        [eDiscrip addTarget:self action:@selector(descrip:) forControlEvents:UIControlEventTouchUpInside];
-        [eDiscrip setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
-        eDiscrip.showsTouchWhenHighlighted = YES;
-        eDiscrip.backgroundColor = [UIColor whiteColor];
-        
-        //adding the date button and labels
-        
-        //actually adding stuff to the view
-        [firstView addSubview:eventPic];
-        [firstView addSubview:eName];
-        [firstView addSubview:eLocation];
-        [firstView addSubview:ePrice];
-        [firstView addSubview:description];
-        [firstView addSubview:eDiscrip];
-        
-//--------------------------------Second View----------------------------------
-        //creating the second View --> Holds the age based switch
-        UIView *secondView = [[UIView alloc]initWithFrame:CGRectMake(0, 205, 320, 45)];
-        secondView.backgroundColor = [UIColor whiteColor];
-        
-        //adding the age based switch
-        ageBased = [[UISwitch alloc]initWithFrame:CGRectMake(245, 5, 40, 30)];
-        
-        //adding the label
-        UILabel *ageLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 200, 30)];
-        ageLabel.text = @"Age Based";
-        //actually adding stuff to the view
-        [secondView addSubview:ageBased];
-        [secondView addSubview:ageLabel];
-        
-//--------------------------------Third View-----------------------------------
-        //creating the third view --> Holds the public or private switch
-        UIView *thirdView = [[UIView alloc]initWithFrame:CGRectMake(0, 260, 320, 80)];
-        thirdView.backgroundColor = [UIColor whiteColor];
-        
-        //adding the switch
-        pubPriv = [[UISwitch alloc]initWithFrame:CGRectMake(245, 5, 40, 30)];
-        
-        //adding the label
-        UILabel *pubPrivLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 200, 30)];
-        pubPrivLabel.text = @"Private";
-        
-        //adding the blacklist button
-        blacklist = [[UIButton alloc]initWithFrame:CGRectMake(15, 40, 290, 30)];
-        [blacklist setTitle:@"BlackList" forState:UIControlStateNormal];
-        [blacklist setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        blacklist.backgroundColor = UIColorFromRGB(0x34B085);
-        blacklist.showsTouchWhenHighlighted = YES;
-        [blacklist addTarget:self action:@selector(blacklist) forControlEvents:UIControlEventTouchUpInside];
-        
-        //actually adding stuff to the view
-        [thirdView addSubview:pubPriv];
-        [thirdView addSubview:pubPrivLabel];
-        [thirdView addSubview:blacklist];
-        
-//--------------------------------Main View------------------------------------
-        self.view.backgroundColor = UIColorFromRGB(0x34B085);
-        [self.view addSubview:firstView];
-        [self.view addSubview:secondView];
-        [self.view addSubview:thirdView];
+        self.tableView.separatorColor = [UIColor lightGrayColor];
+        self.tableView.separatorInset = UIEdgeInsetsZero;
+        self.tableView.allowsSelection = NO;
     }
     return self;
 }
@@ -144,7 +54,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
+                                                                               style:UIBarButtonItemStyleDone
+                                                                              target:self
+                                                                              action:@selector(create:)]);
+    self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                             target:self
+                                                                                             action:@selector(cancel:)]);
+    self.title = @"Host Event";
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,18 +75,333 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Table view data source
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 30.0;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    switch (section) {
+        case 0:
+            return 3;
+            break;
+        case 1:
+            if (ageBased.on)
+                return 5;
+            return 1;
+        case 2:
+            return 2;
+        default:
+            break;
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0){
+        
+        if (indexPath.row == 0)
+        {
+            return 110;
+        }
+        if (indexPath.row == 1)
+        {
+            return 44;
+        }
+        if (indexPath.row == 2)
+        {
+            return 44;
+        }
+    }
+    
+    if (indexPath.section == 1){
+        return 44;
+    }
+    
+    if (indexPath.section == 2){
+        
+        if (indexPath.row == 0)
+        {
+            return 44;
+        }
+        if (indexPath.row == 1)
+        {
+            if (pubPriv.on) {
+                return 44;
+            }
+            return 75;
+        }
+    }
+    return 44;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!cell)
+        cell = PP_AUTORELEASE([[UITableViewCell alloc]init]);
+
+    if (indexPath.section == 0){
+            switch (indexPath.row) {
+                case 0:
+                    //adding the image view
+                    eventPic = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 100, 100)];
+                    image = [UIImage imageNamed:@"EPhoto(edit).png"];
+                    [eventPic setImage:image];
+                    
+                    //adding the Event Name text field
+                    if (!(ageBased.on)) {
+                        eName = [[UITextField alloc]initWithFrame:CGRectMake(120, 5.333333, 185, 33)];
+                    }
+                    else
+                        eName = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, 185, 40)];
+                    eName.placeholder = @"Event Name";
+                    eName.borderStyle = UITextBorderStyleNone;
+                    eName.backgroundColor = [UIColor whiteColor];
+                    eName.delegate = self;
+                    
+                    //adding the Event Location text field
+                    if (!(ageBased.on))
+                        eLocation = [[UITextField alloc]initWithFrame:CGRectMake(120, 38.333333, 185, 33)];
+                    else
+                        eLocation = [[UITextField alloc]initWithFrame:CGRectMake(120, 60, 185, 40)];
+                    eLocation.placeholder = @"Address, Zipcode";
+                    eLocation.borderStyle = UITextBorderStyleNone;
+                    eLocation.backgroundColor = [UIColor whiteColor];
+                    eLocation.delegate = self;
+                    
+                    //adding the Event price text field
+                    if (!(ageBased.on)) {
+                        ePriceN = [[UITextField alloc]initWithFrame:CGRectMake(120, 71.333333, 185, 33)];
+                        ePriceN.placeholder = @"Event Price";
+                        ePriceN.borderStyle = UITextBorderStyleNone;
+                        ePriceN.backgroundColor = [UIColor whiteColor];
+                        ePriceN.delegate = self;
+                        [cell.contentView addSubview:ePriceN];
+                    }
+                    [cell.contentView addSubview:eName];
+                    [cell.contentView addSubview:eventPic];
+                    [cell.contentView addSubview:eLocation];
+                    
+                    break;
+                case 1:
+                    cell.textLabel.text = @"Event Description";
+                    
+                    eDiscrip = [[UIButton alloc]initWithFrame:CGRectMake(250, 5, 50, 35)];
+                    [eDiscrip setTitle:@"Show" forState:UIControlStateNormal];
+                    [eDiscrip addTarget:self action:@selector(descrip:) forControlEvents:UIControlEventTouchUpInside];
+                    [eDiscrip setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
+                    [eDiscrip setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+                    eDiscrip.showsTouchWhenHighlighted = YES;
+                    eDiscrip.backgroundColor = [UIColor whiteColor];
+                    
+                    [cell.contentView addSubview:eDiscrip];
+                    break;
+                case 2:
+                    eDate = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 44)];
+                    eDate.placeholder = @"Date and Time of Event";
+                    eDate.delegate = self;
+                    
+                    dateAndTime = [[UIDatePicker alloc]init];
+                    [dateAndTime setDate:[NSDate date]];
+                    [dateAndTime addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
+                    dateAndTime.backgroundColor = [UIColor whiteColor];
+                    [eDate setInputView:dateAndTime];
+                    
+                    [cell.contentView addSubview:eDate];
+                default:
+                    break;
+            }
+    }
+    if (indexPath.section == 1){
+            switch (indexPath.row) {
+                case 0:
+                    //adding the age based switch
+                    ageBased = [[UISwitch alloc]initWithFrame:CGRectMake(245, 5, 40, 30)];
+                    [ageBased addTarget:self action:@selector(ageBased:) forControlEvents:UIControlEventValueChanged];
+                    
+                    //adding the label
+                    ageLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 200, 30)];
+                    ageLabel.text = @"Age Based";
+                    
+                    //actually adding stuff to the view
+                    [cell.contentView addSubview:ageBased];
+                    [cell.contentView addSubview:ageLabel];
+                    break;
+                case 1:
+                    cell.textLabel.text = @"Age Range";
+                    
+                    rangeL = [[UITextField alloc]initWithFrame:CGRectMake(150, 10, 30, 35)];
+                    rangeL.placeholder = @"00";
+                    rangeL.delegate = self;
+                    
+                    dash = [[UILabel alloc]initWithFrame:CGRectMake(185, 10, 20, 35)];
+                    dash.text = @"-";
+                    
+                    rangeH = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 30, 35)];
+                    rangeH.placeholder = @"00";
+                    rangeH.delegate = self;
+                    
+                    [cell.contentView addSubview:rangeL];
+                    [cell.contentView addSubview:rangeH];
+                    [cell.contentView addSubview:dash];
+                    
+                    break;
+                case 2:
+                    ePriceL = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 40)];
+                    ePriceL.borderStyle = UITextBorderStyleNone;
+                    ePriceL.placeholder = @"Price for Youngest";
+                    ePriceL.delegate = self;
+                    [cell.contentView addSubview:ePriceL];
+                    break;
+                case 3:
+                    ePriceM = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 40)];
+                    ePriceM.borderStyle = UITextBorderStyleNone;
+                    ePriceM.placeholder = @"Price for Average Age";
+                    ePriceM.delegate = self;
+                    [cell.contentView addSubview:ePriceM];
+                    break;
+                case 4:
+                    ePriceH = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 30)];
+                    ePriceH.borderStyle = UITextBorderStyleNone;
+                    ePriceH.placeholder = @"Price for Oldest";
+                    ePriceH.delegate = self;
+                    [cell.contentView addSubview:ePriceH];
+                    break;
+                default:
+                    break;
+            }
+    }
+
+    if (indexPath.section == 2){
+            switch (indexPath.row) {
+                case 0:
+                    cell.textLabel.text = @"Private";
+                    
+                    //adding the pubPriv switch
+                    pubPriv = [[UISwitch alloc]initWithFrame:CGRectMake(245, 5, 40, 30)];
+                    [pubPriv addTarget:self action:@selector(pubPriv:) forControlEvents:UIControlEventValueChanged];
+                    
+                    [cell.contentView addSubview:pubPriv];
+                    break;
+                case 1:
+                    if (!(pubPriv.on)) {
+                        //the actual slider
+                        eCapacity = [[UISlider alloc]initWithFrame:CGRectMake(15, 35, 280, 30)];
+                        eCapacity.minimumValue = 1;
+                        eCapacity.maximumValue = 1000;
+                        [eCapacity addTarget:self action:@selector(slid:) forControlEvents:UIControlEventValueChanged];
+                    
+                        //the static label
+                        capacity = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 200, 30)];
+                        capacity.text = @"Max Capacity";
+                        
+                        //the label that shows the number
+                        capacityNum = [[UILabel alloc]initWithFrame:CGRectMake(260, 10, 60, 30)];
+                        
+                        //adding stuff to the frame
+                        [cell.contentView addSubview:eCapacity];
+                        [cell.contentView addSubview:capacity];
+                        [cell.contentView addSubview:capacityNum];
+                    }
+                    else{
+                        cell.textLabel.text = @"Invite People";
+                        
+                        invite = [[UIButton alloc]initWithFrame:CGRectMake(200, 10, 100, 24)];
+                        [invite setTitle:@"Invite" forState:UIControlStateNormal];
+                        [invite setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
+                        [invite setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+                        [invite addTarget:self action:@selector(invite:) forControlEvents:UIControlEventTouchUpInside];
+                        [cell.contentView addSubview:invite];
+                    }
+                    break;
+                default:
+                    break;
+            }
+    }
+    
+    return cell;
+}
+
+#pragma mark - UITextField Delegate Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self.view endEditing:YES];
+    return YES;
+}
+
 #pragma mark - Button Methods
 
-- (void)create:(id)sender{
+- (void)cancel:(id)sender{
+    [self.delegate LeftViewControllerDidPop:self];
     [self.revealSideViewController popViewControllerAnimated:YES];
 }
 
-- (void)cancel:(id)sender{
+- (void)create:(id)sender{
+    //implement delegate method create event
+    [self.delegate addEvent:nil];
+    [self.delegate LeftViewControllerDidPop:self];
     [self.revealSideViewController popViewControllerAnimated:YES];
 }
 
 - (void)descrip:(id)sender{
-    //implement new view showing up or a modal view coming up
+    //will reveal the description in the view
 }
+
+- (void)ageBased:(id)sender{
+    [self.tableView beginUpdates];
+    
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    
+    NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+    [tempArray addObject:[NSIndexPath indexPathForRow:1 inSection:1]];
+    [tempArray addObject:[NSIndexPath indexPathForRow:2 inSection:1]];
+    [tempArray addObject:[NSIndexPath indexPathForRow:3 inSection:1]];
+    [tempArray addObject:[NSIndexPath indexPathForRow:4 inSection:1]];
+    
+    if (ageBased.on)
+        [self.tableView insertRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationFade];
+    else
+        [self.tableView deleteRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
+
+- (void)pubPriv:(id)sender{
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
+
+- (void)invite:(id)sender{
+    
+}
+
+- (void)slid:(id)sender{
+    capacityNum.text = [NSString stringWithFormat:@"%i", (int)eCapacity.value];
+}
+
+- (void)updateTextField:(id)sender{
+    UIDatePicker *picker = (UIDatePicker*)eDate.inputView;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateStyle:NSDateFormatterLongStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    eDate.text = [formatter stringFromDate:picker.date];
+}
+
+- (void)dismissKeyboard{
+    [eDate resignFirstResponder];
+}
+
 
 @end

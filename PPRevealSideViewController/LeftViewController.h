@@ -13,23 +13,30 @@
 
 @protocol LeftViewControllerDelegate <NSObject>
 
-- (void)LeftViewControllerDidCancel:(LeftViewController *)lv;
-- (void)LeftViewControllerDidfinish:(LeftViewController *)lv withEvent:(Event *)e;
+- (void)LeftViewControllerDidPop:(LeftViewController *)lv;
+- (void)addEvent:(Event*)e;
 
 @end
 
-@interface LeftViewController : UIViewController <UITextFieldDelegate>
+@interface LeftViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, retain) UIImageView*                  eventPic;
 
 @property (nonatomic, retain) UITextField*                  eName;
 @property (nonatomic, retain) UITextField*                  eLocation;
-@property (nonatomic, retain) UITextField*                  ePrice;
+@property (nonatomic, retain) UITextField*                  eDate;
+
+@property (nonatomic, retain) UITextField*                  ePriceN;
+@property (nonatomic, retain) UITextField*                  ePriceL;
+@property (nonatomic, retain) UITextField*                  ePriceM;
+@property (nonatomic, retain) UITextField*                  ePriceH;
+
+@property (nonatomic, retain) UITextField*                  rangeL;
+@property (nonatomic, retain) UITextField*                  rangeH;
 
 @property (nonatomic, retain) UIButton*                     eDiscrip;
 @property (nonatomic, retain) UIButton*                     invite;
 @property (nonatomic, retain) UIButton*                     blacklist;
-@property (nonatomic, retain) UIButton*                     eDate;
 
 @property (nonatomic, retain) UISlider*                     eCapacity;
 

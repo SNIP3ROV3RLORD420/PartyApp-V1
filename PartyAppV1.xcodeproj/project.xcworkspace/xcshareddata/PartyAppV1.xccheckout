@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>416D9FBC-C091-43B1-A871-EC42E94CD58F</string>
+	<string>1BFE8063-DE02-42E3-B1FC-712726E9C518</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PartyAppV1</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</key>
+		<key>A5BD6777-0FB8-42AF-92DE-D5B4768190E3</key>
 		<string>https://github.com/SNIP3ROV3RLORD420/PartyApp-V1.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PartyAppV1.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</key>
+		<key>A5BD6777-0FB8-42AF-92DE-D5B4768190E3</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</string>
+	<string>A5BD6777-0FB8-42AF-92DE-D5B4768190E3</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>85F7D9C4-F1CA-40D5-8711-90024F0A70AF</string>
+			<string>A5BD6777-0FB8-42AF-92DE-D5B4768190E3</string>
 			<key>IDESourceControlWCCName</key>
 			<string>PartyApp-V1</string>
 		</dict>
