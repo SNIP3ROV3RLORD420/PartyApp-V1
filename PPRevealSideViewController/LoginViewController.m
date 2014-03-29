@@ -21,80 +21,52 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation LoginViewController
 
-@synthesize loginButton, createAccount, username, password, appTitle, logoIV, titleIV;
+@synthesize loginButton, createAccount, username, password;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        //making the sub view
-        UIView *vw =[[UIView alloc]initWithFrame:CGRectMake(20, 92, 280, 269)];
-        vw.backgroundColor = [UIColor lightGrayColor];
+        self.view.backgroundColor = UIColorFromRGB(0x34B085);
         
-        //the loginButton
-        loginButton = [[UIButton alloc]initWithFrame:CGRectMake(44, 203, 192, 30)];
-        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [loginButton setTitle:@"Login" forState:UIControlStateNormal];
-        loginButton.backgroundColor = UIColorFromRGB(0x34B085);
-        loginButton.showsTouchWhenHighlighted = YES;
+        //creating the table view
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 230, 280, 88) style:UITableViewStylePlain];
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+        tableView.scrollEnabled = NO;
+        tableView.layer.cornerRadius = 4;
+        tableView.layer.borderWidth = .5;
+        tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        
+        //creating the login button
+        loginButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 323, 280, 44)];
+        loginButton.backgroundColor = UIColorFromRGB(0x5cbf9d);
+        loginButton.layer.cornerRadius = 3;
+        loginButton.layer.borderColor = UIColorFromRGB(0x5cbf9d).CGColor;
         [loginButton addTarget:self action:@selector(logIn:) forControlEvents:UIControlEventTouchUpInside];
+        [loginButton setTitle:@"Log In" forState:UIControlStateNormal];
+        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
-        //the Create account button
-        createAccount = [[UIButton alloc]initWithFrame:CGRectMake(64, 518, 192, 30)];
-        [createAccount setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        //creating the create account button
+        createAccount = [[UIButton alloc]initWithFrame:CGRectMake(85, 480, 150, 30)];
+        createAccount.titleLabel.font = [UIFont fontWithName:@"Arial" size:14.0];
         [createAccount setTitle:@"Create Account" forState:UIControlStateNormal];
-        createAccount.backgroundColor = UIColorFromRGB(0x34B085);
-        createAccount.showsTouchWhenHighlighted = YES;
         [createAccount addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
+        [createAccount setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
-        //the Username text field
-        username = [[UITextField alloc]initWithFrame:CGRectMake(20, 127, 240, 30)];
-        username.borderStyle = UITextBorderStyleBezel;
-        username.backgroundColor = [UIColor whiteColor];
-        username.placeholder = @"Username";
-        username.delegate = self;
+        //creating the label
+        UILabel *appTitle = [[UILabel alloc]initWithFrame:CGRectMake(70, 160, 165, 50)];
+        [appTitle setFont:[UIFont fontWithName:@"Arial-BoldMT" size:40.0]];
+        appTitle.text = @"Our App";
+        [appTitle setTextColor:[UIColor whiteColor]];
         
-        //the password text field
-        password = [[UITextField alloc]initWithFrame:CGRectMake(20, 165, 240, 30)];
-        password.borderStyle = UITextBorderStyleBezel;
-        password.backgroundColor = [UIColor whiteColor];
-        password.placeholder = @"Password";
-        password.secureTextEntry = YES;
-        password.delegate = self;
-        password.secureTextEntry = YES;
-        
-        //title label
-        appTitle = [[UILabel alloc]initWithFrame:CGRectMake(84, 29, 135, 40)];
-        appTitle.text = @"Our App Title";
-        appTitle.textAlignment = NSTextAlignmentCenter;
-        appTitle.adjustsFontSizeToFitWidth = YES;
-        
-        //the logo image
-        logoIV = [[UIImageView alloc]initWithFrame:CGRectMake(84, 29, 135, 40)];
-        
-        //the title image
-        titleIV = [[UIImageView alloc]initWithFrame:CGRectMake(85, 9, 110, 100)];
-        
-#warning BYPASS BUTTON IS ADDED RIGHT NOW FOR ACCESS W/O INTERNET
-        //adding bypass button - No internet murrrrrr
-        UIButton *bypass = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
-        bypass.backgroundColor = UIColorFromRGB(0x34B085);
-        [bypass setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [bypass addTarget:self action:@selector(bypass) forControlEvents:UIControlEventTouchUpInside];
-        bypass.showsTouchWhenHighlighted = YES;
-        
-        //adding shit to the vw view
-        [vw addSubview:loginButton];
-        [vw addSubview:username];
-        [vw addSubview:password];
-        [vw addSubview:titleIV];
-        
-        //adding all this shit to the main view
-        [self.view addSubview:vw];
-        [self.view addSubview:logoIV];
-        [self.view addSubview:createAccount];
+        //adding stuff to the view
         [self.view addSubview:appTitle];
-        [self.view addSubview:bypass];
+        [self.view addSubview:tableView];
+        [self.view addSubview:loginButton];
+        [self.view addSubview:createAccount];
+        
     }
     return self;
 }
@@ -104,7 +76,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
-    
     //Everytime u see the login view, user needs to logout
     [PFUser logOut];
 }
@@ -117,16 +88,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #pragma mark - Button methods
 
+- (void)dismissKeyboard{
+    [username resignFirstResponder];
+    [password resignFirstResponder];
+}
 
 - (void)logIn:(id)sender{
+    [loginButton setTitle:@"Logging in" forState:UIControlStateNormal];
     [PFUser logInWithUsernameInBackground:self.username.text password:self.password.text block:^(PFUser *user, NSError *error) {
         if (user) {
             [self.delegate loginViewControllerDidFinish:self];
+            [loginButton setTitle:@"Logged In" forState:UIControlStateNormal];
             [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
         } else {
             //Something bad has ocurred
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid username or password" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [errorAlertView show];
+            [loginButton setTitle:@"Log in" forState:UIControlStateNormal];
         }
     }];
 }
@@ -134,6 +112,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)create:(id)sender{
     if ([username.text isEqualToString:@""] || [password.text isEqualToString:@""]){
         UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [errorView show];
+    }
+    else if (![self correctPassword]){
+        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Password must be more than 5 characters long and contain 1 number" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [errorView show];
     }
     else{
@@ -153,5 +135,62 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [self.view endEditing:YES];
     return YES;
+}
+
+#pragma mark - Other methods
+
+- (BOOL)correctPassword{
+    NSString *temp = password.text;
+    NSString *numbers = @"0123456789";
+    int length = password.text.length;
+    int numbersCount = 0;
+    #warning Very inefficient, has to be a better way to do this, no internet though :(
+    for (int i = 0; i < length; i++) {
+        for (int x = 0; x < numbers.length; x++) {
+            if ([temp characterAtIndex:i] == [numbers characterAtIndex:x]) {
+                numbersCount++;
+            }
+        }
+    }
+    if (length >= 5 && numbersCount > 0) {
+        return YES;
+    }
+    NSLog(@"Numbers in password: %i",numbersCount);
+    return NO;
+}
+
+#pragma mark - Table View Data Source
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!cell) {
+        cell = PP_AUTORELEASE([[UITableViewCell alloc]init]);
+    }
+    if (indexPath.row == 0) {
+        //creating the username
+        username = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 260, 44)];
+        username.placeholder = @"Username";
+        username.delegate = self;
+        username.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [cell.contentView addSubview:username];
+    }
+    if (indexPath.row == 1) {
+        //creating the password
+        password = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 260, 44)];
+        password.placeholder = @"Password";
+        password.secureTextEntry = YES;
+        password.delegate = self;
+        password.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [cell.contentView addSubview:password];
+    }
+    return cell;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
 }
 @end

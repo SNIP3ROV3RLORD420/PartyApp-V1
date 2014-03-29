@@ -42,6 +42,7 @@
 
 @property (nonatomic, retain) UISwitch*                     ageBased;
 @property (nonatomic, retain) UISwitch*                     pubPriv;
+@property (nonatomic, retain) UISwitch*                     BYOB;
 
 @property (nonatomic, weak) id <LeftViewControllerDelegate> delegate;
 

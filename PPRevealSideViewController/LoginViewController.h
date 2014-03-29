@@ -18,19 +18,13 @@
 
 @end
 
-@interface LoginViewController : UIViewController  <UITextFieldDelegate>
+@interface LoginViewController : UIViewController  <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (retain, nonatomic)UIButton *loginButton;
 @property (retain, nonatomic)UIButton *createAccount;
 
 @property (retain, nonatomic)UITextField *username;
 @property (retain, nonatomic)UITextField *password;
-
-@property (retain, nonatomic)UILabel *appTitle;
-@property (retain, nonatomic)UILabel *logo;
-
-@property (retain, nonatomic)UIImageView *logoIV;
-@property (retain, nonatomic)UIImageView *titleIV;
 
 @property (strong, nonatomic)id <LoginViewControllerDelegate> delegate;
 

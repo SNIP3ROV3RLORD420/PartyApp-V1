@@ -18,16 +18,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @end
 
 @interface LeftViewController (){
-    UILabel *ageLabel;
-    UILabel *privLabel;
-    UILabel *inviteLabel;
-    
     UIImage *image;
     
     UILabel *capacityNum;
     UILabel *capacity;
-    
-    UILabel *ePL;
     
     UILabel *dash;
     
@@ -38,7 +32,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation LeftViewController
 
-@synthesize eventPic, eCapacity, eDiscrip, eLocation, ePriceN, ePriceL, ePriceM, ePriceH, eName, eDate, invite, ageBased, pubPriv, blacklist, rangeH, rangeL;
+@synthesize eventPic, eCapacity, eDiscrip, eLocation, ePriceN, ePriceL, ePriceM, ePriceH, eName, eDate, invite, ageBased, pubPriv, blacklist, rangeH, rangeL, BYOB;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -63,8 +57,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                                              action:@selector(cancel:)]);
     self.title = @"Host Event";
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = PP_AUTORELEASE([[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                          action:@selector(dismissKeyboard)]);
     
     [self.view addGestureRecognizer:tap];
 }
@@ -79,7 +73,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 30.0;
+    return 44;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case 0:
+            return @"Event Generics";
+            break;
+        case 1:
+            return @"Age Restrictions";
+            break;
+        case 2:
+            return @"Event Settings";
+            break;
+        default:
+            break;
+    }
+    return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -100,7 +111,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 return 5;
             return 1;
         case 2:
-            return 2;
+            return 4;
         default:
             break;
     }
@@ -141,6 +152,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 return 44;
             }
             return 75;
+        }
+        if (indexPath.row == 2){
+            return 44;
         }
     }
     return 44;
@@ -232,24 +246,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [ageBased addTarget:self action:@selector(ageBased:) forControlEvents:UIControlEventValueChanged];
                     
                     //adding the label
-                    ageLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 200, 30)];
-                    ageLabel.text = @"Age Based";
+                    cell.textLabel.text = @"Age Based";
                     
                     //actually adding stuff to the view
                     [cell.contentView addSubview:ageBased];
-                    [cell.contentView addSubview:ageLabel];
                     break;
                 case 1:
                     cell.textLabel.text = @"Age Range";
                     
-                    rangeL = [[UITextField alloc]initWithFrame:CGRectMake(150, 10, 30, 35)];
+                    rangeL = [[UITextField alloc]initWithFrame:CGRectMake(150, 0, 30, 44)];
                     rangeL.placeholder = @"00";
                     rangeL.delegate = self;
                     
-                    dash = [[UILabel alloc]initWithFrame:CGRectMake(185, 10, 20, 35)];
+                    dash = [[UILabel alloc]initWithFrame:CGRectMake(185, 0, 20, 44)];
                     dash.text = @"-";
                     
-                    rangeH = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 30, 35)];
+                    rangeH = [[UITextField alloc]initWithFrame:CGRectMake(210, 0, 30, 44)];
                     rangeH.placeholder = @"00";
                     rangeH.delegate = self;
                     
@@ -326,6 +338,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         [cell.contentView addSubview:invite];
                     }
                     break;
+                case 3:
+                    cell.textLabel.text = @"BYOB";
+                    BYOB = [[UISwitch alloc]initWithFrame:CGRectMake(245, 5, 40, 30)];
+                    
+                    [cell.contentView addSubview:BYOB];
+                    break;
+                case 2:
+                    cell.textLabel.text = @"Blacklist";
+                    
+                    blacklist = [[UIButton alloc]initWithFrame:CGRectMake(220, 0, 100, 44)];
+                    [blacklist setTitle:@"Add People" forState:UIControlStateNormal];
+                    [blacklist setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
+                    [blacklist setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+                    [blacklist addTarget:self action:@selector(blacklist:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.contentView addSubview:blacklist];
+                    break;
                 default:
                     break;
             }
@@ -384,7 +412,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)invite:(id)sender{
-    
+#warning imcomplete method
+}
+
+- (void)blacklist:(id)sender{
+#warning imcomplete method
 }
 
 - (void)slid:(id)sender{
@@ -401,6 +433,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)dismissKeyboard{
     [eDate resignFirstResponder];
+    [eName resignFirstResponder];
+    [ePriceN resignFirstResponder];
+    [ePriceM resignFirstResponder];
+    [ePriceL resignFirstResponder];
+    [ePriceH resignFirstResponder];
 }
 
 

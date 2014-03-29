@@ -72,8 +72,6 @@ typedef NSUInteger Gender;
 
 - (int)getAge;                                //for ease of getting users age based off DOB
 
-- (NSString*)stringFromBirthday;              //gets birthday in string form mm/dd/yy
-
 - (CLLocation*)getCurrentLocation;            //needed to implement this...get rid of prop?
 
 - (void)addFriend:(User*)u;                   //add a freind to your freind list

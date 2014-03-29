@@ -55,7 +55,7 @@
                                                                            target:self
                                                                            action:@selector(create:)]);
     self.title = @"Our App";
-    [self performSelector:@selector(pushLogin) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(pushLogin) withObject:nil afterDelay:.5];
     preloadedLeft = NO;
     preloadedRight = NO;
 }

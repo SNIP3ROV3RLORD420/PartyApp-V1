@@ -15,6 +15,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface AccountViewController (){
     BOOL editingMode;
+    
+    UIDatePicker *date;
 }
 
 @end
@@ -71,6 +73,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                             target:self
                                                                             action:@selector(back)]);
     self.title = @"Profile";
+    
+    UIGestureRecognizer *tap = PP_AUTORELEASE([[UIGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)]);
+    [self.view addGestureRecognizer:tap];
     editingMode = NO;
 }
 
@@ -107,29 +112,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return 3;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1 && indexPath.row == 2 && editingMode)
-        return 200;
-    if (indexPath.section == 1 && indexPath.row == 3 && editingMode)
-        return 200;
-    if (indexPath.section == 1 && indexPath.row == 4 && editingMode)
-        return 200;
-    return 44;
-}
-
-
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIdentifier = @"Cell";
-    //label for all the picker views
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 160, 20)];
-    //label for all the picker views
-    UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(250, 10, 50, 20)];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell)
+        cell = PP_AUTORELEASE([[UITableViewCell alloc]init]);
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
                 case 0:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Username";
                     username = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     username.borderStyle = UITextBorderStyleRoundedRect;
@@ -140,18 +131,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     break;
                 case 1:
                 {
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Password";
                     password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     password.borderStyle = UITextBorderStyleRoundedRect;
                     password.delegate = self;
-                    password.placeholder = @"Password";
                     password.text = @"(Hidden)";
                     [cell.contentView addSubview:password];
                     break;
                 }
                 case 2:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Email";
                     email = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     email.borderStyle = UITextBorderStyleRoundedRect;
@@ -161,7 +149,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:email];
                     break;
                 default:
-                    cell = [[UITableViewCell alloc]init];
                     break;
             }
             break;
@@ -169,7 +156,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         case 1:
             switch (indexPath.row) {
                 case 0:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Name";
                     name = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     name.borderStyle = UITextBorderStyleRoundedRect;
@@ -179,7 +165,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:name];
                     break;
                 case 1:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Home";
                     home = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     home.borderStyle = UITextBorderStyleRoundedRect;
@@ -190,31 +175,34 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     [cell.contentView addSubview:home];
                     break;
                 case 2:
-                    cell = [[UITableViewCell alloc]init];
-                    label.text = @"Birthday";
-                    birthday = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 10, 320, 100)];
-                    birthday.datePickerMode = UIDatePickerModeDate;
+                    cell.textLabel.text = @"Birthday";
+                    
+                    birthday = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
+                    birthday.borderStyle = UITextBorderStyleRoundedRect;
+                    birthday.placeholder = @"Date of Birth";
+                    birthday.delegate = self;
+                    
+                    date = [[UIDatePicker alloc]init];
+                    date.datePickerMode = UIDatePickerModeDate;
+                    date.backgroundColor = [UIColor whiteColor];
+                    [date addTarget:self action:@selector(updateTextField:) forControlEvents:UIControlEventValueChanged];
+                    
+                    [birthday setInputView:date];
                     if (!editingMode){
-                        label1.text = usr[@"birthday"];
-                        [cell.contentView addSubview:label1];
+                        birthday.text = usr[@"birthday"];
                     }
                     if (editingMode){
                         if ( [PFUser currentUser][@"birthday"]  != nil)
-                            birthday.date = usr[@"birthday"];
-                        else
-                            [cell.contentView addSubview:birthday];
+                            birthday.text = usr[@"birthday"];
                     }
-                    [cell.contentView addSubview:label];
+                    [cell.contentView addSubview:birthday];
                     break;
                 case 3:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Gender";
                     break;
                 case 4:
-                    cell = [[UITableViewCell alloc]init];
                     cell.textLabel.text = @"Interested In";
                 default:
-                    cell = [[UITableViewCell alloc]init];
                     break;
             }
             break;
@@ -251,9 +239,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(done)]);
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)]);
     editingMode = YES;
-    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
-    [self.tableView reloadData];
-    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)back{
@@ -267,9 +254,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         editingMode = NO;
     [self.view endEditing:YES];
     [self updateCurrentUser];
-    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
-    [self.tableView reloadData];
-    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)cancel{
@@ -277,9 +263,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
     editingMode = NO;
     [self.view endEditing:YES];
-    [self.tableView performSelector:@selector(beginUpdates) withObject:nil afterDelay:0.5];
-    [self.tableView reloadData];
-    [self.tableView performSelector:@selector(endUpdates) withObject:nil afterDelay:0.5];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+- (void)updateTextField:(id)sender{
+    UIDatePicker *picker = (UIDatePicker*)birthday.inputView;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateStyle:NSDateFormatterLongStyle];
+    birthday.text = [formatter stringFromDate:picker.date];
+}
+
+- (void)dismissKeyboard{
+    [birthday resignFirstResponder];
+    [username resignFirstResponder];
+    [home resignFirstResponder];
+    [name resignFirstResponder];
+    [email resignFirstResponder];
 }
 
 @end

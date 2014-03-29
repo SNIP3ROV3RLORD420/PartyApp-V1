@@ -31,7 +31,7 @@
 @property (nonatomic, retain) UITextField *name;
 @property (nonatomic, retain) UITextField *home;
 
-@property (nonatomic, retain) UIDatePicker *birthday;
+@property (nonatomic, retain) UITextField *birthday;
 @property (nonatomic, retain) UIPickerView *gender;
 @property (nonatomic, retain) UIPickerView *interestedIn;
 
