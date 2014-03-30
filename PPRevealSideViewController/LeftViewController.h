@@ -3,6 +3,7 @@
 //  PartyAppV1
 //
 //  Created by Dylan Humphrey on 3/26/14.
+//  Copyright (c) 2014 Dylan Humphrey. All rights reserved.
 //
 //
 
@@ -30,6 +31,8 @@
 @property (nonatomic, retain) UITextField*                  ePriceL;
 @property (nonatomic, retain) UITextField*                  ePriceM;
 @property (nonatomic, retain) UITextField*                  ePriceH;
+
+@property (nonatomic, retain) UITextView*                     eDiscription;
 
 @property (nonatomic, retain) UITextField*                  rangeL;
 @property (nonatomic, retain) UITextField*                  rangeH;

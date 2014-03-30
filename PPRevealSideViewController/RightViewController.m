@@ -3,11 +3,13 @@
 //  PartyAppV1
 //
 //  Created by Dylan Humphrey on 3/20/14.
+//  Copyright (c) 2014 Dylan Humphrey. All rights reserved.
 //
 //
 
 #import "RightViewController.h"
 #import "AccountViewController.h"
+#import "MyEventsViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -96,7 +98,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             cell.backgroundColor = UIColorFromRGB(0x34B085);
             break;
         case 2:
-            cell.textLabel.text = @"Nearby Events";
+            cell.textLabel.text = @"My Events";
             cell.textLabel.textColor = [UIColor whiteColor];
             [cell setSelectedBackgroundView:bc];
             cell.textLabel.highlightedTextColor = UIColorFromRGB(0x34B085);
@@ -132,8 +134,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 1){
-        AccountViewController *av = [[AccountViewController alloc]init];
+        AccountViewController *av = [[AccountViewController alloc]initWithStyle:UITableViewStyleGrouped];
         [self.navigationController pushViewController:av animated:YES];
+        [self.revealSideViewController openCompletelyAnimated:YES];
+    }
+    if (indexPath.row == 2) {
+        MyEventsViewController *mv = [[MyEventsViewController alloc]init];
+        [self.navigationController pushViewController:mv animated:YES];
         [self.revealSideViewController openCompletelyAnimated:YES];
     }
 }

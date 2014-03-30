@@ -3,6 +3,7 @@
 //  PartyAppV1
 //
 //  Created by Dylan Humphrey on 3/20/14.
+//  Copyright (c) 2014 Dylan Humphrey. All rights reserved.
 //
 //
 
@@ -56,10 +57,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [createAccount setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         //creating the label
-        UILabel *appTitle = [[UILabel alloc]initWithFrame:CGRectMake(70, 160, 165, 50)];
-        [appTitle setFont:[UIFont fontWithName:@"Arial-BoldMT" size:40.0]];
-        appTitle.text = @"Our App";
-        [appTitle setTextColor:[UIColor whiteColor]];
+        UIButton *appTitle = [[UIButton alloc]initWithFrame:CGRectMake(80, 160, 165, 50)];
+        appTitle.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:40.0];
+        [appTitle setTitle:@"Our App" forState:UIControlStateNormal];
+        [appTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [appTitle addTarget:self action:@selector(bypass) forControlEvents:UIControlEventTouchUpInside];
         
         //adding stuff to the view
         [self.view addSubview:appTitle];

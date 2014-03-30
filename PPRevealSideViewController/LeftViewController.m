@@ -3,10 +3,12 @@
 //  PartyAppV1
 //
 //  Created by Dylan Humphrey on 3/26/14.
+//  Copyright (c) 2014 Dylan Humphrey. All rights reserved.
 //
 //
 
 #import "LeftViewController.h"
+#import "FreindListViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -20,19 +22,25 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @interface LeftViewController (){
     UIImage *image;
     
+    UILabel *discription;
+    
     UILabel *capacityNum;
     UILabel *capacity;
     
     UILabel *dash;
     
     UIDatePicker *dateAndTime;
+    
+    NSString *theRetainedDescription;
+    
+    BOOL expanded;
 }
 
 @end
 
 @implementation LeftViewController
 
-@synthesize eventPic, eCapacity, eDiscrip, eLocation, ePriceN, ePriceL, ePriceM, ePriceH, eName, eDate, invite, ageBased, pubPriv, blacklist, rangeH, rangeL, BYOB;
+@synthesize eventPic, eCapacity, eDiscrip, eDiscription, eLocation, ePriceN, ePriceL, ePriceM, ePriceH, eName, eDate, invite, ageBased, pubPriv, blacklist, rangeH, rangeL, BYOB;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -56,11 +64,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                                              target:self
                                                                                              action:@selector(cancel:)]);
     self.title = @"Host Event";
-    
-    UITapGestureRecognizer *tap = PP_AUTORELEASE([[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(dismissKeyboard)]);
-    
-    [self.view addGestureRecognizer:tap];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [self.revealSideViewController openCompletelyAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,24 +81,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
+    return 22;
 }
 
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return @"Event Generics";
-            break;
-        case 1:
-            return @"Age Restrictions";
-            break;
-        case 2:
-            return @"Event Settings";
-            break;
-        default:
-            break;
-    }
-    return nil;
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -128,6 +123,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
         if (indexPath.row == 1)
         {
+            if (expanded) {
+                return 150;
+            }
             return 44;
         }
         if (indexPath.row == 2)
@@ -210,16 +208,34 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     
                     break;
                 case 1:
-                    cell.textLabel.text = @"Event Description";
+                    discription = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 150, 35)];
+                    discription.text = @"Event Description";
                     
-                    eDiscrip = [[UIButton alloc]initWithFrame:CGRectMake(250, 5, 50, 35)];
+                    eDiscrip = [[UIButton alloc]initWithFrame:CGRectMake(240, 5, 60, 30)];
                     [eDiscrip setTitle:@"Show" forState:UIControlStateNormal];
+                    if (!expanded){
+                        eDiscrip.backgroundColor = [UIColor whiteColor];
+                        [eDiscrip setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
+                        eDiscrip.layer.borderColor = UIColorFromRGB(0x34B085).CGColor;
+                    }
+                    if (expanded){
+                        eDiscrip.backgroundColor = UIColorFromRGB(0x34B085);
+                        [eDiscrip setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                         eDiscrip.layer.borderColor = [UIColor whiteColor].CGColor;
+                    }
                     [eDiscrip addTarget:self action:@selector(descrip:) forControlEvents:UIControlEventTouchUpInside];
-                    [eDiscrip setTitleColor:UIColorFromRGB(0x34B085) forState:UIControlStateNormal];
-                    [eDiscrip setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-                    eDiscrip.showsTouchWhenHighlighted = YES;
-                    eDiscrip.backgroundColor = [UIColor whiteColor];
+                    eDiscrip.layer.cornerRadius = 4;
+                    eDiscrip.layer.borderWidth = .5;
+                    if (expanded) {
+                        eDiscription = [[UITextView alloc]initWithFrame:CGRectMake(15, 44, 290, 100)];
+                        eDiscription.layer.cornerRadius = 3;
+                        eDiscription.layer.borderWidth = .5;
+                        eDiscription.layer.borderColor = [UIColor lightGrayColor].CGColor;
+                        eDiscription.text = theRetainedDescription;
+                        [cell.contentView addSubview:eDiscription];
+                    }
                     
+                    [cell.contentView addSubview:discription];
                     [cell.contentView addSubview:eDiscrip];
                     break;
                 case 2:
@@ -384,13 +400,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)descrip:(id)sender{
-    //will reveal the description in the view
+    if (!expanded) {
+        expanded = YES;
+    }
+    else{
+        theRetainedDescription = eDiscription.text;
+        expanded = NO;
+    }
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 - (void)ageBased:(id)sender{
     [self.tableView beginUpdates];
     
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
     
     NSMutableArray *tempArray = [[NSMutableArray alloc]init];
     [tempArray addObject:[NSIndexPath indexPathForRow:1 inSection:1]];
@@ -399,25 +424,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [tempArray addObject:[NSIndexPath indexPathForRow:4 inSection:1]];
     
     if (ageBased.on)
-        [self.tableView insertRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationLeft];
     else
-        [self.tableView deleteRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:tempArray withRowAnimation:UITableViewRowAnimationRight];
     [self.tableView endUpdates];
 }
 
 - (void)pubPriv:(id)sender{
     [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]] withRowAnimation:UITableViewRowAnimationRight];
     [self.tableView endUpdates];
 }
 
 - (void)invite:(id)sender{
-#warning imcomplete method
+    FreindListViewController *fv = [[FreindListViewController alloc]init];
+    [self presentViewController:fv animated:YES completion:nil];
 }
 
 - (void)blacklist:(id)sender{
-#warning imcomplete method
+    FreindListViewController *fv = [[FreindListViewController alloc]init];
+    [self presentViewController:fv animated:YES completion:nil];
 }
+
+#pragma mark - UI Methods
 
 - (void)slid:(id)sender{
     capacityNum.text = [NSString stringWithFormat:@"%i", (int)eCapacity.value];

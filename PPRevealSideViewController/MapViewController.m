@@ -68,7 +68,7 @@
 
 - (void)preloadLeft{
     if (!preloadedLeft){
-        LeftViewController *lv = [[LeftViewController alloc]init];
+        LeftViewController *lv = [[LeftViewController alloc]initWithStyle:UITableViewStyleGrouped];
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:lv];
         [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionLeft];
         PPRSLog(@"Preloaded Left View");

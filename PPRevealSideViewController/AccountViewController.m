@@ -55,7 +55,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.tableView.separatorColor = UIColorFromRGB(0x34B085);
         self.tableView.allowsSelection = NO;
     }
     return self;
@@ -74,8 +73,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                             action:@selector(back)]);
     self.title = @"Profile";
     
-    UIGestureRecognizer *tap = PP_AUTORELEASE([[UIGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)]);
-    [self.view addGestureRecognizer:tap];
     editingMode = NO;
 }
 
@@ -135,7 +132,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     password.borderStyle = UITextBorderStyleRoundedRect;
                     password.delegate = self;
-                    password.text = @"(Hidden)";
+                    password.text = usr[@"password"];
+                    password.placeholder = @"Password";
+                    password.secureTextEntry = YES;
                     [cell.contentView addSubview:password];
                     break;
                 }
@@ -244,8 +243,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)back{
+    [self.navigationController popViewControllerAnimated:YES];
     [self.revealSideViewController popViewControllerAnimated:YES];
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)done{
@@ -272,14 +271,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateStyle:NSDateFormatterLongStyle];
     birthday.text = [formatter stringFromDate:picker.date];
-}
-
-- (void)dismissKeyboard{
-    [birthday resignFirstResponder];
-    [username resignFirstResponder];
-    [home resignFirstResponder];
-    [name resignFirstResponder];
-    [email resignFirstResponder];
 }
 
 @end
