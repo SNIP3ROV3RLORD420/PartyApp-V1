@@ -11,7 +11,7 @@
 
 @implementation User
 
-@synthesize interest, gender, name, home, DOB, friendsList, pushCurrentLocation, locationManager;
+@synthesize interest, gender, name, home, DOB, friendsList;
 
 - (BOOL)hasArrived:(Event *)selectedEvent{
     //if (self.getCurrentLocation == selectedEvent.location)
@@ -28,9 +28,6 @@
     return [ageComps year];
 }
 
-- (CLLocation*)getCurrentLocation{
-    return locationManager.location;          //I have no idea if this works or not, but im gonna assume it does
-}
 
 - (void)addFriend:(User *)u{
     BOOL isAdded = NO;

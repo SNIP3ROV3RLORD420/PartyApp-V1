@@ -39,8 +39,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self performSelector:@selector(hide) withObject:self afterDelay:.1];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -143,6 +144,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [self.navigationController pushViewController:mv animated:YES];
         [self.revealSideViewController openCompletelyAnimated:YES];
     }
+}
+
+#pragma mark - Anonymous
+
+- (void)hide{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 

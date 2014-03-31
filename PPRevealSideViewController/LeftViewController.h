@@ -19,7 +19,7 @@
 
 @end
 
-@interface LeftViewController : UITableViewController <UITextFieldDelegate>
+@interface LeftViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, retain) UIImageView*                  eventPic;
 

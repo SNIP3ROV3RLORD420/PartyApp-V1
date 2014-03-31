@@ -31,6 +31,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     UIDatePicker *dateAndTime;
     
+    UIPickerView *prices;
+    UINavigationBar *pickerBar;
+    NSArray *pickerArray;
+    
     NSString *theRetainedDescription;
     
     BOOL expanded;
@@ -56,6 +60,40 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //setting the bar that pops up when a textfield begins editing
+    pickerBar = PP_AUTORELEASE([[UINavigationBar alloc]initWithFrame:CGRectMake( 0, 0, 320, 30)]);
+    pickerBar.barStyle = UIBarStyleBlackTranslucent;
+    UIBarButtonItem *pickerItem = [[UIBarButtonItem alloc]initWithTitle:@"Done"
+                                                                  style:UIBarButtonItemStyleDone
+                                                                  target:self
+                                                                  action:@selector(pickerDone)];
+    UINavigationItem *navItem = [[UINavigationItem alloc]init];
+    navItem.rightBarButtonItem = pickerItem;
+    pickerBar.items = [NSArray arrayWithObjects:navItem, nil];
+    
+    //setting the picker array
+    pickerArray = [[NSArray alloc]initWithObjects:
+                   @"$0.00",
+                   @"$1.00",
+                   @"$2.00",
+                   @"$3.00",
+                   @"$3.00",
+                   @"$4.00",
+                   @"$5.00",
+                   @"$6.00",
+                   @"$7.00",
+                   @"$8.00",
+                   @"$9.00",
+                   @"$10.00",
+                   @"$15.00",
+                   @"$20.00",
+                   @"$25.00",
+                   @"$30.00",
+                   @"$35.00",
+                   @"$40.00",
+                   nil];
+    
+    //setting the navigation bar
     self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
                                                                                style:UIBarButtonItemStyleDone
                                                                               target:self
@@ -64,7 +102,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                                              target:self
                                                                                              action:@selector(cancel:)]);
     self.title = @"Host Event";
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -161,6 +198,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
     if (!cell)
         cell = PP_AUTORELEASE([[UITableViewCell alloc]init]);
 
@@ -180,6 +218,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         eName = [[UITextField alloc]initWithFrame:CGRectMake(120, 10, 185, 40)];
                     eName.placeholder = @"Event Name";
                     eName.borderStyle = UITextBorderStyleNone;
+                    eName.returnKeyType = UIReturnKeyDone;
                     eName.backgroundColor = [UIColor whiteColor];
                     eName.delegate = self;
                     
@@ -190,6 +229,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         eLocation = [[UITextField alloc]initWithFrame:CGRectMake(120, 60, 185, 40)];
                     eLocation.placeholder = @"Address, Zipcode";
                     eLocation.borderStyle = UITextBorderStyleNone;
+                    eLocation.returnKeyType = UIReturnKeyDone;
                     eLocation.backgroundColor = [UIColor whiteColor];
                     eLocation.delegate = self;
                     
@@ -199,7 +239,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                         ePriceN.placeholder = @"Event Price";
                         ePriceN.borderStyle = UITextBorderStyleNone;
                         ePriceN.backgroundColor = [UIColor whiteColor];
+                        ePriceN.inputAccessoryView = pickerBar;
                         ePriceN.delegate = self;
+                        
+                        prices = [[UIPickerView alloc]init];
+                        prices.backgroundColor = [UIColor whiteColor];
+                        prices.delegate = self;
+                        prices.dataSource = self;
+                        [ePriceN setInputView:prices];
+                        
                         [cell.contentView addSubview:ePriceN];
                     }
                     [cell.contentView addSubview:eName];
@@ -228,6 +276,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     eDiscrip.layer.borderWidth = .5;
                     if (expanded) {
                         eDiscription = [[UITextView alloc]initWithFrame:CGRectMake(15, 44, 290, 100)];
+                        eDiscription.returnKeyType = UIReturnKeyDone;
                         eDiscription.layer.cornerRadius = 3;
                         eDiscription.layer.borderWidth = .5;
                         eDiscription.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -241,6 +290,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 case 2:
                     eDate = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 44)];
                     eDate.placeholder = @"Date and Time of Event";
+                    eDate.inputAccessoryView = pickerBar;
                     eDate.delegate = self;
                     
                     dateAndTime = [[UIDatePicker alloc]init];
@@ -290,21 +340,45 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     ePriceL = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 40)];
                     ePriceL.borderStyle = UITextBorderStyleNone;
                     ePriceL.placeholder = @"Price for Youngest";
+                    ePriceL.inputAccessoryView = pickerBar;
                     ePriceL.delegate = self;
+                    
+                    prices = [[UIPickerView alloc]init];
+                    prices.backgroundColor = [UIColor whiteColor];
+                    prices.delegate = self;
+                    prices.dataSource = self;
+                    [ePriceL setInputView:prices];
+                    
                     [cell.contentView addSubview:ePriceL];
                     break;
                 case 3:
                     ePriceM = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 40)];
                     ePriceM.borderStyle = UITextBorderStyleNone;
                     ePriceM.placeholder = @"Price for Average Age";
+                    ePriceM.inputAccessoryView = pickerBar;
                     ePriceM.delegate = self;
+                    
+                    prices = [[UIPickerView alloc]init];
+                    prices.backgroundColor = [UIColor whiteColor];
+                    prices.delegate = self;
+                    prices.dataSource = self;
+                    [ePriceM setInputView:prices];
+                    
                     [cell.contentView addSubview:ePriceM];
                     break;
                 case 4:
                     ePriceH = [[UITextField alloc]initWithFrame:CGRectMake(15, 5, 320, 30)];
                     ePriceH.borderStyle = UITextBorderStyleNone;
                     ePriceH.placeholder = @"Price for Oldest";
+                    ePriceH.inputAccessoryView = pickerBar;
                     ePriceH.delegate = self;
+                    
+                    prices = [[UIPickerView alloc]init];
+                    prices.backgroundColor = [UIColor whiteColor];
+                    prices.delegate = self;
+                    prices.dataSource = self;
+                    [ePriceH setInputView:prices];
+                    
                     [cell.contentView addSubview:ePriceH];
                     break;
                 default:
@@ -460,14 +534,39 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     eDate.text = [formatter stringFromDate:picker.date];
 }
 
-- (void)dismissKeyboard{
-    [eDate resignFirstResponder];
-    [eName resignFirstResponder];
+- (void)pickerDone{
+    UIPickerView *n = (UIPickerView*)ePriceN.inputView;
+    UIPickerView *l = (UIPickerView*)ePriceL.inputView;
+    UIPickerView *m = (UIPickerView*)ePriceM.inputView;
+    UIPickerView *h = (UIPickerView*)ePriceH.inputView;
+    
+    ePriceN.text = [pickerArray objectAtIndex:[n selectedRowInComponent:0]];
+    ePriceL.text = [pickerArray objectAtIndex:[l selectedRowInComponent:0]];
+    ePriceM.text = [pickerArray objectAtIndex:[m selectedRowInComponent:0]];
+    ePriceH.text = [pickerArray objectAtIndex:[h selectedRowInComponent:0]];
+    
     [ePriceN resignFirstResponder];
-    [ePriceM resignFirstResponder];
     [ePriceL resignFirstResponder];
+    [ePriceM resignFirstResponder];
     [ePriceH resignFirstResponder];
+    [eDate resignFirstResponder];
 }
 
+#pragma mark - UIPickerViewDelegate
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    
+    return [pickerArray objectAtIndex:row];
+}
+
+#pragma mark - UIPickerViewDatasource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return pickerArray.count;
+}
 
 @end

@@ -12,8 +12,6 @@
 #import <Parse/Parse.h>
 
 
-#warning CLASS WILL BE GONE SOON, JUST NEED TO TRANSFER OVER SOME METHODS TO STATIC METHODS THAT CAN BE CALLED ON A PFUser
-
 @class Event;   //to avoid compiling issues :D
 
 //What gender this user is interested in
@@ -38,13 +36,9 @@ typedef NSUInteger Gender;
     NSString *home;                           //used for Quick Host button
     NSString *name;
     
-    CLLocationManager *locationManager;       //to get current location
-    
     NSDate *DOB;                              //age --> make events more exclusive
     
     NSMutableArray *friendsList;              //make freinds
-    
-    BOOL *pushCurrentLocation;                //if user wants freinds to see where he/she is
     
     //add more stuff that I'm forgetting
 }
@@ -55,13 +49,9 @@ typedef NSUInteger Gender;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *home;
 
-@property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, strong, getter = getBirthday) NSDate *DOB;
 
 @property (nonatomic, strong) NSMutableArray *friendsList;
-
-@property (nonatomic) BOOL *pushCurrentLocation;
-
 
 @property (nonatomic, assign) interestedIn interest;
 @property (nonatomic, assign) Gender gender;
@@ -71,8 +61,6 @@ typedef NSUInteger Gender;
 - (BOOL)hasArrived:(Event*)selectedEvent;      //used to see whos at event
 
 - (int)getAge;                                //for ease of getting users age based off DOB
-
-- (CLLocation*)getCurrentLocation;            //needed to implement this...get rid of prop?
 
 - (void)addFriend:(User*)u;                   //add a freind to your freind list
 

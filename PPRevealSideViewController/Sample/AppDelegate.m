@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -31,6 +32,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [User registerSubclass];
+    
+    [GMSServices provideAPIKey:@"AIzaSyBKzNXNLoU_XiH8gENxtHlVLrBOVOqiCB4"];
     
     [Parse setApplicationId:@"TK1NJ2HGR944FKKP6VR0C7YHSpzJyLwgm1UbX8IJ" clientKey:@"asTGqa9g2LAM2CztIym3h2cnbkuxOtSRsD2Venml"];
     

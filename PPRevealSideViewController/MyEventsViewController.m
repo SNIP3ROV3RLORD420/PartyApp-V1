@@ -33,6 +33,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     [super viewDidLoad];
     
+    //setting the navigation bar
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back"
                                                                     style:UIBarButtonItemStylePlain
                                                                     target:self

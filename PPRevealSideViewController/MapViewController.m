@@ -11,9 +11,9 @@
 #import "LoginViewController.h"
 #import "Comms.h"
 #import "LeftViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface MapViewController (){
-    MKMapView *map;
     NSMutableArray *allEvents;
     
     BOOL preloadedRight;
@@ -27,14 +27,19 @@
 
 @implementation MapViewController
 
-@synthesize locationManager = _locationManager;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        map = PP_AUTORELEASE([[MKMapView alloc]initWithFrame:CGRectMake(0, 64, 320, 504)]);
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
+                                                                longitude:151.20
+                                                                     zoom:6];
+        
+        GMSMapView *map = [GMSMapView mapWithFrame:CGRectMake(0, 64, 320, 504) camera:camera];
+        map.myLocationEnabled = YES;
+        
         [self.view addSubview:map];
     }
     return self;
@@ -44,7 +49,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[self locationManager] startUpdatingLocation];
     
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Slide"
                                                                              style:UIBarButtonItemStylePlain
@@ -100,29 +104,6 @@
     [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
     [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
 }
-
-- (CLLocationManager *)locationManager {
-    if (_locationManager != nil) {
-        return _locationManager;
-    }
-    
-    _locationManager = [[CLLocationManager alloc] init];
-    [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
-    [_locationManager setDelegate:self];
-    
-    return _locationManager;
-}
-
-#pragma mark - CLLocationManagerDelegate
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations :(NSArray *)locations
-{
-    NSLog(@"Updating");
-    CLLocation* latestLoc = [locations lastObject];
-    [PFUser currentUser][@"location"] = [PFGeoPoint geoPointWithLocation:latestLoc];
-    [[PFUser currentUser] saveEventually];
-}
-
 #pragma mark - Managing Button Methods
 
 - (void)pushRight:(id)sender{
@@ -149,7 +130,7 @@
 }
 
 - (NSMutableArray*)processAllEvents:(NSMutableArray *)allEvents{
-    //this method will process the list of all current visible events from the server
+    //this method will process the list of all current events from the server
     //it will return an array of the events that have not passed and should be visible
     //for now return an empty array
     return [NSMutableArray arrayWithObject:nil];
