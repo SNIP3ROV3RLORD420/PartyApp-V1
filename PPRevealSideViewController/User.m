@@ -11,8 +11,8 @@
 
 @implementation User
 
-@synthesize interest, gender, name, home, DOB, friendsList;
-
+//@synthesize interest, gender, name, home, DOB, friendsList;
+/*
 - (BOOL)hasArrived:(Event *)selectedEvent{
     //if (self.getCurrentLocation == selectedEvent.location)
     //    return true;   need to write event class first
@@ -42,5 +42,5 @@
 - (void)removeFriend:(User *)u{               //should probably add some sort of error checking, but w/e
     [friendsList removeObject:u];
 }
-
+*/
 @end

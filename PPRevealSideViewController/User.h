@@ -32,7 +32,7 @@ enum{
 };
 typedef NSUInteger Gender;
 
-@interface User : PFUser<PFSubclassing>{
+@interface User : NSObject{
     NSString *home;                           //used for Quick Host button
     NSString *name;
     
@@ -44,8 +44,6 @@ typedef NSUInteger Gender;
 }
 
 /*
----------------Create Setters and Getters----------------------------------
- */
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *home;
 
@@ -55,9 +53,7 @@ typedef NSUInteger Gender;
 
 @property (nonatomic, assign) interestedIn interest;
 @property (nonatomic, assign) Gender gender;
-/*
- ---------------Create Methods-------------------------------------
- */
+
 - (BOOL)hasArrived:(Event*)selectedEvent;      //used to see whos at event
 
 - (int)getAge;                                //for ease of getting users age based off DOB
@@ -65,5 +61,5 @@ typedef NSUInteger Gender;
 - (void)addFriend:(User*)u;                   //add a freind to your freind list
 
 - (void)removeFriend:(User*)u;                //remove a freind :(
-
+*/
 @end

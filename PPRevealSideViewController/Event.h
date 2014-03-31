@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import <Parse/Parse.h>
 
-@class User;
-
-typedef CGFloat Price;
-
-@interface Event : NSObject{
-    NSString *eventName;
+@interface Event : PFObject<PFSubclassing>{
+    
+    //old
+    /*NSString *eventName;
     NSString *eventDescription;
     NSString *eventLocation;                                //will consist of Address + City + Zipcode
     
@@ -38,13 +37,17 @@ typedef CGFloat Price;
     float priceL;
     float priceM;
     float priceH;
+*/
     
-    int numberOfMales;                                      //makes percentFemale more efficient
+    int numberOfMales;                                     
     int numberOfFemales;
 }
-/*
- -------------------Getters and Setters----------------------------
- */
+
+
++ (NSString *)parseClassName;
+
+
+
 @property float priceN, priceL, priceM, priceH;
 
 @property (nonatomic, strong) NSString *eventName;
@@ -58,27 +61,30 @@ typedef CGFloat Price;
 @property (nonatomic, strong) NSMutableArray *invited;
 @property (nonatomic, strong) NSMutableArray *hosts;
 @property (nonatomic, strong) NSMutableArray *blacklist;
+@property (nonatomic, strong) NSMutableArray* arrived;
+
 
 @property (nonatomic, getter = isBYOB) BOOL *BYOB;
 @property (nonatomic, getter = isPrivate) BOOL *Private;
 @property (nonatomic, getter = isAgeBased) BOOL *ageBased;
 @property (nonatomic, getter = isRolled) BOOL *rolled;
 
-/*
- -----------------------Methods-------------------------------------
- */
-- (void)addHost:(User*)u;
-- (void)removeHost:(User*)u;
 
-- (void)addGuest:(User*)u;
-- (void)removeGuest:(User*)u;
-- (void)blacklistGuest:(User*)u;
-- (void)removeGuestFromBlacklist:(User*)u;
+
+- (void)addHost:(PFUser*)u;
+- (void)removeHost:(PFUser*)u;
+
+- (void)addGuest:(PFUser*)u;
+- (void)removeGuest:(PFUser*)u;
+- (void)blacklistGuest:(PFUser*)u;
+- (void)removeGuestFromBlacklist:(PFUser*)u;
 
 - (NSMutableArray*)presentGuests;                               //people who are at event
-- (NSMutableArray*)notPresentGuests;                            //people who arent yet
+- (NSMutableArray*)notPresentGuests;                            //people who arent there yet
 
--(BOOL)guestArrived:(User *)u;
+-(void)savEvent;
+
+-(void)guestArrived:(PFUser *)u;
 
 - (float)percentFemale;                                         //will return decimal percent of females
 
