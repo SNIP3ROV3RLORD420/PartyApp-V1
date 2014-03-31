@@ -132,7 +132,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     password = [[UITextField alloc]initWithFrame:CGRectMake(130, 7, 180, 30)];
                     password.borderStyle = UITextBorderStyleRoundedRect;
                     password.delegate = self;
-                    password.text = usr[@"password"];
+                    password.text = @"(hidden)";
                     password.placeholder = @"Password";
                     password.secureTextEntry = YES;
                     [cell.contentView addSubview:password];

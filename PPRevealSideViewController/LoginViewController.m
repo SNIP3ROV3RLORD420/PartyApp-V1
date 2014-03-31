@@ -147,6 +147,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     int length = password.text.length;
     int numbersCount = 0;
     #warning Very inefficient, has to be a better way to do this, no internet though :(
+    #warning It might be inefficient, but its a small scale... even if the password is 10 characters long, its only 100 simple calculations 1 time
     for (int i = 0; i < length; i++) {
         for (int x = 0; x < numbers.length; x++) {
             if ([temp characterAtIndex:i] == [numbers characterAtIndex:x]) {
