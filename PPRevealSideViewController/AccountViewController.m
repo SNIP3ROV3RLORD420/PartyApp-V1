@@ -55,7 +55,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.tableView.allowsSelection = NO;
     }
     return self;
 }
@@ -63,6 +62,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+     self.tableView.allowsSelection = NO;
     usr = [PFUser currentUser];
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                     target:self
@@ -170,7 +170,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                     home.delegate = self;
                     home.placeholder = @"Address, Zipcode";
                     //home.text = usr[@"home"];
-                    #warning need to decide if home should be a location or an address
                     [cell.contentView addSubview:home];
                     break;
                 case 2:

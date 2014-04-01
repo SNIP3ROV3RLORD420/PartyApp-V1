@@ -50,9 +50,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.tableView.separatorColor = [UIColor lightGrayColor];
-        self.tableView.separatorInset = UIEdgeInsetsZero;
-        self.tableView.allowsSelection = NO;
     }
     return self;
 }
@@ -60,6 +57,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.separatorColor = [UIColor lightGrayColor];
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView.allowsSelection = NO;
+    
     //setting the bar that pops up when a textfield begins editing
     pickerBar = PP_AUTORELEASE([[UINavigationBar alloc]initWithFrame:CGRectMake( 0, 0, 320, 30)]);
     pickerBar.barStyle = UIBarStyleBlackTranslucent;

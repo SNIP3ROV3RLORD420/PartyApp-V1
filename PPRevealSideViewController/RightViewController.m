@@ -26,8 +26,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.tableView.separatorColor = [UIColor whiteColor];
-        self.tableView.scrollEnabled = NO;
     }
     return self;
 }
@@ -35,7 +33,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.revealSideViewController unloadViewControllerForSide:PPRevealSideDirectionLeft];
+    self.tableView.separatorColor = [UIColor whiteColor];
+    self.tableView.scrollEnabled = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{

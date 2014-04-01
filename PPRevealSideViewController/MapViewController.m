@@ -18,6 +18,8 @@
     
     BOOL preloadedRight;
     BOOL preloadedLeft;
+    
+    GMSMapView *map;
 }
 
 - (void)updateMap:(NSMutableArray*)allVisibleEvents;
@@ -33,14 +35,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
-                                                                longitude:151.20
-                                                                     zoom:6];
-        
-        GMSMapView *map = [GMSMapView mapWithFrame:CGRectMake(0, 64, 320, 504) camera:camera];
-        map.myLocationEnabled = YES;
-        
-        [self.view addSubview:map];
     }
     return self;
 }
@@ -48,16 +42,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Slide"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(pushRight:)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Create"
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(create:)]);
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:34
+                                                            longitude:-150
+                                                                 zoom:6];
+    
+    map = [GMSMapView mapWithFrame:CGRectMake(0, 64, 320, 504) camera:camera];
+    map.myLocationEnabled = YES;
+    map.settings.myLocationButton = YES;
+    map.settings.compassButton = YES;
+    
+    [self.view addSubview:map];
+    
+    // Do any additional setup after loading the view.
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushRight:)];
+    
+    self.navigationItem.rightBarButtonItem = slide;
+    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"New Event"
+                                                                                           style:UIBarButtonItemStylePlain
+                                                                                            target:self
+                                                                                            action:@selector(create:)]);
     self.title = @"Our App";
     [self performSelector:@selector(pushLogin) withObject:nil afterDelay:.5];
     preloadedLeft = NO;
@@ -151,5 +155,7 @@
 
 - (void)loginViewControllerDidFinish:(LoginViewController *)lv{
 }
+
+#pragma mark - Map Delegate
 
 @end

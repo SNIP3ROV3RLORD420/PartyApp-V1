@@ -60,6 +60,7 @@
 		BF8A850B18DCB19700C636A4 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850918DCB19700C636A4 /* Event.m */; };
 		BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */ = {isa = PBXBuildFile; fileRef = BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */; };
 		BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */; };
+		BF9FE70718EA0F2000E27324 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9FE70618EA0F2000E27324 /* menu.png */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
 		E0D35A4D14F282FD0013EB90 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4C14F282FD0013EB90 /* PPRevealSideViewController.m */; };
 		E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0D35A4E14F2831B0013EB90 /* AppDelegate.m */; };
@@ -418,6 +419,7 @@
 		BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EPhoto(edit).png"; sourceTree = "<group>"; };
 		BF97AEF918E775B900CB9F7E /* FreindListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreindListViewController.h; sourceTree = "<group>"; };
 		BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreindListViewController.m; sourceTree = "<group>"; };
+		BF9FE70618EA0F2000E27324 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		BFDB558218DBF68A0012C2DF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BFDB558318DBF68A0012C2DF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E0D35A4B14F282FD0013EB90 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
@@ -1081,6 +1083,7 @@
 		E0D903C514ED2A610072EECD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BF9FE70618EA0F2000E27324 /* menu.png */,
 				BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */,
 				E0D903C614ED2A610072EECD /* PartyAppV1-Info.plist */,
 				E0D903C714ED2A610072EECD /* InfoPlist.strings */,
@@ -1257,6 +1260,7 @@
 			files = (
 				E0D903C914ED2A610072EECD /* InfoPlist.strings in Resources */,
 				23BCBD8118DF9CCA001AA03A /* FBUserSettingsViewResources.bundle in Resources */,
+				BF9FE70718EA0F2000E27324 /* menu.png in Resources */,
 				BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */,
 				5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */,
 				BF6607C618E8E904003F9B9E /* GoogleMaps.bundle in Resources */,

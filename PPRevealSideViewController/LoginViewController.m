@@ -28,55 +28,55 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.view.backgroundColor = UIColorFromRGB(0x34B085);
-        
-        //creating the table view
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 230, 280, 88) style:UITableViewStylePlain];
-        [tableView setSeparatorInset:UIEdgeInsetsZero];
-        tableView.scrollEnabled = NO;
-        tableView.layer.cornerRadius = 4;
-        tableView.layer.borderWidth = .5;
-        tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        
-        //creating the login button
-        loginButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 323, 280, 44)];
-        loginButton.backgroundColor = UIColorFromRGB(0x5cbf9d);
-        loginButton.layer.cornerRadius = 3;
-        loginButton.layer.borderColor = UIColorFromRGB(0x5cbf9d).CGColor;
-        [loginButton addTarget:self action:@selector(logIn:) forControlEvents:UIControlEventTouchUpInside];
-        [loginButton setTitle:@"Log In" forState:UIControlStateNormal];
-        [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
-        //creating the create account button
-        createAccount = [[UIButton alloc]initWithFrame:CGRectMake(85, 480, 150, 30)];
-        createAccount.titleLabel.font = [UIFont fontWithName:@"Arial" size:14.0];
-        [createAccount setTitle:@"Create Account" forState:UIControlStateNormal];
-        [createAccount addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
-        [createAccount setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
-        //creating the label
-        UIButton *appTitle = [[UIButton alloc]initWithFrame:CGRectMake(80, 160, 165, 50)];
-        appTitle.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:40.0];
-        [appTitle setTitle:@"Our App" forState:UIControlStateNormal];
-        [appTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [appTitle addTarget:self action:@selector(bypass) forControlEvents:UIControlEventTouchUpInside];
-        
-        //adding stuff to the view
-        [self.view addSubview:appTitle];
-        [self.view addSubview:tableView];
-        [self.view addSubview:loginButton];
-        [self.view addSubview:createAccount];
-        
     }
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = UIColorFromRGB(0x34B085);
+    
+    //creating the table view
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 230, 280, 88) style:UITableViewStylePlain];
+    [tableView setSeparatorInset:UIEdgeInsetsZero];
+    tableView.scrollEnabled = NO;
+    tableView.layer.cornerRadius = 4;
+    tableView.layer.borderWidth = .5;
+    tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    
+    //creating the login button
+    loginButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 323, 280, 44)];
+    loginButton.backgroundColor = UIColorFromRGB(0x5cbf9d);
+    loginButton.layer.cornerRadius = 3;
+    loginButton.layer.borderColor = UIColorFromRGB(0x5cbf9d).CGColor;
+    [loginButton addTarget:self action:@selector(logIn:) forControlEvents:UIControlEventTouchUpInside];
+    [loginButton setTitle:@"Log In" forState:UIControlStateNormal];
+    [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    //creating the create account button
+    createAccount = [[UIButton alloc]initWithFrame:CGRectMake(85, 480, 150, 30)];
+    createAccount.titleLabel.font = [UIFont fontWithName:@"Arial" size:14.0];
+    [createAccount setTitle:@"Create Account" forState:UIControlStateNormal];
+    [createAccount addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
+    [createAccount setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    //creating the label
+    UIButton *appTitle = [[UIButton alloc]initWithFrame:CGRectMake(80, 160, 165, 50)];
+    appTitle.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:40.0];
+    [appTitle setTitle:@"Our App" forState:UIControlStateNormal];
+    [appTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [appTitle addTarget:self action:@selector(bypass) forControlEvents:UIControlEventTouchUpInside];
+    
+    //adding stuff to the view
+    [self.view addSubview:appTitle];
+    [self.view addSubview:tableView];
+    [self.view addSubview:loginButton];
+    [self.view addSubview:createAccount];
+    
     [self.navigationController setNavigationBarHidden:YES];
     //Everytime u see the login view, user needs to logout
     [PFUser logOut];
@@ -146,8 +146,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     NSString *numbers = @"0123456789";
     int length = password.text.length;
     int numbersCount = 0;
-    #warning Very inefficient, has to be a better way to do this, no internet though :(
-    #warning It might be inefficient, but its a small scale... even if the password is 10 characters long, its only 100 simple calculations 1 time
     for (int i = 0; i < length; i++) {
         for (int x = 0; x < numbers.length; x++) {
             if ([temp characterAtIndex:i] == [numbers characterAtIndex:x]) {

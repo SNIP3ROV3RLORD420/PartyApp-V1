@@ -79,7 +79,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
     }
-    cell.indentationLevel = 7;
     return cell;
 }
 
