@@ -7,6 +7,8 @@
 //
 
 #import "MyEventsViewController.h"
+#import "Event.h"
+#import <Parse/Parse.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor \
 colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
@@ -14,7 +16,8 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface MyEventsViewController (){
-    NSMutableArray *myEvents;
+    NSMutableArray *hostEvents;
+    NSMutableArray *invitedEvents;
 }
 
 @end
@@ -33,18 +36,21 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     [super viewDidLoad];
     
-    //setting the navigation bar
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Back"
-                                                                    style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(back)];
-    self.title = @"My Events";
+    self.view.backgroundColor = UIColorFromRGB(0x4c4c4c);
+    self.tableView.backgroundColor = UIColorFromRGB(0x323232);
+    
     UIRefreshControl *refresh = [[UIRefreshControl alloc]init];
-    [refresh setTintColor:UIColorFromRGB(0x34B085)];
+    [refresh setTintColor:[UIColor whiteColor]];
     [refresh addTarget:self action:@selector(getEvents) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
     
-    //set myEvents to some serverside list of events that this user is currently a host of
+    /*
+     
+     NSMutableArray *allEvents = some method or online database of events
+     hostEvents = [self getEventsHostOf:allEvents];
+     invitedEvents = [self getEventsInvitedTo:allEvents];
+     
+     */
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -62,13 +68,37 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return myEvents.count;
+    if (section == 0) {
+        if (hostEvents.count == 0) {
+            return 1;
+        }
+        return hostEvents.count;
+    }
+    else{
+        if (invitedEvents.count == 0) {
+            return 1;
+        }
+        return invitedEvents.count;
+    }
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return @"                Hosting";
+    }
+    else
+        return @"                Invited To";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0)
+        return 30;
+    return 0;
 }
 
 
@@ -77,16 +107,38 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     static NSString *cellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[UITableViewCell alloc]init];
+        cell = [[UITableViewCell alloc]initWithFrame:CGRectMake(50, 0, 270, 44)];
     }
+    if (indexPath.section == 0) {
+        if (hostEvents.count == 0) {
+            cell.textLabel.text = @"Currently None";
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = UIColorFromRGB(0x323232);
+        }
+        else{
+            //do all that stuff with the events and what not
+        }
+    }
+    if (indexPath.section == 1) {
+        if (invitedEvents.count == 0) {
+            cell.textLabel.text = @"Currently None";
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = UIColorFromRGB(0x323232);
+        }
+        else{
+            //do all that stuff with the events and what not
+        }
+    }
+    cell.indentationLevel = 7;
     return cell;
 }
 
 #pragma mark - Button Methods
 
-- (void)back{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.revealSideViewController popViewControllerAnimated:YES];
+- (void)pushLeft{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
 
 #pragma mark - Refresher Methods
@@ -97,8 +149,43 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)updateTable{
     
+    [self updateEventLists];
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
+}
+
+- (void)updateEventLists{
+    NSMutableArray *allEvents = [[NSMutableArray alloc]init]; //some method or online database of events
+    hostEvents = [self getEventsHostOf:allEvents];
+    invitedEvents = [self getEventsInvitedTo:allEvents];
+}
+
+#pragma mark - Event Methods
+
+- (NSMutableArray*)getEventsHostOf:(NSArray*)allEvents{
+    NSMutableArray *hostOf = [[NSMutableArray alloc]init];
+#warning This method will start taking longer and longer the more events there are, but to start out should be fine
+    for (Event* e in allEvents) {
+        for (PFUser* usr in e.hosts) {
+            if ([usr[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
+                [hostOf addObject:e];
+            }
+        }
+    }
+    return hostOf;
+}
+
+- (NSMutableArray*)getEventsInvitedTo:(NSArray*)allEvents{
+    NSMutableArray* invitedTo = [[NSMutableArray alloc]init];
+#warning This method will start taking longer and longer the more events there are, but to start out should be fine
+    for (Event* e in allEvents) {
+        for (PFUser* usr in e.invited) {
+            if ([usr[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
+                [invitedTo addObject:e];
+            }
+        }
+    }
+    return invitedTo;
 }
 
 @end

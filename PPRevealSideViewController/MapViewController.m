@@ -10,14 +10,17 @@
 #import "RightViewController.h"
 #import "LoginViewController.h"
 #import "Comms.h"
-#import "LeftViewController.h"
+#import "CreateViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <Parse/Parse.h>
+
+#define UIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface MapViewController (){
     NSMutableArray *allEvents;
-    
-    BOOL preloadedRight;
-    BOOL preloadedLeft;
     
     GMSMapView *map;
 }
@@ -43,29 +46,43 @@
 {
     [super viewDidLoad];
     
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:34
-                                                            longitude:-150
-                                                                 zoom:6];
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
     
-    map = [GMSMapView mapWithFrame:CGRectMake(0, 64, 320, 504) camera:camera];
+    [self.revealSideViewController setFakeiOS7StatusBarColor:UIColorFromRGB(0x4c4c4c)];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:34.05
+                                                            longitude:-118.25
+                                                                 zoom:12];
+    
+    map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    //temp marker
+    
+    UIEdgeInsets mapInsets = UIEdgeInsetsMake(64, 0, 0, 0);
+    map.padding = mapInsets;
+    
+    GMSMarker *losAngeles = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(34.05, -118.25)];
+    losAngeles.title = @"Los Angeles";
+    losAngeles.map = map;
     map.myLocationEnabled = YES;
     map.settings.myLocationButton = YES;
     map.settings.compassButton = YES;
     
-    [self.view addSubview:map];
+    self.view = map;
     
     // Do any additional setup after loading the view.
-    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushRight:)];
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft:)];
     
-    self.navigationItem.rightBarButtonItem = slide;
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"New Event"
-                                                                                           style:UIBarButtonItemStylePlain
-                                                                                            target:self
-                                                                                            action:@selector(create:)]);
+    self.navigationItem.leftBarButtonItem = slide;
+    UIBarButtonItem *slide1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushRight:)];
+    self.navigationItem.RightBarButtonItem = slide1;
     self.title = @"Our App";
-    [self performSelector:@selector(pushLogin) withObject:nil afterDelay:.5];
-    preloadedLeft = NO;
-    preloadedRight = NO;
+    
+    UIButton *add = [[UIButton alloc]initWithFrame:CGRectMake(5, 70, 30, 30)];
+    [add setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [add addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:add];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,55 +91,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)preloadLeft{
-    if (!preloadedLeft){
-        LeftViewController *lv = [[LeftViewController alloc]initWithStyle:UITableViewStyleGrouped];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:lv];
-        [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionLeft];
-        PPRSLog(@"Preloaded Left View");
-        PP_AUTORELEASE(nav);
-        preloadedLeft = YES;
-    }
-    else
-        NSLog(@"Left Already Preloaded!");
-}
-
-- (void)preloadRight{
-    if (!preloadedRight){
-        RightViewController *c = [[RightViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:c];
-        [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
-        PPRSLog(@"Preloaded Right View");
-        PP_AUTORELEASE(nav);
-        preloadedRight = YES;
-    }
-    else
-        NSLog(@"Right Already Preloaded!");
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    //implement later --> Make it so the view isnt preloaded until after the login is complete to save memory
-    //for now just preload anyways :p
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
-    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
-    [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
-}
 #pragma mark - Managing Button Methods
+
+- (void)pushLeft:(id)sender{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
+}
 
 - (void)pushRight:(id)sender{
     [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight animated:YES];
 }
 
 - (void)create:(id)sender{
-    [self.revealSideViewController openCompletelySide:PPRevealSideDirectionLeft animated:YES];
-}
-
-#pragma mark - Navigation
-
-- (void)pushLogin{
-    LoginViewController *lv = [[LoginViewController alloc]init];
-    [self.navigationController presentViewController:lv animated:YES completion:^{PPRSLog(@"Popped login")}];
+    LeftViewController *lv = [[LeftViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:lv animated:YES];
 }
 
 #pragma mark - All Map View Class methods

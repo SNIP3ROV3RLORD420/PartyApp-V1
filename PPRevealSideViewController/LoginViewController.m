@@ -8,6 +8,9 @@
 //
 
 #import "LoginViewController.h"
+#import "RightViewController.h"
+#import "MyEventsViewController.h"
+#import "MapViewController.h"
 #import <Parse/Parse.h>
 #import "Comms.h"
 
@@ -35,6 +38,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideDirectionNone];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
     
     self.view.backgroundColor = UIColorFromRGB(0x34B085);
     
@@ -82,6 +88,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [PFUser logOut];
 }
 
+- (void)preloadRight{
+    MyEventsViewController *lv = [[MyEventsViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:lv];
+    nav.navigationBar.hidden = YES;
+    [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
+    PPRSLog(@"Preloaded Right View");
+    PP_AUTORELEASE(nav);
+}
+
+- (void)preloadLeft{
+    RightViewController *c = [[RightViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionLeft];
+    PPRSLog(@"Preloaded Left View");
+    PP_AUTORELEASE(c);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
+    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
+    [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -101,7 +130,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         if (user) {
             [self.delegate loginViewControllerDidFinish:self];
             [loginButton setTitle:@"Logged In" forState:UIControlStateNormal];
-            [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Dismissed")}];
+            
+            MapViewController *mv = [[MapViewController alloc]init];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
+            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES completion:^{PPRSLog(@"Logged In")}];
+            
         } else {
             //Something bad has ocurred
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid username or password" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -128,8 +161,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)bypass{
-    [self.delegate loginViewControllerDidFinish:self];
-    [self dismissViewControllerAnimated:YES completion:^{PPRSLog(@"Bypassed")}];
+    MapViewController *mv = [[MapViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
+    [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES completion:^{PPRSLog(@"Bypassed")}];
 }
 
 #pragma makr - Textfield Delegate

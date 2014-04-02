@@ -25,14 +25,14 @@
 @property (nonatomic, weak) PFUser* usr;
 
 
-@property (nonatomic, retain) UITextField *username;
-@property (nonatomic, retain) UITextField *password;
-@property (nonatomic, retain) UITextField *email;
-@property (nonatomic, retain) UITextField *name;
-@property (nonatomic, retain) UITextField *home;
+@property (nonatomic, strong) UITextField *username;
+@property (nonatomic, strong) UITextField *password;
+@property (nonatomic, strong) UITextField *email;
+@property (nonatomic, strong) UITextField *name;
+@property (nonatomic, strong) UITextField *home;
 
-@property (nonatomic, retain) UITextField *birthday;
-@property (nonatomic, retain) UIPickerView *gender;
-@property (nonatomic, retain) UIPickerView *interestedIn;
+@property (nonatomic, strong) UITextField *birthday;
+@property (nonatomic, strong) UIPickerView *gender;
+@property (nonatomic, strong) UIPickerView *interestedIn;
 
 @end

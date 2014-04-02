@@ -7,7 +7,7 @@
 //
 //
 
-#import "LeftViewController.h"
+#import "CreateViewController.h"
 #import "FreindListViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -62,17 +62,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.allowsSelection = NO;
     
-    //setting the bar that pops up when a textfield begins editing
-    pickerBar = PP_AUTORELEASE([[UINavigationBar alloc]initWithFrame:CGRectMake( 0, 0, 320, 30)]);
-    pickerBar.barStyle = UIBarStyleBlackTranslucent;
-    UIBarButtonItem *pickerItem = [[UIBarButtonItem alloc]initWithTitle:@"Done"
-                                                                  style:UIBarButtonItemStyleDone
-                                                                  target:self
-                                                                  action:@selector(pickerDone)];
-    UINavigationItem *navItem = [[UINavigationItem alloc]init];
-    navItem.rightBarButtonItem = pickerItem;
-    pickerBar.items = [NSArray arrayWithObjects:navItem, nil];
-    
     //setting the picker array
     pickerArray = [[NSArray alloc]initWithObjects:
                    @"$0.00",
@@ -96,11 +85,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                    nil];
     
     //setting the navigation bar
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
+    self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Host"
                                                                                style:UIBarButtonItemStyleDone
                                                                               target:self
                                                                               action:@selector(create:)]);
-    self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                                                              target:self
                                                                                              action:@selector(cancel:)]);
     self.title = @"Host Event";
@@ -465,14 +454,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)cancel:(id)sender{
     [self.delegate LeftViewControllerDidPop:self];
-    [self.revealSideViewController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)create:(id)sender{
     //implement delegate method create event
     [self.delegate addEvent:nil];
     [self.delegate LeftViewControllerDidPop:self];
-    [self.revealSideViewController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)descrip:(id)sender{

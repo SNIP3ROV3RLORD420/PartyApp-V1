@@ -62,15 +62,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
+    
      self.tableView.allowsSelection = NO;
     usr = [PFUser currentUser];
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                     target:self
                                     action:@selector(edit)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back"
-                                                                            style:UIBarButtonItemStyleDone
-                                                                            target:self
-                                                                            action:@selector(back)]);
+    
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft)];
+    
+    self.navigationItem.leftBarButtonItem = slide;
     self.title = @"Profile";
     
     editingMode = NO;
@@ -241,14 +245,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.tableView endUpdates];
 }
 
-- (void)back{
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.revealSideViewController popViewControllerAnimated:YES];
+- (void)pushLeft{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
 
 - (void)done{
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(edit)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft)];
+    self.navigationItem.leftBarButtonItem = slide;
+    
         editingMode = NO;
     [self.view endEditing:YES];
     [self updateCurrentUser];
@@ -258,7 +263,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)cancel{
     self.navigationItem.rightBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(edit)]);
-    self.navigationItem.leftBarButtonItem = PP_AUTORELEASE([[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)]);
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft)];
+    self.navigationItem.leftBarButtonItem = slide;
+    
     editingMode = NO;
     [self.view endEditing:YES];
     [self.tableView beginUpdates];

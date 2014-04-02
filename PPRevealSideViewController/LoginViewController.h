@@ -21,12 +21,12 @@
 
 @interface LoginViewController : UIViewController  <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (retain, nonatomic)UIButton *loginButton;
-@property (retain, nonatomic)UIButton *createAccount;
+@property (strong, nonatomic)UIButton *loginButton;
+@property (strong, nonatomic)UIButton *createAccount;
 
-@property (retain, nonatomic)UITextField *username;
-@property (retain, nonatomic)UITextField *password;
+@property (strong, nonatomic)UITextField *username;
+@property (strong, nonatomic)UITextField *password;
 
-@property (strong, nonatomic)id <LoginViewControllerDelegate> delegate;
+@property (weak, nonatomic)id <LoginViewControllerDelegate> delegate;
 
 @end

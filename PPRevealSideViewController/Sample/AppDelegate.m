@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import "LoginViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
 
@@ -41,20 +42,15 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     self.window = PP_AUTORELEASE([[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]]);
     
-    MapViewController *main = [[MapViewController alloc] init];
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:main];
-    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
+    LoginViewController *main = [[LoginViewController alloc] init];
+
+    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:main];
     
     _revealSideViewController.delegate = self;
     
-    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
-    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
+    _revealSideViewController.options = PPRevealSideOptionsiOS7StatusBarFading | PPRevealSideOptionsBounceAnimations;
     
     self.window.rootViewController = _revealSideViewController;
-    
-    PP_RELEASE(main);
-    PP_RELEASE(nav);
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
