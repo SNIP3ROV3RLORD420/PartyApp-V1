@@ -22,6 +22,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     NSMutableArray *hostEvents;
     NSMutableArray *invitedEvents;
+    
+    BOOL firstLoad;
 }
 
 @end
@@ -40,7 +42,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     [super viewDidLoad];
     
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 100);
+    firstLoad = YES;
+    
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 320);
     
     self.view.backgroundColor = UIColorFromRGB(0x4c4c4c);
     self.tableView.backgroundColor = UIColorFromRGB(0x323232);
@@ -98,16 +102,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return 22;
 }
 
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return @"hosting";
-    }
-    if (section == 2) {
-        return @"invited";
-    }
-    return nil;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -156,10 +150,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 22)];
     label.textColor = UIColorFromRGB(0xa6a6a6);
     if (section == 1) {
-        label.text = @"HOSTING";
+        label.text = @"Hosting";
     }
     if (section == 2) {
-        label.text = @"INVITED TO";
+        label.text = @"Invited To";
     }
     [view addSubview:label];
     
@@ -190,10 +184,19 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 break;
             case 1:
                 cell.textLabel.text = @"Map";
-                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                if (firstLoad) {
+                    cell.textLabel.textColor = [UIColor whiteColor];
+                }
+                else
+                    cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
                 [cell setSelectedBackgroundView:bc];
                 cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                cell.backgroundColor = UIColorFromRGB(0x323232);
+                if (firstLoad) {
+                    cell.backgroundColor = UIColorFromRGB(0x191919);
+                }
+                else
+                    cell.backgroundColor = UIColorFromRGB(0x323232);
+                firstLoad = NO;
                 break;
             case 2:
                 cell.textLabel.text = @"Other";
@@ -266,6 +269,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
             [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
+            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
             
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
@@ -282,6 +286,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
             [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
+            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
             
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
