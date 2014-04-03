@@ -11,6 +11,8 @@
 #import "LoginViewController.h"
 #import "CreateViewController.h"
 
-@interface MapViewController : UIViewController <LeftViewControllerDelegate, LoginViewControllerDelegate>
+@interface MapViewController : UIViewController <LeftViewControllerDelegate, LoginViewControllerDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) UISearchDisplayController *searchController;
 
 @end

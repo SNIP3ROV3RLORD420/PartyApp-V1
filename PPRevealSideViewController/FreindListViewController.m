@@ -109,6 +109,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UISearchBar *search = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, 320, 40)];
     search.backgroundColor = [UIColor whiteColor];
     search.tintColor = [UIColor whiteColor];
+    search.placeholder = @"Search";
     return search;
 }
 

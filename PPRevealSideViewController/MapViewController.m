@@ -21,6 +21,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface MapViewController (){
     NSMutableArray *allEvents;
+    NSMutableArray *searchArray;
+    
+    UISearchBar *searchBar;
     
     GMSMapView *map;
 }
@@ -32,7 +35,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation MapViewController
 
-
+@synthesize searchController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,6 +86,20 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [add addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:add];
+    
+    //doing search stuff
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
+    searchBar.placeholder = @"Search";;
+    [self.view addSubview:searchBar];
+    
+    searchController = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch)];
+    cancel.tintColor = [UIColor whiteColor];
+    searchController.navigationItem.rightBarButtonItem = cancel;
+    searchController.delegate = self;
+    searchController.searchResultsDataSource = self;
+    searchController.searchResultsDelegate = self;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,8 +120,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)search{
-    //method that is called when the search button is pressed
-    //will enable the user to input a location, then the map will move to that location and reload all events there
+    [searchController setActive:YES animated:YES];
+    [searchBar becomeFirstResponder];
+}
+
+- (void)cancelSearch{
+    [searchController setActive:NO animated:YES];
 }
 
 #pragma mark - All Map View Class methods
@@ -139,5 +160,25 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 #pragma mark - Map Delegate
+
+#pragma mark - Table View Delegate and Data Source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return searchArray.count;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]init];
+    }
+    return cell;
+}
+
+#pragma mark - Search Display Controller Delegate
 
 @end

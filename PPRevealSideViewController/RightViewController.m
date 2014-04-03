@@ -61,6 +61,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
      invitedEvents = [self getEventsInvitedTo:allEvents];
      
      */
+    NSLog(@"Loaded Side View");
     
 }
 
@@ -141,7 +142,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 200, 40)];
     name.text = usr[@"name"]; //not working which is weird
     if (!name.text)
-        name.text = @"Dylan Humphrey";
+        name.text = @"Display Name";
     name.textColor = [UIColor whiteColor];
     
     [view addSubview:pic];
@@ -255,14 +256,36 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0){
+            NSMutableArray *arr = [[NSMutableArray alloc]init];
+            [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:3 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+            
             AccountViewController *av = [[AccountViewController alloc]initWithStyle:UITableViewStyleGrouped];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
         }
         if (indexPath.row == 1) {
+            NSMutableArray *arr = [[NSMutableArray alloc]init];
+            [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:3 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+            
             MapViewController *mv = [[MapViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
         }
     }
 }
@@ -282,7 +305,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)updateTable{
     
     [self updateEventLists];
-    [self.tableView reloadData];
+    NSIndexSet *iS = [NSIndexSet indexSetWithIndex:1];
+    NSIndexSet *iSS = [NSIndexSet indexSetWithIndex:2];
+    [self.tableView reloadSections:iS withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:iSS withRowAnimation:UITableViewRowAnimationFade];
     [self.refreshControl endRefreshing];
 }
 
