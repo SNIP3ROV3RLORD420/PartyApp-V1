@@ -17,7 +17,12 @@ colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface RightViewController ()
+@interface RightViewController (){
+    PFUser *usr;
+    
+    NSMutableArray *hostEvents;
+    NSMutableArray *invitedEvents;
+}
 
 @end
 
@@ -41,7 +46,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.tableView.backgroundColor = UIColorFromRGB(0x323232);
     
     self.tableView.separatorColor = [UIColor whiteColor];
-    self.tableView.scrollEnabled = NO;
+    
+    usr = [PFUser currentUser];
+    
+    UIRefreshControl *refresh = [[UIRefreshControl alloc]init];
+    [refresh setTintColor:[UIColor whiteColor]];
+    [refresh addTarget:self action:@selector(getEvents) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresh;
+    
+    /*
+     
+     NSMutableArray *allEvents = some method or online database of events
+     hostEvents = [self getEventsHostOf:allEvents];
+     invitedEvents = [self getEventsInvitedTo:allEvents];
+     
+     */
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -58,26 +78,91 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    if (indexPath.section == 0) {
+        return 50;
+    }
+    return 44;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return 0;
+        return 50;
     }
     return 22;
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return @"hosting";
+    }
+    if (section == 2) {
+        return @"invited";
+    }
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 5;
+    if (section == 0) {
+        return 5;
+    }
+    if (section == 1) {
+        if (hostEvents.count == 0) {
+            return 1;
+        }
+        return hostEvents.count;
+    }
+    if (section == 2) {
+        if (invitedEvents.count == 0) {
+            return 1;
+        }
+        return invitedEvents.count;
+    }
+    return 1;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
+    view.backgroundColor = UIColorFromRGB(0x323232);
+    
+    UIImageView *pic = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 40, 40)];
+    pic.image = [UIImage imageNamed:@"sampleProf.png"];
+    
+    UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 200, 40)];
+    name.text = usr[@"name"]; //not working which is weird
+    if (!name.text)
+        name.text = @"Dylan Humphrey";
+    name.textColor = [UIColor whiteColor];
+    
+    [view addSubview:pic];
+    [view addSubview:name];
+        
+        return view;
+    }
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 22)];
+    view.backgroundColor = UIColorFromRGB(0x323232);
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 22)];
+    label.textColor = UIColorFromRGB(0xa6a6a6);
+    if (section == 1) {
+        label.text = @"HOSTING";
+    }
+    if (section == 2) {
+        label.text = @"INVITED TO";
+    }
+    [view addSubview:label];
+    
+    return view;
 }
 
 
@@ -92,58 +177,93 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UIView *bc = [[UIView alloc]initWithFrame:CGRectMake(5, 0, 100, 50)];
     bc.backgroundColor = UIColorFromRGB(0x191919);
     
-    switch (indexPath.row) {
-        case 0:
-            cell.textLabel.text = @"My Account";
+    if (indexPath.section == 0) {
+        
+        switch (indexPath.row) {
+            case 0:
+                cell.textLabel.text = @"My Account";
+                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                [cell setSelectedBackgroundView:bc];
+                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+                cell.backgroundColor = UIColorFromRGB(0x323232);
+                break;
+            case 1:
+                cell.textLabel.text = @"Map";
+                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                [cell setSelectedBackgroundView:bc];
+                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+                cell.backgroundColor = UIColorFromRGB(0x323232);
+                break;
+            case 2:
+                cell.textLabel.text = @"Other";
+                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                [cell setSelectedBackgroundView:bc];
+                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+                cell.backgroundColor = UIColorFromRGB(0x323232);
+                break;
+            case 3:
+                cell.textLabel.text = @"Settings";
+                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                [cell setSelectedBackgroundView:bc];
+                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+                cell.backgroundColor = UIColorFromRGB(0x323232);
+                break;
+            case 4:
+                cell.textLabel.text = @"About";
+                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
+                [cell setSelectedBackgroundView:bc];
+                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+                cell.backgroundColor = UIColorFromRGB(0x323232);
+                break;
+            default:
+                break;
+        }
+    }
+    if (indexPath.section == 1) {
+        if (hostEvents.count == 0) {
+            cell.textLabel.text = @"Not Hosting Any";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.backgroundColor = UIColorFromRGB(0x323232);
+        }
+        else{
+            cell.textLabel.text = [[hostEvents objectAtIndex:indexPath.row] eventName];
             cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
             [cell setSelectedBackgroundView:bc];
             cell.textLabel.highlightedTextColor = [UIColor whiteColor];
             cell.backgroundColor = UIColorFromRGB(0x323232);
-            break;
-        case 1:
-            cell.textLabel.text = @"Map";
+        }
+    }
+    if (indexPath.section == 2) {
+        if (invitedEvents.count == 0) {
+            cell.textLabel.text = @"Not Invited to Any";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.backgroundColor = UIColorFromRGB(0x323232);
+        }
+        else{
+            cell.textLabel.text = [[invitedEvents objectAtIndex:indexPath.row] eventName];
             cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
             [cell setSelectedBackgroundView:bc];
             cell.textLabel.highlightedTextColor = [UIColor whiteColor];
             cell.backgroundColor = UIColorFromRGB(0x323232);
-            break;
-        case 2:
-            cell.textLabel.text = @"Other";
-            cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-            [cell setSelectedBackgroundView:bc];
-            cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-            cell.backgroundColor = UIColorFromRGB(0x323232);
-            break;
-        case 3:
-            cell.textLabel.text = @"Settings";
-            cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-            [cell setSelectedBackgroundView:bc];
-            cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-            cell.backgroundColor = UIColorFromRGB(0x323232);
-            break;
-        case 4:
-            cell.textLabel.text = @"About";
-            cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-            [cell setSelectedBackgroundView:bc];
-            cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-            cell.backgroundColor = UIColorFromRGB(0x323232);
-            break;
-        default:
-            break;
+        }
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0){
-        AccountViewController *av = [[AccountViewController alloc]initWithStyle:UITableViewStyleGrouped];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
-        [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
-    }
-    if (indexPath.row == 1) {
-        MapViewController *mv = [[MapViewController alloc]init];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
-        [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0){
+            AccountViewController *av = [[AccountViewController alloc]initWithStyle:UITableViewStyleGrouped];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
+            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+        }
+        if (indexPath.row == 1) {
+            MapViewController *mv = [[MapViewController alloc]init];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
+            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+        }
     }
 }
 
@@ -151,6 +271,53 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)hide{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+#pragma mark - Refresher Methods
+
+- (void)getEvents{
+    [self performSelector:@selector(updateTable) withObject:self afterDelay:1.0];
+}
+
+- (void)updateTable{
+    
+    [self updateEventLists];
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+}
+
+- (void)updateEventLists{
+    NSMutableArray *allEvents = [[NSMutableArray alloc]init]; //some method or online database of events
+    hostEvents = [self getEventsHostOf:allEvents];
+    invitedEvents = [self getEventsInvitedTo:allEvents];
+}
+
+#pragma mark - Event Methods
+
+- (NSMutableArray*)getEventsHostOf:(NSArray*)allEvents{
+    NSMutableArray *hostOf = [[NSMutableArray alloc]init];
+#warning This method will start taking longer and longer the more events there are, but to start out should be fine
+    for (Event* e in allEvents) {
+        for (PFUser* user in e.hosts) {
+            if ([user[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
+                [hostOf addObject:e];
+            }
+        }
+    }
+    return hostOf;
+}
+
+- (NSMutableArray*)getEventsInvitedTo:(NSArray*)allEvents{
+    NSMutableArray* invitedTo = [[NSMutableArray alloc]init];
+#warning This method will start taking longer and longer the more events there are, but to start out should be fine
+    for (Event* e in allEvents) {
+        for (PFUser* user in e.invited) {
+            if ([user[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
+                [invitedTo addObject:e];
+            }
+        }
+    }
+    return invitedTo;
 }
 
 

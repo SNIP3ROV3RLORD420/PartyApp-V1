@@ -47,7 +47,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [super viewDidLoad];
     
     [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
-    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionNavigationBar];
     
     [self.revealSideViewController setFakeiOS7StatusBarColor:UIColorFromRGB(0x4c4c4c)];
     
@@ -74,11 +74,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft:)];
     
     self.navigationItem.leftBarButtonItem = slide;
-    UIBarButtonItem *slide1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushRight:)];
-    self.navigationItem.RightBarButtonItem = slide1;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search)];
     self.title = @"Our App";
     
-    UIButton *add = [[UIButton alloc]initWithFrame:CGRectMake(5, 70, 30, 30)];
+    UIButton *add = [[UIButton alloc]initWithFrame:CGRectMake(5, 70, 48, 48)];
     [add setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     [add addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -97,13 +97,14 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
 
-- (void)pushRight:(id)sender{
-    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionRight animated:YES];
-}
-
 - (void)create:(id)sender{
     LeftViewController *lv = [[LeftViewController alloc]initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:lv animated:YES];
+}
+
+- (void)search{
+    //method that is called when the search button is pressed
+    //will enable the user to input a location, then the map will move to that location and reload all events there
 }
 
 #pragma mark - All Map View Class methods

@@ -40,6 +40,7 @@
 		23BCBD8118DF9CCA001AA03A /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23BCBD8018DF9CCA001AA03A /* FBUserSettingsViewResources.bundle */; };
 		23E640F218E0EE0900A0C2DF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E640F118E0EE0900A0C2DF /* FacebookSDK.framework */; };
 		5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5635878E1605F51A003BC599 /* Default-568h@2x.png */; };
+		BF02365318EC884600DCAC1C /* sampleProf.png in Resources */ = {isa = PBXBuildFile; fileRef = BF02365218EC884600DCAC1C /* sampleProf.png */; };
 		BF31C3A018DE91E100A07190 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31C39F18DE91E100A07190 /* AccountViewController.m */; };
 		BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589AF18DBDBB300865F59 /* RightViewController.m */; };
 		BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589B218DBDC3A00865F59 /* MapViewController.m */; };
@@ -392,6 +393,7 @@
 		23BCBD8018DF9CCA001AA03A /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		23E640F118E0EE0900A0C2DF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		5635878E1605F51A003BC599 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		BF02365218EC884600DCAC1C /* sampleProf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleProf.png; sourceTree = "<group>"; };
 		BF31C39E18DE91E100A07190 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		BF31C39F18DE91E100A07190 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		BF3589AE18DBDBB300865F59 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
@@ -1090,6 +1092,7 @@
 		E0D903C514ED2A610072EECD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BF02365218EC884600DCAC1C /* sampleProf.png */,
 				BFECC31318EB51BE0017131A /* add.png */,
 				BF9FE70618EA0F2000E27324 /* menu.png */,
 				BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */,
@@ -1268,6 +1271,7 @@
 			files = (
 				BFECC31418EB51BE0017131A /* add.png in Resources */,
 				E0D903C914ED2A610072EECD /* InfoPlist.strings in Resources */,
+				BF02365318EC884600DCAC1C /* sampleProf.png in Resources */,
 				23BCBD8118DF9CCA001AA03A /* FBUserSettingsViewResources.bundle in Resources */,
 				BF9FE70718EA0F2000E27324 /* menu.png in Resources */,
 				BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */,

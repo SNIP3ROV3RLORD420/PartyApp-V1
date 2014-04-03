@@ -88,15 +88,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [PFUser logOut];
 }
 
-- (void)preloadRight{
-    MyEventsViewController *lv = [[MyEventsViewController alloc]initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:lv];
-    nav.navigationBar.hidden = YES;
-    [self.revealSideViewController preloadViewController:nav forSide:PPRevealSideDirectionRight];
-    PPRSLog(@"Preloaded Right View");
-    PP_AUTORELEASE(nav);
-}
-
 - (void)preloadLeft{
     RightViewController *c = [[RightViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionLeft];
@@ -106,8 +97,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadRight) object:nil];
-    [self performSelector:@selector(preloadRight) withObject:nil afterDelay:0.3];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadLeft) object:nil];
     [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
 }
 

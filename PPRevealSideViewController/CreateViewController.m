@@ -93,6 +93,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                                              target:self
                                                                                              action:@selector(cancel:)]);
     self.title = @"Host Event";
+    //adding a pan gesture
+    UISwipeGestureRecognizer *pan = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipe)];
+    pan.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.view addGestureRecognizer:pan];
+    
+    pickerBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UINavigationItem *navItem = [[UINavigationItem alloc]init];
+    navItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(pickerDone)];
+    pickerBar.items = [NSArray arrayWithObject:navItem];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -461,6 +471,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //implement delegate method create event
     [self.delegate addEvent:nil];
     [self.delegate LeftViewControllerDidPop:self];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)swipe{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
