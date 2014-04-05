@@ -2,13 +2,19 @@
 //  SettingsViewController.m
 //  PartyAppV1
 //
-//  Created by Dylan Humphrey on 4/1/14.
+//  Created by Dylan Humphrey on 4/3/14.
 //
 //
 
 #import "SettingsViewController.h"
 
-@interface SettingsViewController ()
+@interface SettingsViewController (){
+    UISwitch *pushNotifications;
+    UISwitch *keepLogged;
+    
+    UISlider *rangeSlider;
+    UILabel *range;
+}
 
 @end
 
@@ -26,7 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.title = @"Settings";
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,76 +47,80 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 3;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        return 70;
+    }
+    return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if(!cell){
+        cell = [[UITableViewCell alloc]init];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @"Push Notifications";
+        pushNotifications = [[UISwitch alloc]init];
+        [pushNotifications addTarget:self action:@selector(notifications) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = pushNotifications;
+    }
+    if (indexPath.section == 1) {
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, 100, 30)];
+        label.text = @"Search Range";
+        rangeSlider = [[UISlider alloc]initWithFrame:CGRectMake(5, 50, 310, 20)];
+        rangeSlider.minimumValue = 1;
+        rangeSlider.maximumValue = 50;
+        [rangeSlider addTarget:self action:@selector(slid) forControlEvents:UIControlEventValueChanged];
+        
+        range = [[UILabel alloc]initWithFrame:CGRectMake(270, 7, 30, 30)];
+        range.text = @"1";
+        [cell.contentView addSubview:label];
+        [cell.contentView addSubview:range];
+        cell.detailTextLabel.text = @"Miles";
+        
+        [cell.contentView addSubview:rangeSlider];
+    }
+    if (indexPath.section == 2) {
+        cell.textLabel.text = @"Keep Me Logged In";
+        keepLogged = [[UISwitch alloc]init];
+        cell.accessoryView = keepLogged;
+        [keepLogged addTarget:self action:@selector(keepLogged) forControlEvents:UIControlEventValueChanged];
+    }
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+#pragma mark - Button Methods
+
+- (void)back{
+    [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+#pragma mark - Other Methods
+
+- (void)notifications{
+    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+- (void)keepLogged{
+    
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (void)slid{
+    range.text = [NSString stringWithFormat:@"%i",(int)rangeSlider.value];
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

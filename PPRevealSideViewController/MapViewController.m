@@ -67,6 +67,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     GMSMarker *losAngeles = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(34.05, -118.25)];
     losAngeles.title = @"Los Angeles";
     losAngeles.map = map;
+    map.settings.zoomGestures = NO;
     map.myLocationEnabled = YES;
     map.settings.myLocationButton = YES;
     map.settings.compassButton = YES;

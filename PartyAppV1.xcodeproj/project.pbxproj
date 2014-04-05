@@ -58,10 +58,10 @@
 		BF79F76818E3C0FE0013ADB5 /* CreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF79F76718E3C0FE0013ADB5 /* CreateViewController.m */; };
 		BF8A850A18DCB19700C636A4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850718DCB19700C636A4 /* User.m */; };
 		BF8A850B18DCB19700C636A4 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8A850918DCB19700C636A4 /* Event.m */; };
+		BF92797D18EE34B70092D287 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF92797C18EE34B70092D287 /* SettingsViewController.m */; };
 		BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */ = {isa = PBXBuildFile; fileRef = BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */; };
 		BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */; };
 		BF9FE70718EA0F2000E27324 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9FE70618EA0F2000E27324 /* menu.png */; };
-		BFCE395E18EB290300966C6C /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCE395D18EB290300966C6C /* SettingsViewController.m */; };
 		BFD62EEC18EDBE4B007B8344 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD62EEB18EDBE4B007B8344 /* Parse.framework */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
 		BFECC31418EB51BE0017131A /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = BFECC31318EB51BE0017131A /* add.png */; };
@@ -419,12 +419,12 @@
 		BF8A850718DCB19700C636A4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		BF8A850818DCB19700C636A4 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		BF8A850918DCB19700C636A4 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		BF92797B18EE34B70092D287 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		BF92797C18EE34B70092D287 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EPhoto(edit).png"; sourceTree = "<group>"; };
 		BF97AEF918E775B900CB9F7E /* FreindListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreindListViewController.h; sourceTree = "<group>"; };
 		BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreindListViewController.m; sourceTree = "<group>"; };
 		BF9FE70618EA0F2000E27324 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		BFCE395C18EB290300966C6C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		BFCE395D18EB290300966C6C /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		BFD62EEB18EDBE4B007B8344 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		BFDB558218DBF68A0012C2DF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BFDB558318DBF68A0012C2DF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -966,8 +966,8 @@
 				BF79F76718E3C0FE0013ADB5 /* CreateViewController.m */,
 				BF31C39E18DE91E100A07190 /* AccountViewController.h */,
 				BF31C39F18DE91E100A07190 /* AccountViewController.m */,
-				BFCE395C18EB290300966C6C /* SettingsViewController.h */,
-				BFCE395D18EB290300966C6C /* SettingsViewController.m */,
+				BF92797B18EE34B70092D287 /* SettingsViewController.h */,
+				BF92797C18EE34B70092D287 /* SettingsViewController.m */,
 			);
 			name = "Sub-Controllers(Right)";
 			sourceTree = "<group>";
@@ -1316,7 +1316,7 @@
 				BF79F76818E3C0FE0013ADB5 /* CreateViewController.m in Sources */,
 				E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */,
 				BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */,
-				BFCE395E18EB290300966C6C /* SettingsViewController.m in Sources */,
+				BF92797D18EE34B70092D287 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

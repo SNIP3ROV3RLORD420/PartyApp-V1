@@ -10,6 +10,7 @@
 #import "RightViewController.h"
 #import "AccountViewController.h"
 #import "MyEventsViewController.h"
+#import "SettingsViewController.h"
 #import "MapViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -291,6 +292,24 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
+        }
+        if (indexPath.row == 3){
+            NSMutableArray *arr = [[NSMutableArray alloc]init];
+            [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
+            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
+            
+            SettingsViewController *sv = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
+            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:sv];
+            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
+            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
+            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+
         }
     }
 }
