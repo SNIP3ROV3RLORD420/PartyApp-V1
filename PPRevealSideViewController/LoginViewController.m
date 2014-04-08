@@ -9,7 +9,6 @@
 
 #import "LoginViewController.h"
 #import "RightViewController.h"
-#import "MyEventsViewController.h"
 #import "MapViewController.h"
 #import <Parse/Parse.h>
 #import "Comms.h"

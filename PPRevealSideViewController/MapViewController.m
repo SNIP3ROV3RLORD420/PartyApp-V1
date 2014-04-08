@@ -91,7 +91,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //doing search stuff
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
     searchBar.placeholder = @"Search";;
-    [self.view addSubview:searchBar];
     
     searchController = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch)];
@@ -122,10 +121,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)search{
     [searchController setActive:YES animated:YES];
+    [self.view addSubview:searchBar];
     [searchBar becomeFirstResponder];
 }
 
 - (void)cancelSearch{
+    [searchBar removeFromSuperview];
     [searchController setActive:NO animated:YES];
 }
 

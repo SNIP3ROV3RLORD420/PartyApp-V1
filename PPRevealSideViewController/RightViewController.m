@@ -9,7 +9,6 @@
 
 #import "RightViewController.h"
 #import "AccountViewController.h"
-#import "MyEventsViewController.h"
 #import "SettingsViewController.h"
 #import "MapViewController.h"
 
@@ -19,8 +18,6 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface RightViewController (){
-    PFUser *usr;
-    
     NSMutableArray *hostEvents;
     NSMutableArray *invitedEvents;
     
@@ -30,6 +27,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @end
 
 @implementation RightViewController
+
+@synthesize usr;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -126,9 +125,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
+    UIView *view;
+    
     if (section == 0) {
         
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
+    view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
     view.backgroundColor = UIColorFromRGB(0x323232);
     
     UIImageView *pic = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 40, 40)];
@@ -143,10 +144,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [view addSubview:pic];
     [view addSubview:name];
         
-        return view;
     }
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 22)];
+    else{
+    view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 22)];
     view.backgroundColor = UIColorFromRGB(0x323232);
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 22)];
     label.textColor = UIColorFromRGB(0xa6a6a6);
@@ -157,6 +157,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         label.text = @"Invited To";
     }
     [view addSubview:label];
+    }
     
     return view;
 }

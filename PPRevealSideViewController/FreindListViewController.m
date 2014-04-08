@@ -121,7 +121,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         cell = [[UITableViewCell alloc]init];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%i", indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%i", indexPath.row + 1];
     
     return cell;
 }

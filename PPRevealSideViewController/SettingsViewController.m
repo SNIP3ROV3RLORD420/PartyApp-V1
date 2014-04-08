@@ -11,9 +11,6 @@
 @interface SettingsViewController (){
     UISwitch *pushNotifications;
     UISwitch *keepLogged;
-    
-    UISlider *rangeSlider;
-    UILabel *range;
 }
 
 @end
@@ -48,14 +45,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1) {
-        return 70;
-    }
-    return 44;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -78,22 +68,6 @@
         cell.accessoryView = pushNotifications;
     }
     if (indexPath.section == 1) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, 100, 30)];
-        label.text = @"Search Range";
-        rangeSlider = [[UISlider alloc]initWithFrame:CGRectMake(5, 50, 310, 20)];
-        rangeSlider.minimumValue = 1;
-        rangeSlider.maximumValue = 50;
-        [rangeSlider addTarget:self action:@selector(slid) forControlEvents:UIControlEventValueChanged];
-        
-        range = [[UILabel alloc]initWithFrame:CGRectMake(270, 7, 30, 30)];
-        range.text = @"1";
-        [cell.contentView addSubview:label];
-        [cell.contentView addSubview:range];
-        cell.detailTextLabel.text = @"Miles";
-        
-        [cell.contentView addSubview:rangeSlider];
-    }
-    if (indexPath.section == 2) {
         cell.textLabel.text = @"Keep Me Logged In";
         keepLogged = [[UISwitch alloc]init];
         cell.accessoryView = keepLogged;
@@ -117,10 +91,6 @@
 
 - (void)keepLogged{
     
-}
-
-- (void)slid{
-    range.text = [NSString stringWithFormat:@"%i",(int)rangeSlider.value];
 }
 
 @end

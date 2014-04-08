@@ -40,10 +40,10 @@
 		23E640F218E0EE0900A0C2DF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E640F118E0EE0900A0C2DF /* FacebookSDK.framework */; };
 		5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5635878E1605F51A003BC599 /* Default-568h@2x.png */; };
 		BF02365318EC884600DCAC1C /* sampleProf.png in Resources */ = {isa = PBXBuildFile; fileRef = BF02365218EC884600DCAC1C /* sampleProf.png */; };
+		BF0A92E518F354F50055D520 /* AccViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0A92E418F354F50055D520 /* AccViewController.m */; };
 		BF31C3A018DE91E100A07190 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31C39F18DE91E100A07190 /* AccountViewController.m */; };
 		BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589AF18DBDBB300865F59 /* RightViewController.m */; };
 		BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589B218DBDC3A00865F59 /* MapViewController.m */; };
-		BF6607AC18E799A2003F9B9E /* MyEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6607AB18E799A2003F9B9E /* MyEventsViewController.m */; };
 		BF6607B418E8E4D9003F9B9E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B318E8E4D9003F9B9E /* AVFoundation.framework */; };
 		BF6607B618E8E4E3003F9B9E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B518E8E4E3003F9B9E /* CoreData.framework */; };
 		BF6607B818E8E4F5003F9B9E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B718E8E4F5003F9B9E /* GLKit.framework */; };
@@ -393,6 +393,8 @@
 		23E640F118E0EE0900A0C2DF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		5635878E1605F51A003BC599 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		BF02365218EC884600DCAC1C /* sampleProf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleProf.png; sourceTree = "<group>"; };
+		BF0A92E318F354F50055D520 /* AccViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccViewController.h; sourceTree = "<group>"; };
+		BF0A92E418F354F50055D520 /* AccViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccViewController.m; sourceTree = "<group>"; };
 		BF31C39E18DE91E100A07190 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		BF31C39F18DE91E100A07190 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		BF3589AE18DBDBB300865F59 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
@@ -400,8 +402,6 @@
 		BF3589B118DBDC3A00865F59 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		BF3589B218DBDC3A00865F59 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		BF3589B418DBDDA400865F59 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		BF6607AA18E799A2003F9B9E /* MyEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyEventsViewController.h; sourceTree = "<group>"; };
-		BF6607AB18E799A2003F9B9E /* MyEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyEventsViewController.m; sourceTree = "<group>"; };
 		BF6607B318E8E4D9003F9B9E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BF6607B518E8E4E3003F9B9E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BF6607B718E8E4F5003F9B9E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1012,8 +1012,8 @@
 				BF3589AF18DBDBB300865F59 /* RightViewController.m */,
 				BFDB558218DBF68A0012C2DF /* LoginViewController.h */,
 				BFDB558318DBF68A0012C2DF /* LoginViewController.m */,
-				BF6607AA18E799A2003F9B9E /* MyEventsViewController.h */,
-				BF6607AB18E799A2003F9B9E /* MyEventsViewController.m */,
+				BF0A92E318F354F50055D520 /* AccViewController.h */,
+				BF0A92E418F354F50055D520 /* AccViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1309,9 +1309,9 @@
 				BF8A850B18DCB19700C636A4 /* Event.m in Sources */,
 				BF31C3A018DE91E100A07190 /* AccountViewController.m in Sources */,
 				BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */,
-				BF6607AC18E799A2003F9B9E /* MyEventsViewController.m in Sources */,
 				BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */,
 				23BCBD7F18DF9C57001AA03A /* Comms.m in Sources */,
+				BF0A92E518F354F50055D520 /* AccViewController.m in Sources */,
 				BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */,
 				BF79F76818E3C0FE0013ADB5 /* CreateViewController.m in Sources */,
 				E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */,
