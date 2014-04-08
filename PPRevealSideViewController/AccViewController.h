@@ -16,12 +16,13 @@
 
 //section 1
 @property (nonatomic, strong) UIImageView *profPic;
-@property (nonatomic, strong) UITextField *email;
-@property (nonatomic, strong) UITextField *name;
+@property (nonatomic, strong) UITextField *firstName;
+@property (nonatomic, strong) UITextField *lastName;
 
 //section 2
 @property (nonatomic, strong) UITextField *home;
-@property (nonatomic, strong) UIPickerView *interestedIn;
+@property (nonatomic, strong) UITextField *email;
+@property (nonatomic, strong) UITextField *InterestedIn;
 @property (nonatomic, strong) UITextField *password;
 @property (nonatomic, strong) UITextField *username;
 

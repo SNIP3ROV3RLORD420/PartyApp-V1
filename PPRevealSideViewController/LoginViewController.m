@@ -63,7 +63,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     //creating the create account button
-    createAccount = [[UIButton alloc]initWithFrame:CGRectMake(85, 480, 150, 30)];
+    createAccount = [[UIButton alloc]initWithFrame:CGRectMake(105, 480, 120, 30)];
     createAccount.titleLabel.font = [UIFont fontWithName:@"Arial" size:14.0];
     [createAccount setTitle:@"Create Account" forState:UIControlStateNormal];
     [createAccount addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];

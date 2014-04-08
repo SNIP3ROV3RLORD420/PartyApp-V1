@@ -8,7 +8,7 @@
 //
 
 #import "RightViewController.h"
-#import "AccountViewController.h"
+#import "AccViewController.h"
 #import "SettingsViewController.h"
 #import "MapViewController.h"
 
@@ -267,7 +267,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [arr addObject:[NSIndexPath indexPathForRow:3 inSection:0]];
             [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
             
-            AccountViewController *av = [[AccountViewController alloc]initWithStyle:UITableViewStyleGrouped];
+            AccViewController *av = [[AccViewController alloc]init];
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
             [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
             [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
