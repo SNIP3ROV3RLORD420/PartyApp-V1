@@ -201,6 +201,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         username.placeholder = @"Username";
         username.delegate = self;
         username.clearButtonMode = UITextFieldViewModeWhileEditing;
+        username.returnKeyType = UIReturnKeyDone;
         [cell.contentView addSubview:username];
     }
     if (indexPath.row == 1) {
@@ -210,6 +211,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         password.secureTextEntry = YES;
         password.delegate = self;
         password.clearButtonMode = UITextFieldViewModeWhileEditing;
+        password.returnKeyType = UIReturnKeyDone;
         [cell.contentView addSubview:password];
     }
     return cell;

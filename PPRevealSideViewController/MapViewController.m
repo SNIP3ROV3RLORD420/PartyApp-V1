@@ -90,7 +90,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     //doing search stuff
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
-    searchBar.placeholder = @"Search";;
+    searchBar.placeholder = @"Search";
     
     searchController = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch)];

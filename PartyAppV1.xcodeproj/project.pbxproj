@@ -41,7 +41,6 @@
 		5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5635878E1605F51A003BC599 /* Default-568h@2x.png */; };
 		BF02365318EC884600DCAC1C /* sampleProf.png in Resources */ = {isa = PBXBuildFile; fileRef = BF02365218EC884600DCAC1C /* sampleProf.png */; };
 		BF0A92E518F354F50055D520 /* AccViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0A92E418F354F50055D520 /* AccViewController.m */; };
-		BF31C3A018DE91E100A07190 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF31C39F18DE91E100A07190 /* AccountViewController.m */; };
 		BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589AF18DBDBB300865F59 /* RightViewController.m */; };
 		BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589B218DBDC3A00865F59 /* MapViewController.m */; };
 		BF6607B418E8E4D9003F9B9E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B318E8E4D9003F9B9E /* AVFoundation.framework */; };
@@ -395,8 +394,6 @@
 		BF02365218EC884600DCAC1C /* sampleProf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleProf.png; sourceTree = "<group>"; };
 		BF0A92E318F354F50055D520 /* AccViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccViewController.h; sourceTree = "<group>"; };
 		BF0A92E418F354F50055D520 /* AccViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccViewController.m; sourceTree = "<group>"; };
-		BF31C39E18DE91E100A07190 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
-		BF31C39F18DE91E100A07190 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		BF3589AE18DBDBB300865F59 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
 		BF3589AF18DBDBB300865F59 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		BF3589B118DBDC3A00865F59 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -964,8 +961,8 @@
 				BF3589B218DBDC3A00865F59 /* MapViewController.m */,
 				BF79F76618E3C0FE0013ADB5 /* CreateViewController.h */,
 				BF79F76718E3C0FE0013ADB5 /* CreateViewController.m */,
-				BF31C39E18DE91E100A07190 /* AccountViewController.h */,
-				BF31C39F18DE91E100A07190 /* AccountViewController.m */,
+				BF0A92E318F354F50055D520 /* AccViewController.h */,
+				BF0A92E418F354F50055D520 /* AccViewController.m */,
 				BF92797B18EE34B70092D287 /* SettingsViewController.h */,
 				BF92797C18EE34B70092D287 /* SettingsViewController.m */,
 			);
@@ -1012,8 +1009,6 @@
 				BF3589AF18DBDBB300865F59 /* RightViewController.m */,
 				BFDB558218DBF68A0012C2DF /* LoginViewController.h */,
 				BFDB558318DBF68A0012C2DF /* LoginViewController.m */,
-				BF0A92E318F354F50055D520 /* AccViewController.h */,
-				BF0A92E418F354F50055D520 /* AccViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1307,7 +1302,6 @@
 				E0D903CB14ED2A610072EECD /* main.m in Sources */,
 				E0D35A4D14F282FD0013EB90 /* PPRevealSideViewController.m in Sources */,
 				BF8A850B18DCB19700C636A4 /* Event.m in Sources */,
-				BF31C3A018DE91E100A07190 /* AccountViewController.m in Sources */,
 				BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */,
 				BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */,
 				23BCBD7F18DF9C57001AA03A /* Comms.m in Sources */,

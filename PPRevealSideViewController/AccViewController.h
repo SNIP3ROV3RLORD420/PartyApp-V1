@@ -10,7 +10,7 @@
 #import "User.h"
 #import <Parse/Parse.h>
 
-@interface AccViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AccViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) PFUser *usr;
 
@@ -25,5 +25,8 @@
 @property (nonatomic, strong) UITextField *InterestedIn;
 @property (nonatomic, strong) UITextField *password;
 @property (nonatomic, strong) UITextField *username;
+
+//other things
+@property (nonatomic, strong) UISearchDisplayController *homeSearch;
 
 @end

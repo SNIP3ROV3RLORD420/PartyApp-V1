@@ -17,17 +17,20 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UITableView *section1;
     UITableView *section2;
     
+    UINavigationBar *pickerBar;
+    
     UIPickerView *picker;
     
     NSArray *pickerList;
+    
+    UISearchBar *searchBar;
 }
 
 @end
 
 @implementation AccViewController
 
-@synthesize username, usr, password, home, InterestedIn, profPic, email, firstName, lastName;
-
+@synthesize username, usr, password, home, InterestedIn, profPic, email, firstName, lastName, homeSearch;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,7 +52,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(edit)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushLeft)];
-    pickerList = [[NSArray alloc]initWithObjects:@"Male",@"Female",@"Both", nil];
+    pickerList = [[NSArray alloc]initWithObjects:
+                  @"Male",
+                  @"Female",
+                  @"Both",
+                  nil];
     
     //adding the image view
     profPic = [[UIImageView alloc]initWithFrame:CGRectMake(5, 69, 100, 100)];
@@ -80,6 +87,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     section2.dataSource = self;
     [self.view addSubview:section2];
     
+    //creating the picker bar
+    pickerBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UINavigationItem *navItem = [[UINavigationItem alloc]init];
+    navItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(pickerDone)];
+    pickerBar.items = [NSArray arrayWithObject:navItem];
+    
+    //creating search related things
+    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
+    searchBar.placeholder = @"Your Address";
+    
+    homeSearch = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
+    homeSearch.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSearch)];
+    homeSearch.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    homeSearch.delegate = self;
+    homeSearch.searchResultsDataSource = self;
+    homeSearch.searchResultsDelegate = self;
+    
     self.title = @"My Profile";
 }
 
@@ -106,6 +130,16 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [section2 endEditing:YES];
 }
 
+- (void)pickerDone{
+    UIPickerView *p = (UIPickerView*)InterestedIn.inputView;
+    InterestedIn.text = [NSString stringWithFormat:@"Interested In: %@",[pickerList objectAtIndex:[p selectedRowInComponent:0]]];
+    [InterestedIn resignFirstResponder];
+}
+
+- (void)cancelSearch{
+    [searchBar removeFromSuperview];
+    [homeSearch setActive:NO animated:YES];
+}
 #pragma mark - Table View Data Source and Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -161,48 +195,60 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (tableView == section2) {
         switch (indexPath.row) {
             case 0:
-                username = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, cell.bounds.size.width, cell.bounds.size.height)];
+                username = [[UITextField alloc]initWithFrame:CGRectMake(104, 4, cell.bounds.size.width, cell.bounds.size.height)];
                 username.placeholder = @"Username";
                 username.text = usr[@"username"];
-                username.font = [UIFont fontWithName:@"Arial" size:20];
                 username.returnKeyType = UIReturnKeyDone;
                 username.delegate = self;
+                cell.textLabel.text = @"Username:";
                 [cell.contentView addSubview:username];
                 break;
             case 1:
-                password = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, cell.bounds.size.width, cell.bounds.size.height)];
+                password = [[UITextField alloc]initWithFrame:CGRectMake(102, 4, cell.bounds.size.width, cell.bounds.size.height)];
                 password.secureTextEntry = YES;
                 password.placeholder = @"Password";
                 password.text = usr[@"password"];
-                password.font = [UIFont fontWithName:@"Arial" size:20];
                 password.returnKeyType = UIReturnKeyDone;
                 password.delegate = self;
+                cell.textLabel.text = @"Password:";
                 [cell.contentView addSubview:password];
                 break;
             case 2:
-                home = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, cell.bounds.size.width, cell.bounds.size.height)];
+                home = [[UITextField alloc]initWithFrame:CGRectMake(15, 4, cell.bounds.size.width, cell.bounds.size.height)];
                 home.placeholder = @"Search For Your Home";
-                //home.text = usr[@"home"];
-                home.font = [UIFont fontWithName:@"Arial" size:20];
                 home.returnKeyType = UIReturnKeyDone;
                 home.delegate = self;
                 [cell.contentView addSubview:home];
                 break;
             case 3:
-                email = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, cell.bounds.size.width, cell.bounds.size.height)];
-                email.placeholder = @"Your Email Address";
+                email = [[UITextField alloc]initWithFrame:CGRectMake(137, 4, cell.bounds.size.width, cell.bounds.size.height)];
+                email.placeholder = @"Email Address";
                 email.text = usr[@"email"];
-                email.font = [UIFont fontWithName:@"Arial" size:20];
                 email.returnKeyType = UIReturnKeyDone;
                 email.delegate = self;
+                cell.textLabel.text = @"Email Address:";
                 [cell.contentView addSubview:email];
                 break;
             case 4:
-                InterestedIn = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, cell.bounds.size.width, cell.bounds.size.height)];
+                InterestedIn = [[UITextField alloc]initWithFrame:CGRectMake(10, 4, cell.bounds.size.width, cell.bounds.size.height)];
+                InterestedIn.text = @"Interested In: ";
+                InterestedIn.delegate = self;
+                InterestedIn.inputAccessoryView = pickerBar;
+                
+                picker = [[UIPickerView alloc]init];
+                picker.delegate = self;
+                picker.dataSource = self;
+                picker.backgroundColor = [UIColor whiteColor];
+                
+                [InterestedIn setInputView:picker];
+                [cell.contentView addSubview:InterestedIn];
                 break;
             default:
                 break;
         }
+    }
+    if (tableView == homeSearch.searchResultsTableView){
+        
     }
     return cell;
 }
@@ -225,6 +271,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [alert show];
     [textField endEditing:YES];
     }
+    if (textField == home){
+        [homeSearch setActive:YES animated:YES];
+        [self.view addSubview:searchBar];
+        [searchBar becomeFirstResponder];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -234,5 +285,29 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #pragma mark - UIPickerViewDelegate
 
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    
+    return [pickerList objectAtIndex:row];
+}
+
+#pragma mark - UIPickerViewDatasource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return pickerList.count;
+}
+
+#pragma mark - Search Display Controller Delegate
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+    return YES;
+}
 
 @end
