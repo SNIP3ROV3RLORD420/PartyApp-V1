@@ -23,7 +23,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     NSArray *pickerList;
     
-    UISearchBar *searchBar;
+    UISearchBar *searcher;
+    
+    MKLocalSearch *localSearch;
+    MKLocalSearchResponse *results;
 }
 
 @end
@@ -94,10 +97,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     pickerBar.items = [NSArray arrayWithObject:navItem];
     
     //creating search related things
-    searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
-    searchBar.placeholder = @"Your Address";
+    searcher = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
+    searcher.placeholder = @"Your Address";
+    searcher.delegate = self;
     
-    homeSearch = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
+    homeSearch = [[UISearchDisplayController alloc]initWithSearchBar:searcher contentsController:self];
     homeSearch.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSearch)];
     homeSearch.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     homeSearch.delegate = self;
@@ -137,7 +141,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)cancelSearch{
-    [searchBar removeFromSuperview];
+    [searcher removeFromSuperview];
     [homeSearch setActive:NO animated:YES];
 }
 #pragma mark - Table View Data Source and Delegate
@@ -148,6 +152,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     if (tableView == section2){
         return 5;
+    }
+    if (tableView == homeSearch.searchResultsTableView){
+        return [results.mapItems count];
     }
     return 0;
 }
@@ -248,9 +255,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         }
     }
     if (tableView == homeSearch.searchResultsTableView){
+        MKMapItem *item = results.mapItems[indexPath.row];
         
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+        cell.textLabel.text = item.name;
+        cell.detailTextLabel.text = item.placemark.addressDictionary[@"Street"];
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == homeSearch.searchResultsTableView){
+        [homeSearch setActive:NO animated:YES];
+        
+        home.text = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    }
 }
 
 #pragma mark - UITextfieldDelegate
@@ -273,8 +293,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     }
     if (textField == home){
         [homeSearch setActive:YES animated:YES];
-        [self.view addSubview:searchBar];
-        [searchBar becomeFirstResponder];
+        [self.view addSubview:searcher];
+        [searcher becomeFirstResponder];
     }
 }
 
@@ -302,12 +322,44 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #pragma mark - Search Display Controller Delegate
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
-    return YES;
-}
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
-    return YES;
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    // Cancel any previous searches.
+    [localSearch cancel];
+    
+    MKMapItem *currentLoc = [MKMapItem mapItemForCurrentLocation];
+    
+    // Perform a new search.
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = searchBar.text;
+    request.region = MKCoordinateRegionMake(currentLoc.placemark.location.coordinate, MKCoordinateSpanMake(1000, 1000));
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error){
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        
+        if (error != nil) {
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Map Error",nil)
+                                        message:[error localizedDescription]
+                                       delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil] show];
+            return;
+        }
+        
+        if ([response.mapItems count] == 0) {
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Results",nil)
+                                        message:nil
+                                       delegate:nil
+                              cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil] show];
+            return;
+        }
+        
+        results = response;
+        
+        [homeSearch.searchResultsTableView reloadData];
+    }];
 }
 
 @end

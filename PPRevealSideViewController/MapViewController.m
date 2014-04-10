@@ -59,15 +59,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                  zoom:12];
     
     map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    //temp marker
-    
-    UIEdgeInsets mapInsets = UIEdgeInsetsMake(64, 0, 0, 0);
-    map.padding = mapInsets;
-    
-    GMSMarker *losAngeles = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(34.05, -118.25)];
-    losAngeles.title = @"Los Angeles";
-    losAngeles.map = map;
-    map.settings.zoomGestures = NO;
+    map.padding = UIEdgeInsetsMake(64, 0, 0, 0);
     map.myLocationEnabled = YES;
     map.settings.myLocationButton = YES;
     map.settings.compassButton = YES;

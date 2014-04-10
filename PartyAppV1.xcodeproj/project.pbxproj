@@ -61,6 +61,7 @@
 		BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */ = {isa = PBXBuildFile; fileRef = BF97AEB018E5FC8E00CB9F7E /* EPhoto(edit).png */; };
 		BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */; };
 		BF9FE70718EA0F2000E27324 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9FE70618EA0F2000E27324 /* menu.png */; };
+		BFBAB5C118F636AF0002F32B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3589B418DBDDA400865F59 /* MapKit.framework */; };
 		BFD62EEC18EDBE4B007B8344 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD62EEB18EDBE4B007B8344 /* Parse.framework */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
 		BFECC31418EB51BE0017131A /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = BFECC31318EB51BE0017131A /* add.png */; };
@@ -468,6 +469,7 @@
 				23BCBD7218DF9B6B001AA03A /* FacebookSDK.framework in Frameworks */,
 				23BCBC2C18DF9994001AA03A /* AudioToolbox.framework in Frameworks */,
 				23BCBC2A18DF998D001AA03A /* CFNetwork.framework in Frameworks */,
+				BFBAB5C118F636AF0002F32B /* MapKit.framework in Frameworks */,
 				23BCBC2618DF997B001AA03A /* libz.1.1.3.dylib in Frameworks */,
 				23BCBC2418DF996F001AA03A /* MobileCoreServices.framework in Frameworks */,
 				E0D903F414ED38B50072EECD /* QuartzCore.framework in Frameworks */,
