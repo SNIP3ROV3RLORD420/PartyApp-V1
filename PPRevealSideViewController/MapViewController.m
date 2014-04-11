@@ -7,7 +7,6 @@
 //
 
 #import "MapViewController.h"
-#import "RightViewController.h"
 #import "LoginViewController.h"
 #import "Comms.h"
 #import "CreateViewController.h"
@@ -27,10 +26,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     GMSMapView *map;
 }
-
-- (void)updateMap:(NSMutableArray*)allVisibleEvents;
-- (NSMutableArray*)processAllEvents:(NSMutableArray*)allEvents;
-
 @end
 
 @implementation MapViewController
@@ -52,7 +47,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
     [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionNavigationBar];
     
-    [self.revealSideViewController setFakeiOS7StatusBarColor:UIColorFromRGB(0x4c4c4c)];
+    [self.revealSideViewController setFakeiOS7StatusBarColor:[UIColor blackColor]];
     
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:34.05
                                                             longitude:-118.25
@@ -103,6 +98,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #pragma mark - Managing Button Methods
 
 - (void)pushLeft:(id)sender{
+    map.userInteractionEnabled = NO;
     [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
 
@@ -122,32 +118,11 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [searchController setActive:NO animated:YES];
 }
 
-#pragma mark - All Map View Class methods
+#pragma mark - Right View Controller Delegate
 
-- (void)updateMap:(NSMutableArray *)allVisibleEvents{
-    //this method will take the array from processAllEvents
-    //this method will configure the map to display the events
-    //will be called when the map is slid up and will be called in the left view controller delegate method leftViewControllerDidFinish
+- (void)RightViewControllerDidPop:(RightViewController *)rv{
+    map.userInteractionEnabled = YES;
 }
-
-- (NSMutableArray*)processAllEvents:(NSMutableArray *)allEvents{
-    //this method will process the list of all current events from the server
-    //it will return an array of the events that have not passed and should be visible
-    //for now return an empty array
-    return [NSMutableArray arrayWithObject:nil];
-}
-
-#pragma mark - Left View Controller Delegate
-
-- (void)LeftViewControllerDidPop:(LeftViewController *)lv{
-    [self updateMap:[self processAllEvents:allEvents]];
-}
-
-- (void)addEvent:(Event *)e{
-    [allEvents insertObject:e atIndex:0];
-    [self updateMap:[self processAllEvents:allEvents]];
-}
-
 #pragma mark - Login View Controller Delegate
 
 - (void)loginViewControllerDidFinish:(LoginViewController *)lv{

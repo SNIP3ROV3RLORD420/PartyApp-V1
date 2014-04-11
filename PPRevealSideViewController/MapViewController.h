@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "LoginViewController.h"
+#import "RightViewController.h"
 #import "CreateViewController.h"
 
-@interface MapViewController : UIViewController <LeftViewControllerDelegate, LoginViewControllerDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <RightViewControllerDelegate, LoginViewControllerDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UISearchDisplayController *searchController;
 

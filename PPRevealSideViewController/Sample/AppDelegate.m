@@ -48,7 +48,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     _revealSideViewController.delegate = self;
     
-    _revealSideViewController.options = PPRevealSideOptionsiOS7StatusBarFading | PPRevealSideOptionsBounceAnimations;
+    _revealSideViewController.options = PPRevealSideOptionsiOS7StatusBarFading;
     
     self.window.rootViewController = _revealSideViewController;
     

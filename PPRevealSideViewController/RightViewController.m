@@ -261,6 +261,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 0){
+            if ([self.revealSideViewController.rootViewController isKindOfClass:[AccViewController class]]) {
+                [self.revealSideViewController popViewControllerAnimated:YES];
+            }
+            else{
             NSMutableArray *arr = [[NSMutableArray alloc]init];
             [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
             [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
@@ -276,8 +280,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
+            }
         }
         if (indexPath.row == 1) {
+            if ([self.revealSideViewController.rootViewController isKindOfClass:[MapViewController class]]) {
+                [self.revealSideViewController popViewControllerAnimated:YES];
+            }
+            else{
             NSMutableArray *arr = [[NSMutableArray alloc]init];
             [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
             [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
@@ -293,8 +302,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
+            }
         }
         if (indexPath.row == 3){
+            if ([self.revealSideViewController.rootViewController isKindOfClass:[SettingsViewController class]]) {
+                [self.revealSideViewController popViewControllerAnimated:YES];
+            }
+            else{
             NSMutableArray *arr = [[NSMutableArray alloc]init];
             [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
             [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
@@ -310,6 +324,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView endUpdates];
+            }
 
         }
     }
@@ -338,38 +353,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)updateEventLists{
-    NSMutableArray *allEvents = [[NSMutableArray alloc]init]; //some method or online database of events
-    hostEvents = [self getEventsHostOf:allEvents];
-    invitedEvents = [self getEventsInvitedTo:allEvents];
 }
-
-#pragma mark - Event Methods
-
-- (NSMutableArray*)getEventsHostOf:(NSArray*)allEvents{
-    NSMutableArray *hostOf = [[NSMutableArray alloc]init];
-#warning This method will start taking longer and longer the more events there are, but to start out should be fine
-    for (Event* e in allEvents) {
-        for (PFUser* user in e.hosts) {
-            if ([user[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
-                [hostOf addObject:e];
-            }
-        }
-    }
-    return hostOf;
-}
-
-- (NSMutableArray*)getEventsInvitedTo:(NSArray*)allEvents{
-    NSMutableArray* invitedTo = [[NSMutableArray alloc]init];
-#warning This method will start taking longer and longer the more events there are, but to start out should be fine
-    for (Event* e in allEvents) {
-        for (PFUser* user in e.invited) {
-            if ([user[@"name"] isEqualToString:[PFUser currentUser][@"name"]]) {
-                [invitedTo addObject:e];
-            }
-        }
-    }
-    return invitedTo;
-}
-
 
 @end

@@ -11,8 +11,18 @@
 #import "User.h"
 #import <UIKit/UIKit.h>
 
+@class RightViewController;
+
+@protocol RightViewControllerDelegate <NSObject>
+
+- (void)RightViewControllerDidPop:(RightViewController*)rv;
+
+@end
+
 @interface RightViewController : UITableViewController
 
 @property (nonatomic, weak) PFUser *usr;
+
+@property (nonatomic, strong) id <RightViewControllerDelegate> delegate;
 
 @end

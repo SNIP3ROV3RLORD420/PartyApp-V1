@@ -98,7 +98,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     //creating search related things
     searcher = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
-    searcher.placeholder = @"Your Address";
+    searcher.placeholder = @"Search for your address";
     searcher.delegate = self;
     
     homeSearch = [[UISearchDisplayController alloc]initWithSearchBar:searcher contentsController:self];
@@ -156,6 +156,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (tableView == homeSearch.searchResultsTableView){
         return [results.mapItems count];
     }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == homeSearch.searchResultsTableView)
+        return 44;
     return 0;
 }
 
@@ -222,8 +228,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                 break;
             case 2:
                 home = [[UITextField alloc]initWithFrame:CGRectMake(15, 4, cell.bounds.size.width, cell.bounds.size.height)];
-                home.placeholder = @"Search For Your Home";
-                home.returnKeyType = UIReturnKeyDone;
+                home.placeholder = @"Home Address";
                 home.delegate = self;
                 [cell.contentView addSubview:home];
                 break;
@@ -320,7 +325,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return pickerList.count;
 }
 
-#pragma mark - Search Display Controller Delegate
+#pragma mark - SearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     // Cancel any previous searches.
@@ -340,13 +345,37 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
-        if (error != nil) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Map Error",nil)
-                                        message:[error localizedDescription]
+        if ([response.mapItems count] == 0) {
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Results",nil)
+                                        message:nil
                                        delegate:nil
                               cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil] show];
             return;
         }
+        
+        results = response;
+        
+        [homeSearch.searchResultsTableView reloadData];
+    }];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    // Cancel any previous searches.
+    [localSearch cancel];
+    
+    MKMapItem *currentLoc = [MKMapItem mapItemForCurrentLocation];
+    
+    // Perform a new search.
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = searchText;
+    request.region = MKCoordinateRegionMake(currentLoc.placemark.location.coordinate, MKCoordinateSpanMake(1000, 1000));
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error){
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         if ([response.mapItems count] == 0) {
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Results",nil)
@@ -360,6 +389,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         
         [homeSearch.searchResultsTableView reloadData];
     }];
+
 }
 
 @end

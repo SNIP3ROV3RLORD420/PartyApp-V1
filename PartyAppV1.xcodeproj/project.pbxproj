@@ -961,8 +961,6 @@
 			children = (
 				BF3589B118DBDC3A00865F59 /* MapViewController.h */,
 				BF3589B218DBDC3A00865F59 /* MapViewController.m */,
-				BF79F76618E3C0FE0013ADB5 /* CreateViewController.h */,
-				BF79F76718E3C0FE0013ADB5 /* CreateViewController.m */,
 				BF0A92E318F354F50055D520 /* AccViewController.h */,
 				BF0A92E418F354F50055D520 /* AccViewController.m */,
 				BF92797B18EE34B70092D287 /* SettingsViewController.h */,
@@ -987,6 +985,8 @@
 		BFE23FD318E21B8800D37F4C /* Sub-Controllers(left) */ = {
 			isa = PBXGroup;
 			children = (
+				BF79F76618E3C0FE0013ADB5 /* CreateViewController.h */,
+				BF79F76718E3C0FE0013ADB5 /* CreateViewController.m */,
 				BF97AEF918E775B900CB9F7E /* FreindListViewController.h */,
 				BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */,
 			);
