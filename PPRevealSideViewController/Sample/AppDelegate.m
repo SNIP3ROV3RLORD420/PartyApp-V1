@@ -60,6 +60,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x34B085)];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         [[UITabBar appearance] setTintColor:UIColorFromRGB(0x34B085)];
     }
     

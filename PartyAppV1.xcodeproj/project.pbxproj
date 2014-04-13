@@ -41,8 +41,12 @@
 		5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5635878E1605F51A003BC599 /* Default-568h@2x.png */; };
 		BF02365318EC884600DCAC1C /* sampleProf.png in Resources */ = {isa = PBXBuildFile; fileRef = BF02365218EC884600DCAC1C /* sampleProf.png */; };
 		BF0A92E518F354F50055D520 /* AccViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0A92E418F354F50055D520 /* AccViewController.m */; };
-		BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589AF18DBDBB300865F59 /* RightViewController.m */; };
 		BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF3589B218DBDC3A00865F59 /* MapViewController.m */; };
+		BF36BD1D18FB110B0080B6BC /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF36BD1818FB110B0080B6BC /* SIAlertView.bundle */; };
+		BF36BD1E18FB110B0080B6BC /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF36BD1A18FB110B0080B6BC /* SIAlertView.m */; };
+		BF36BD1F18FB110B0080B6BC /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF36BD1C18FB110B0080B6BC /* UIWindow+SIUtils.m */; };
+		BF36BD2318FB1CF10080B6BC /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BF36BD2218FB1CF10080B6BC /* ODRefreshControl.m */; };
+		BF36BD2618FB1FE90080B6BC /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF36BD2518FB1FE90080B6BC /* LeftViewController.m */; };
 		BF6607B418E8E4D9003F9B9E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B318E8E4D9003F9B9E /* AVFoundation.framework */; };
 		BF6607B618E8E4E3003F9B9E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B518E8E4E3003F9B9E /* CoreData.framework */; };
 		BF6607B818E8E4F5003F9B9E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6607B718E8E4F5003F9B9E /* GLKit.framework */; };
@@ -405,11 +409,18 @@
 		BF02365218EC884600DCAC1C /* sampleProf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleProf.png; sourceTree = "<group>"; };
 		BF0A92E318F354F50055D520 /* AccViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccViewController.h; sourceTree = "<group>"; };
 		BF0A92E418F354F50055D520 /* AccViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccViewController.m; sourceTree = "<group>"; };
-		BF3589AE18DBDBB300865F59 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
-		BF3589AF18DBDBB300865F59 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		BF3589B118DBDC3A00865F59 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		BF3589B218DBDC3A00865F59 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		BF3589B418DBDDA400865F59 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		BF36BD1818FB110B0080B6BC /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
+		BF36BD1918FB110B0080B6BC /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
+		BF36BD1A18FB110B0080B6BC /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
+		BF36BD1B18FB110B0080B6BC /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
+		BF36BD1C18FB110B0080B6BC /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		BF36BD2118FB1CF10080B6BC /* ODRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODRefreshControl.h; sourceTree = "<group>"; };
+		BF36BD2218FB1CF10080B6BC /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODRefreshControl.m; sourceTree = "<group>"; };
+		BF36BD2418FB1FE90080B6BC /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
+		BF36BD2518FB1FE90080B6BC /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		BF6607B318E8E4D9003F9B9E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BF6607B518E8E4E3003F9B9E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		BF6607B718E8E4F5003F9B9E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -992,6 +1003,27 @@
 			name = "Sub-Controllers(Right)";
 			sourceTree = "<group>";
 		};
+		BF36BD1718FB110B0080B6BC /* SIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				BF36BD1818FB110B0080B6BC /* SIAlertView.bundle */,
+				BF36BD1918FB110B0080B6BC /* SIAlertView.h */,
+				BF36BD1A18FB110B0080B6BC /* SIAlertView.m */,
+				BF36BD1B18FB110B0080B6BC /* UIWindow+SIUtils.h */,
+				BF36BD1C18FB110B0080B6BC /* UIWindow+SIUtils.m */,
+			);
+			path = SIAlertView;
+			sourceTree = "<group>";
+		};
+		BF36BD2018FB1CF10080B6BC /* ODRefreshControl */ = {
+			isa = PBXGroup;
+			children = (
+				BF36BD2118FB1CF10080B6BC /* ODRefreshControl.h */,
+				BF36BD2218FB1CF10080B6BC /* ODRefreshControl.m */,
+			);
+			path = ODRefreshControl;
+			sourceTree = "<group>";
+		};
 		BF8A850518DCB16D00C636A4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1030,10 +1062,10 @@
 			children = (
 				BFE23FD318E21B8800D37F4C /* Sub-Controllers(left) */,
 				BF31C39D18DE905600A07190 /* Sub-Controllers(Right) */,
-				BF3589AE18DBDBB300865F59 /* RightViewController.h */,
-				BF3589AF18DBDBB300865F59 /* RightViewController.m */,
 				BFDB558218DBF68A0012C2DF /* LoginViewController.h */,
 				BFDB558318DBF68A0012C2DF /* LoginViewController.m */,
+				BF36BD2418FB1FE90080B6BC /* LeftViewController.h */,
+				BF36BD2518FB1FE90080B6BC /* LeftViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1101,6 +1133,8 @@
 				E0D35A6014F283250013EB90 /* Controllers */,
 				E0D35A5114F2831B0013EB90 /* AppDelegate.h */,
 				E0D35A4E14F2831B0013EB90 /* AppDelegate.m */,
+				BF36BD2018FB1CF10080B6BC /* ODRefreshControl */,
+				BF36BD1718FB110B0080B6BC /* SIAlertView */,
 				E0D35A4A14F282FD0013EB90 /* PPRevealSideviewController */,
 				E0D903C514ED2A610072EECD /* Supporting Files */,
 				5635878E1605F51A003BC599 /* Default-568h@2x.png */,
@@ -1315,6 +1349,7 @@
 				BFD5C23E18F9DFC0002E98F4 /* accountS.png in Resources */,
 				BF6607C618E8E904003F9B9E /* GoogleMaps.bundle in Resources */,
 				BFD5C24B18F9E28E002E98F4 /* settingsN.png in Resources */,
+				BF36BD1D18FB110B0080B6BC /* SIAlertView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1347,13 +1382,16 @@
 				BF8A850B18DCB19700C636A4 /* Event.m in Sources */,
 				BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */,
 				BF3589B318DBDC3A00865F59 /* MapViewController.m in Sources */,
+				BF36BD1E18FB110B0080B6BC /* SIAlertView.m in Sources */,
 				23BCBD7F18DF9C57001AA03A /* Comms.m in Sources */,
 				BF0A92E518F354F50055D520 /* AccViewController.m in Sources */,
+				BF36BD2618FB1FE90080B6BC /* LeftViewController.m in Sources */,
 				BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */,
 				BF79F76818E3C0FE0013ADB5 /* CreateViewController.m in Sources */,
+				BF36BD1F18FB110B0080B6BC /* UIWindow+SIUtils.m in Sources */,
+				BF36BD2318FB1CF10080B6BC /* ODRefreshControl.m in Sources */,
 				BFD5C22D18F9D775002E98F4 /* AboutViewController.m in Sources */,
 				E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */,
-				BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */,
 				BF92797D18EE34B70092D287 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

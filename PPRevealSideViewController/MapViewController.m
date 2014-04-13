@@ -57,7 +57,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
                                                                  zoom:12];
     
     map = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    map.padding = UIEdgeInsetsMake(64, 0, 0, 0);
+    map.padding = UIEdgeInsetsMake(64, 0, 44, 0);
     map.myLocationEnabled = YES;
     map.settings.myLocationButton = YES;
     map.settings.compassButton = YES;
@@ -113,7 +113,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)create:(id)sender{
-    LeftViewController *lv = [[LeftViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    CreateViewController *lv = [[CreateViewController alloc]initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:lv animated:YES];
 }
 
@@ -128,17 +128,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     [searchController setActive:NO animated:YES];
 }
 
-#pragma mark - Right View Controller Delegate
-
-- (void)RightViewControllerDidPop:(RightViewController *)rv{
-    map.userInteractionEnabled = YES;
-}
 #pragma mark - Login View Controller Delegate
 
 - (void)loginViewControllerDidFinish:(LoginViewController *)lv{
 }
-
-#pragma mark - Map Delegate
 
 #pragma mark - Table View Delegate and Data Source
 

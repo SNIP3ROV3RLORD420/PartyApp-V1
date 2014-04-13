@@ -8,11 +8,12 @@
 //
 
 #import "LoginViewController.h"
-#import "RightViewController.h"
+#import "LeftViewController.h"
 #import "AccViewController.h"
 #import "AboutViewController.h"
 #import "SettingsViewController.h"
 #import "MapViewController.h"
+#import "SIAlertView.h"
 #import <Parse/Parse.h>
 #import "Comms.h"
 
@@ -87,10 +88,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (void)preloadLeft{
-    RightViewController *c = [[RightViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    LeftViewController *c = [[LeftViewController alloc] init];
     [self.revealSideViewController preloadViewController:c forSide:PPRevealSideDirectionLeft];
     PPRSLog(@"Preloaded Left View");
-    PP_AUTORELEASE(c);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -152,8 +152,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             
         } else {
             //Something bad has ocurred
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid username or password" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
+            SIAlertView *alert = [[SIAlertView alloc]initWithTitle:@"Oops!" andMessage:@"We couldn't find your account! Make sure your Username and Password are correct."];
+            [alert addButtonWithTitle:@"Ok"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert){
+                              }];
+            alert.transitionStyle = SIAlertViewTransitionStyleSlideFromBottom;
+            [alert show];
             [loginButton setTitle:@"Log in" forState:UIControlStateNormal];
         }
     }];
@@ -161,12 +166,22 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)create:(id)sender{
     if ([username.text isEqualToString:@""] || [password.text isEqualToString:@""]){
-        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [errorView show];
+        SIAlertView *alert = [[SIAlertView alloc]initWithTitle:@"Oops!" andMessage:@"Please enter in a Username and password. Your account will be created with the Username and Password you enter!"];
+        [alert addButtonWithTitle:@"Ok"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert){
+                          }];
+        alert.transitionStyle = SIAlertViewTransitionStyleSlideFromBottom;
+        [alert show];
     }
     else if (![self correctPassword]){
-        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Password must be more than 5 characters long and contain 1 number" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [errorView show];
+        SIAlertView *alert = [[SIAlertView alloc]initWithTitle:@"Oops!" andMessage:@"Password must be more than 5 characters long and must contain 1 number!"];
+        [alert addButtonWithTitle:@"Ok"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert){
+                          }];
+        alert.transitionStyle = SIAlertViewTransitionStyleSlideFromBottom;
+        [alert show];
     }
     else{
         [createAccount setEnabled:NO];
