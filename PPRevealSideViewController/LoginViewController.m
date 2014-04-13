@@ -207,7 +207,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #pragma makr - Textfield Delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self.view endEditing:YES];
+    if (textField == username){
+        [password becomeFirstResponder];
+    }
+    if (textField == password){
+        [self.view endEditing:YES];
+    }
     return YES;
 }
 
@@ -228,7 +233,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (length >= 5 && numbersCount > 0) {
         return YES;
     }
-    NSLog(@"Numbers in password: %i",numbersCount);
     return NO;
 }
 
