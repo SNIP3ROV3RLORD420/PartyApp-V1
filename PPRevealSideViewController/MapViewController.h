@@ -10,10 +10,13 @@
 #import <MapKit/MapKit.h>
 #import "LoginViewController.h"
 #import "RightViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 #import "CreateViewController.h"
 
-@interface MapViewController : UIViewController <RightViewControllerDelegate, LoginViewControllerDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <RightViewControllerDelegate, LoginViewControllerDelegate, UISearchDisplayDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) UISearchDisplayController *searchController;
+
+@property (strong, nonatomic) GMSMapView *map;
 
 @end

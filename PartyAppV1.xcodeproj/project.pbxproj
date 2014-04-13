@@ -62,6 +62,16 @@
 		BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */; };
 		BF9FE70718EA0F2000E27324 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9FE70618EA0F2000E27324 /* menu.png */; };
 		BFBAB5C118F636AF0002F32B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3589B418DBDDA400865F59 /* MapKit.framework */; };
+		BFD5C22D18F9D775002E98F4 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5C22C18F9D775002E98F4 /* AboutViewController.m */; };
+		BFD5C23E18F9DFC0002E98F4 /* accountS.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C23618F9DFC0002E98F4 /* accountS.png */; };
+		BFD5C24218F9DFC0002E98F4 /* mapS.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C23A18F9DFC0002E98F4 /* mapS.png */; };
+		BFD5C24318F9DFC0002E98F4 /* aboutS.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C23B18F9DFC0002E98F4 /* aboutS.png */; };
+		BFD5C24518F9DFC0002E98F4 /* settingsS.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C23D18F9DFC0002E98F4 /* settingsS.png */; };
+		BFD5C24A18F9E28E002E98F4 /* accountN.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C24618F9E28E002E98F4 /* accountN.png */; };
+		BFD5C24B18F9E28E002E98F4 /* settingsN.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C24718F9E28E002E98F4 /* settingsN.png */; };
+		BFD5C24C18F9E28E002E98F4 /* mapN.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C24818F9E28E002E98F4 /* mapN.png */; };
+		BFD5C24D18F9E28E002E98F4 /* aboutN.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C24918F9E28E002E98F4 /* aboutN.png */; };
+		BFD5C25118F9F143002E98F4 /* logOut.png in Resources */ = {isa = PBXBuildFile; fileRef = BFD5C25018F9F143002E98F4 /* logOut.png */; };
 		BFD62EEC18EDBE4B007B8344 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFD62EEB18EDBE4B007B8344 /* Parse.framework */; };
 		BFDB558418DBF68A0012C2DF /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB558318DBF68A0012C2DF /* LoginViewController.m */; };
 		BFECC31418EB51BE0017131A /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = BFECC31318EB51BE0017131A /* add.png */; };
@@ -423,6 +433,17 @@
 		BF97AEF918E775B900CB9F7E /* FreindListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreindListViewController.h; sourceTree = "<group>"; };
 		BF97AEFA18E775B900CB9F7E /* FreindListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreindListViewController.m; sourceTree = "<group>"; };
 		BF9FE70618EA0F2000E27324 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		BFD5C22B18F9D775002E98F4 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		BFD5C22C18F9D775002E98F4 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		BFD5C23618F9DFC0002E98F4 /* accountS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accountS.png; sourceTree = "<group>"; };
+		BFD5C23A18F9DFC0002E98F4 /* mapS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapS.png; sourceTree = "<group>"; };
+		BFD5C23B18F9DFC0002E98F4 /* aboutS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutS.png; sourceTree = "<group>"; };
+		BFD5C23D18F9DFC0002E98F4 /* settingsS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsS.png; sourceTree = "<group>"; };
+		BFD5C24618F9E28E002E98F4 /* accountN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accountN.png; sourceTree = "<group>"; };
+		BFD5C24718F9E28E002E98F4 /* settingsN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsN.png; sourceTree = "<group>"; };
+		BFD5C24818F9E28E002E98F4 /* mapN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapN.png; sourceTree = "<group>"; };
+		BFD5C24918F9E28E002E98F4 /* aboutN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboutN.png; sourceTree = "<group>"; };
+		BFD5C25018F9F143002E98F4 /* logOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logOut.png; sourceTree = "<group>"; };
 		BFD62EEB18EDBE4B007B8344 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		BFDB558218DBF68A0012C2DF /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		BFDB558318DBF68A0012C2DF /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -965,6 +986,8 @@
 				BF0A92E418F354F50055D520 /* AccViewController.m */,
 				BF92797B18EE34B70092D287 /* SettingsViewController.h */,
 				BF92797C18EE34B70092D287 /* SettingsViewController.m */,
+				BFD5C22B18F9D775002E98F4 /* AboutViewController.h */,
+				BFD5C22C18F9D775002E98F4 /* AboutViewController.m */,
 			);
 			name = "Sub-Controllers(Right)";
 			sourceTree = "<group>";
@@ -1089,6 +1112,15 @@
 		E0D903C514ED2A610072EECD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BFD5C25018F9F143002E98F4 /* logOut.png */,
+				BFD5C24618F9E28E002E98F4 /* accountN.png */,
+				BFD5C24718F9E28E002E98F4 /* settingsN.png */,
+				BFD5C24818F9E28E002E98F4 /* mapN.png */,
+				BFD5C24918F9E28E002E98F4 /* aboutN.png */,
+				BFD5C23618F9DFC0002E98F4 /* accountS.png */,
+				BFD5C23A18F9DFC0002E98F4 /* mapS.png */,
+				BFD5C23B18F9DFC0002E98F4 /* aboutS.png */,
+				BFD5C23D18F9DFC0002E98F4 /* settingsS.png */,
 				BF02365218EC884600DCAC1C /* sampleProf.png */,
 				BFECC31318EB51BE0017131A /* add.png */,
 				BF9FE70618EA0F2000E27324 /* menu.png */,
@@ -1266,14 +1298,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFD5C24218F9DFC0002E98F4 /* mapS.png in Resources */,
 				BFECC31418EB51BE0017131A /* add.png in Resources */,
+				BFD5C24A18F9E28E002E98F4 /* accountN.png in Resources */,
 				E0D903C914ED2A610072EECD /* InfoPlist.strings in Resources */,
+				BFD5C24518F9DFC0002E98F4 /* settingsS.png in Resources */,
 				BF02365318EC884600DCAC1C /* sampleProf.png in Resources */,
+				BFD5C24D18F9E28E002E98F4 /* aboutN.png in Resources */,
 				23BCBD8118DF9CCA001AA03A /* FBUserSettingsViewResources.bundle in Resources */,
 				BF9FE70718EA0F2000E27324 /* menu.png in Resources */,
 				BF97AEB118E5FC8E00CB9F7E /* EPhoto(edit).png in Resources */,
+				BFD5C24318F9DFC0002E98F4 /* aboutS.png in Resources */,
 				5635878F1605F51A003BC599 /* Default-568h@2x.png in Resources */,
+				BFD5C25118F9F143002E98F4 /* logOut.png in Resources */,
+				BFD5C24C18F9E28E002E98F4 /* mapN.png in Resources */,
+				BFD5C23E18F9DFC0002E98F4 /* accountS.png in Resources */,
 				BF6607C618E8E904003F9B9E /* GoogleMaps.bundle in Resources */,
+				BFD5C24B18F9E28E002E98F4 /* settingsN.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,6 +1351,7 @@
 				BF0A92E518F354F50055D520 /* AccViewController.m in Sources */,
 				BF97AEFB18E775B900CB9F7E /* FreindListViewController.m in Sources */,
 				BF79F76818E3C0FE0013ADB5 /* CreateViewController.m in Sources */,
+				BFD5C22D18F9D775002E98F4 /* AboutViewController.m in Sources */,
 				E0D35A6814F283AE0013EB90 /* AppDelegate.m in Sources */,
 				BF3589B018DBDBB300865F59 /* RightViewController.m in Sources */,
 				BF92797D18EE34B70092D287 /* SettingsViewController.m in Sources */,

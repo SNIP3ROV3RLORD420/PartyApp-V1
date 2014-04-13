@@ -20,8 +20,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 @interface RightViewController (){
     NSMutableArray *hostEvents;
     NSMutableArray *invitedEvents;
-    
-    BOOL firstLoad;
 }
 
 @end
@@ -41,8 +39,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    firstLoad = YES;
     
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 320);
     
@@ -84,7 +80,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 50;
+        return .5;
     }
     return 44;
 }
@@ -106,7 +102,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 5;
+        return 1;
     }
     if (section == 1) {
         if (hostEvents.count == 0) {
@@ -124,44 +120,55 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    UIView *view;
-    
     if (section == 0) {
+        //customizing the initial view
+        UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 240, 50)];
+        view.backgroundColor = UIColorFromRGB(0x323232);
         
-    view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
-    view.backgroundColor = UIColorFromRGB(0x323232);
-    
-    UIImageView *pic = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 40, 40)];
-    pic.image = [UIImage imageNamed:@"sampleProf.png"];
-    
-    UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 200, 40)];
-    name.text = usr[@"name"]; //not working which is weird
-    if (!name.text)
-        name.text = @"Display Name";
-    name.textColor = [UIColor whiteColor];
-    
-    [view addSubview:pic];
-    [view addSubview:name];
+        //making the left view
+        UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
+        leftView.backgroundColor = UIColorFromRGB(0x323232);
         
+        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 40, 40)];
+        image.image = [UIImage imageNamed:@"sampleProf.png"];
+        UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(50, 5, 120, 40)];
+        name.text = usr[@"name"];
+        name.textColor = [UIColor whiteColor];
+        if (!name.text) {
+            name.text = @"Your Name";
+        }
+        name.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        [leftView addSubview:image];
+        [leftView addSubview:name];
+        
+        [view addSubview:leftView];
+        
+        //making the right view
+        UIView *rightView = [[UIView alloc]initWithFrame:CGRectMake(200, 0, 100, 50)];
+        
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(5, 5, 40, 40)];
+        [button setImage:[UIImage imageNamed:@"logOut.png"] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(logOut) forControlEvents:UIControlEventTouchUpInside];
+        
+        [rightView addSubview:button];
+        [view addSubview:rightView];
+        
+        return view;
     }
-    else{
-    view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 22)];
-    view.backgroundColor = UIColorFromRGB(0x323232);
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 22)];
-    label.textColor = UIColorFromRGB(0xa6a6a6);
-    if (section == 1) {
-        label.text = @"Hosting";
-    }
-    if (section == 2) {
-        label.text = @"Invited To";
-    }
-    [view addSubview:label];
-    }
-    
-    return view;
+    return nil;
 }
 
+
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return @"Hosting";
+    }
+    if (section == 2) {
+        return @"Invited To";
+    }
+    return nil;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,57 +181,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     UIView *bc = [[UIView alloc]initWithFrame:CGRectMake(5, 0, 100, 50)];
     bc.backgroundColor = UIColorFromRGB(0x191919);
     
-    if (indexPath.section == 0) {
-        
-        switch (indexPath.row) {
-            case 0:
-                cell.textLabel.text = @"My Account";
-                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-                [cell setSelectedBackgroundView:bc];
-                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                cell.backgroundColor = UIColorFromRGB(0x323232);
-                break;
-            case 1:
-                cell.textLabel.text = @"Map";
-                if (firstLoad) {
-                    cell.textLabel.textColor = [UIColor whiteColor];
-                }
-                else
-                    cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-                [cell setSelectedBackgroundView:bc];
-                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                if (firstLoad) {
-                    cell.backgroundColor = UIColorFromRGB(0x191919);
-                }
-                else
-                    cell.backgroundColor = UIColorFromRGB(0x323232);
-                firstLoad = NO;
-                break;
-            case 2:
-                cell.textLabel.text = @"Other";
-                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-                [cell setSelectedBackgroundView:bc];
-                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                cell.backgroundColor = UIColorFromRGB(0x323232);
-                break;
-            case 3:
-                cell.textLabel.text = @"Settings";
-                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-                [cell setSelectedBackgroundView:bc];
-                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                cell.backgroundColor = UIColorFromRGB(0x323232);
-                break;
-            case 4:
-                cell.textLabel.text = @"About";
-                cell.textLabel.textColor = UIColorFromRGB(0xa6a6a6);
-                [cell setSelectedBackgroundView:bc];
-                cell.textLabel.highlightedTextColor = [UIColor whiteColor];
-                cell.backgroundColor = UIColorFromRGB(0x323232);
-                break;
-            default:
-                break;
-        }
-    }
     if (indexPath.section == 1) {
         if (hostEvents.count == 0) {
             cell.textLabel.text = @"Not Hosting Any";
@@ -258,78 +214,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0){
-            if ([self.revealSideViewController.rootViewController isKindOfClass:[AccViewController class]]) {
-                [self.revealSideViewController popViewControllerAnimated:YES];
-            }
-            else{
-            NSMutableArray *arr = [[NSMutableArray alloc]init];
-            [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:3 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-            
-            AccViewController *av = [[AccViewController alloc]init];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:av];
-            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
-            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
-            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
-            
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView endUpdates];
-            }
-        }
-        if (indexPath.row == 1) {
-            if ([self.revealSideViewController.rootViewController isKindOfClass:[MapViewController class]]) {
-                [self.revealSideViewController popViewControllerAnimated:YES];
-            }
-            else{
-            NSMutableArray *arr = [[NSMutableArray alloc]init];
-            [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:3 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-            
-            MapViewController *mv = [[MapViewController alloc]init];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
-            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
-            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
-            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
-            
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView endUpdates];
-            }
-        }
-        if (indexPath.row == 3){
-            if ([self.revealSideViewController.rootViewController isKindOfClass:[SettingsViewController class]]) {
-                [self.revealSideViewController popViewControllerAnimated:YES];
-            }
-            else{
-            NSMutableArray *arr = [[NSMutableArray alloc]init];
-            [arr addObject:[NSIndexPath indexPathForRow:0 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:1 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:2 inSection:0]];
-            [arr addObject:[NSIndexPath indexPathForRow:4 inSection:0]];
-            
-            SettingsViewController *sv = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:sv];
-            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES];
-            [self.tableView cellForRowAtIndexPath:indexPath].backgroundColor = UIColorFromRGB(0x191919);
-            [self.tableView cellForRowAtIndexPath:indexPath].textLabel.textColor = [UIColor whiteColor];
-            
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView endUpdates];
-            }
-
-        }
-    }
-}
-
 #pragma mark - Anonymous
 
 - (void)hide{
@@ -355,4 +239,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)updateEventLists{
 }
 
+#pragma mark - Button Methods
+
+- (void)logOut{
+    LoginViewController *lv = [[LoginViewController alloc]init];
+    [self.revealSideViewController popViewControllerWithNewCenterController:lv animated:YES];
+}
 @end

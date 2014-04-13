@@ -9,6 +9,9 @@
 
 #import "LoginViewController.h"
 #import "RightViewController.h"
+#import "AccViewController.h"
+#import "AboutViewController.h"
+#import "SettingsViewController.h"
 #import "MapViewController.h"
 #import <Parse/Parse.h>
 #import "Comms.h"
@@ -37,9 +40,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideDirectionNone];
-    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
     
     self.view.backgroundColor = UIColorFromRGB(0x34B085);
     
@@ -84,7 +84,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     
     [self.navigationController setNavigationBarHidden:YES];
     //Everytime u see the login view, user needs to logout
-    [PFUser logOut];
 }
 
 - (void)preloadLeft{
@@ -96,6 +95,10 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [PFUser logOut];
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideDirectionNone];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideDirectionNone];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadLeft) object:nil];
     [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.4];
 }
@@ -121,8 +124,31 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             [loginButton setTitle:@"Logged In" forState:UIControlStateNormal];
             
             MapViewController *mv = [[MapViewController alloc]init];
-            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
-            [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES completion:^{PPRSLog(@"Logged In")}];
+            AccViewController *av = [[AccViewController alloc]init];
+            SettingsViewController *sv = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
+            AboutViewController *ab = [[AboutViewController alloc]init];
+            
+            UINavigationController *mn = [[UINavigationController alloc]initWithRootViewController:mv];
+            UINavigationController *an = [[UINavigationController alloc]initWithRootViewController:av];
+            UINavigationController *sn = [[UINavigationController alloc]initWithRootViewController:sv];
+            UINavigationController *abn = [[UINavigationController alloc]initWithRootViewController:ab];
+            
+            mn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Map"
+                                                         image:[UIImage imageNamed:@"mapN.png"]
+                                                 selectedImage:[UIImage imageNamed:@"mapS.png"]];
+            an.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Account"
+                                                         image:[UIImage imageNamed:@"accountN.png"]
+                                                 selectedImage:[UIImage imageNamed:@"accountS.png"]];
+            sn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Settings"
+                                                         image:[UIImage imageNamed:@"settingsN.png"]
+                                                 selectedImage:[UIImage imageNamed:@"settingsS"]];
+            abn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"About"
+                                                          image:[UIImage imageNamed:@"aboutN.png"]
+                                                  selectedImage:[UIImage imageNamed:@"aboutS"]];
+            
+            UITabBarController *tab = [[UITabBarController alloc]init];
+            tab.viewControllers = [NSArray arrayWithObjects:an,mn,sn,abn, nil];
+            [self.revealSideViewController popViewControllerWithNewCenterController:tab animated:YES completion:^{PPRSLog(@"Logged In")}];
             
         } else {
             //Something bad has ocurred
@@ -151,8 +177,31 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)bypass{
     MapViewController *mv = [[MapViewController alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mv];
-    [self.revealSideViewController popViewControllerWithNewCenterController:nav animated:YES completion:^{PPRSLog(@"Bypassed")}];
+    AccViewController *av = [[AccViewController alloc]init];
+    SettingsViewController *sv = [[SettingsViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    AboutViewController *ab = [[AboutViewController alloc]init];
+    
+    UINavigationController *mn = [[UINavigationController alloc]initWithRootViewController:mv];
+    UINavigationController *an = [[UINavigationController alloc]initWithRootViewController:av];
+    UINavigationController *sn = [[UINavigationController alloc]initWithRootViewController:sv];
+    UINavigationController *abn = [[UINavigationController alloc]initWithRootViewController:ab];
+    
+    mn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Map"
+                                                 image:[UIImage imageNamed:@"mapN.png"]
+                                         selectedImage:[UIImage imageNamed:@"mapS.png"]];
+    an.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Account"
+                                                 image:[UIImage imageNamed:@"accountN.png"]
+                                         selectedImage:[UIImage imageNamed:@"accountS.png"]];
+    sn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Settings"
+                                                 image:[UIImage imageNamed:@"settingsN.png"]
+                                         selectedImage:[UIImage imageNamed:@"settingsS"]];
+    abn.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"About"
+                                                  image:[UIImage imageNamed:@"aboutN.png"]
+                                          selectedImage:[UIImage imageNamed:@"aboutS"]];
+    
+    UITabBarController *tab = [[UITabBarController alloc]init];
+    tab.viewControllers = [NSArray arrayWithObjects:an,mn,sn,abn, nil];
+    [self.revealSideViewController popViewControllerWithNewCenterController:tab animated:YES completion:^{PPRSLog(@"Bypassed")}];
 }
 
 #pragma makr - Textfield Delegate

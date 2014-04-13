@@ -26,6 +26,12 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

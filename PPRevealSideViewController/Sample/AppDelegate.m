@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
+#import "MapViewController.h"
 #import "LoginViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
@@ -59,6 +60,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
         [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x34B085)];
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        [[UITabBar appearance] setTintColor:UIColorFromRGB(0x34B085)];
     }
     
     //loading animation

@@ -42,6 +42,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,9 +55,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.view.backgroundColor = UIColorFromRGB(0xf2f2f2);
     
     usr = [PFUser currentUser];
-    
-    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar | PPRevealSideInteractionContentView];
-    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionContentView | PPRevealSideInteractionNavigationBar];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(edit)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(pushLeft)];
@@ -108,7 +111,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     homeSearch.searchResultsDataSource = self;
     homeSearch.searchResultsDelegate = self;
     
-    self.title = @"My Profile";
+    self.title = @"My Account";
 }
 
 - (void)didReceiveMemoryWarning
@@ -326,38 +329,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 #pragma mark - SearchBarDelegate
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    // Cancel any previous searches.
-    [localSearch cancel];
-    
-    MKMapItem *currentLoc = [MKMapItem mapItemForCurrentLocation];
-    
-    // Perform a new search.
-    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    request.naturalLanguageQuery = searchBar.text;
-    request.region = MKCoordinateRegionMake(currentLoc.placemark.location.coordinate, MKCoordinateSpanMake(1000, 1000));
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    localSearch = [[MKLocalSearch alloc] initWithRequest:request];
-    
-    [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error){
-        
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        
-        if ([response.mapItems count] == 0) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Results",nil)
-                                        message:nil
-                                       delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil] show];
-            return;
-        }
-        
-        results = response;
-        
-        [homeSearch.searchResultsTableView reloadData];
-    }];
-}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     // Cancel any previous searches.

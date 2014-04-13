@@ -10,7 +10,6 @@
 #import "LoginViewController.h"
 #import "Comms.h"
 #import "CreateViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
 #import <Parse/Parse.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -19,18 +18,16 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface MapViewController (){
-    NSMutableArray *allEvents;
-    NSMutableArray *searchArray;
+    MKLocalSearchResponse *results;
+    MKLocalSearch *localSearch;
     
     UISearchBar *searchBar;
-    
-    GMSMapView *map;
 }
 @end
 
 @implementation MapViewController
 
-@synthesize searchController;
+@synthesize searchController, map;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +35,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (self) {
     }
     return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.revealSideViewController setPanInteractionsWhenOpened:PPRevealSideInteractionNavigationBar];
+    [self.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionNavigationBar];
 }
 
 - (void)viewDidLoad
@@ -62,12 +65,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     self.view = map;
     
     // Do any additional setup after loading the view.
-    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pushLeft:)];
+    UIBarButtonItem *slide = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"]
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(pushLeft:)];
     
     self.navigationItem.leftBarButtonItem = slide;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search)];
-    self.title = @"Our App";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                                          target:self
+                                                                                          action:@selector(search)];
+    self.title = @"Map";
     
     UIButton *add = [[UIButton alloc]initWithFrame:CGRectMake(5, 70, 48, 48)];
     [add setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
@@ -78,9 +86,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     //doing search stuff
     searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20, 270, 44)];
     searchBar.placeholder = @"Search";
+    searchBar.delegate = self;
     
     searchController = [[UISearchDisplayController alloc]initWithSearchBar:searchBar contentsController:self];
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelSearch)];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                           target:self
+                                                                           action:@selector(cancelSearch)];
     cancel.tintColor = [UIColor whiteColor];
     searchController.navigationItem.rightBarButtonItem = cancel;
     searchController.delegate = self;
@@ -98,7 +109,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #pragma mark - Managing Button Methods
 
 - (void)pushLeft:(id)sender{
-    map.userInteractionEnabled = NO;
     [self.revealSideViewController pushOldViewControllerOnDirection:PPRevealSideDirectionLeft animated:YES];
 }
 
@@ -137,7 +147,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return searchArray.count;
+    return results.mapItems.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -145,9 +155,43 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
     }
+    
+    MKMapItem *item = results.mapItems[indexPath.row];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    
+    cell.textLabel.text = item.name;
+    cell.detailTextLabel.text = item.placemark.addressDictionary[@"Street"];
+    
     return cell;
 }
 
-#pragma mark - Search Display Controller Delegate
+#pragma mark - Search Delegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    // Cancel any previous searches.
+    [localSearch cancel];
+    
+    MKMapItem *currentLoc = [MKMapItem mapItemForCurrentLocation];
+    
+    // Perform a new search.
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = searchText;
+    request.region = MKCoordinateRegionMake(currentLoc.placemark.location.coordinate, MKCoordinateSpanMake(1000, 1000));
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    localSearch = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error){
+        
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+        results = response;
+        
+        [searchController.searchResultsTableView reloadData];
+    }];
+    
+}
+
 
 @end
